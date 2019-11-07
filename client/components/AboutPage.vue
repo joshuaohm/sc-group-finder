@@ -1,7 +1,10 @@
 <template>
   <div class="about-page">
     <Page>
-      <Tab></Tab>
+      <Tab data=tabProp></Tab>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, molestiae at officia maxime odit repellendus, possimus expedita inventore ea minima hic omnis error qui! Ratione in odit quia amet veritatis.
+      </p>
     </Page>
   </div>
 </template>
@@ -11,10 +14,14 @@ import Page from 'components/Page'
 import Tab from 'components/Tab'
 
 export default {
+  components: {
+    Page, Tab
+  },
   data () {
     return {
       title: "Welcome To BLANK", 
-      msg: "Use this website to {INSERT ACTIVITY}"
+      msg: "Use this website to {INSERT ACTIVITY}",
+      tabProp: ["Title","About"]
     }
   },
   computed: {

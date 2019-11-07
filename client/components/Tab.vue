@@ -1,22 +1,26 @@
 <template>
     <div class="tab-wrapper">
-      <transition name="tab-transition">
-        <div v-if="show" class="tab">
-          testing
-        </div>
-      </transition>
+      <div v-for="item in data" v-bind:key="item.key" class="tab">
+        <span v-if="item[0].toLower() !=='title'">{{item[0]}} : </span>
+        <span v-if="item[1] && item[1].Length > 0">{{item[1]}}</span>
+      </div>
     </div>
 </template>
 
 <script>
 export default {
+  props: {
+    data: Array
+  },
   data () {
     return {
-      msg: 'Vetur means "Winter" in icelandic.',
       show: false,
     }
   },
   created() {
+
+    console.log(data);
+
     this.$store.subscribe((mutation, state) => {
       if(mutation.type === 'PAGELOADED'){
         console.log("page loaded 2");
