@@ -1,8 +1,7 @@
 <template>
-  <Page>
-    <Tab>
-    </Tab>
-  </Page>
+  <div class="home-page">
+    <Page :content="[tabProp, msg]"></Page>
+  </div>
 </template>
 
 <script>
@@ -14,7 +13,21 @@ export default {
     Tab, Page
   },
   created () {
-    document.title = "Testing"
+    document.title = "Home"
+  },
+  data () {
+    return {
+      msg: {
+        type: "p",
+        content: "You are not logged in, please log in."
+      },
+      tabProp: {
+          type : "Tab",
+          content : [
+            { value: "Welcome To BLANK" }
+          ]
+      }
+    }
   }
 }
 </script>

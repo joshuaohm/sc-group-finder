@@ -72,10 +72,13 @@ $page-color: #012e23;
       display: flex;
       flex: row nowrap;
       justify-content: space-around;
+      align-items: center;
       padding: 0;
       width: 50%;
+      height: 100%;
       float: right;
       list-style: none;
+      margin: 0;
 
       .nav-item, .nav-item a:link, .nav-item a:visited {
         text-decoration: none;

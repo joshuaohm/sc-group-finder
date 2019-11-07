@@ -1,22 +1,42 @@
 <template>
-<div class="page-wrapper">
-  <transition appear
-        appear-to-class="page-appear"
-        appear-active-class="page-appeared"
-        v-on:after-appear="pageLoaded()">
-    <div class="page">
-      
-    </div>
-  </transition>
-</div>
+  <div class="page-wrapper">
+    <transition appear
+          appear-to-class="page-appear"
+          appear-active-class="page-appeared"
+          v-on:after-appear="pageLoaded()">
+      <div class="page">
+        <div v-for="component in content" :key="component.type">
+          <div v-if="component.type.toLowerCase().includes('tab')">
+            <component :is="component.type" :content="component"></component>
+          </div>
+          <div v-else-if="component.type.toLowerCase() === 'p'">
+            <p>{{component.content}}</p>
+          </div>
+          <div v-else-if="component.type.toLowerCase() === 'h3'">
+            <h3>{{component.content}}</h3>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
+import Tab from 'components/Tab'
+
 export default {
+  components: {
+    Tab
+  },
   data () {
     return {
       msg: 'Vetur means "Winter" in icelandic.',
       show: false,
+    }
+  },
+  props: {
+    content: {
+      type: Array
     }
   },
   created() {
@@ -65,7 +85,7 @@ $page-color: #012e23;
 }
 
 .page-appear{
-  animation: fadeInGrowVert .5s ease;
+  animation: fadeInGrowVert .3s ease;
   animation-delay: .5s;
 }
 
