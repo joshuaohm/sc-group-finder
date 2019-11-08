@@ -16,16 +16,19 @@ html, body{
 }
 
 body {
-  
   background-color: #000;
   margin: 0;
   font-size: 2rem;
-  font-family: -apple-system, BlinkMacSystemFont,
-               'avenir next', avenir,
-               helvetica, 'helvetica neue',
-               Ubuntu,
-               'segoe ui', arial,
-               sans-serif;
+  font-family: 'Orbitron', sans-serif;
+}
+
+h1, h2, h3{
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+}
+
+p{
+  font-family: 'Robo Mono', monospace;
 }
 
 #app{

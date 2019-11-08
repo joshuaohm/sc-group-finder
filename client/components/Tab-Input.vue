@@ -1,10 +1,9 @@
 <template>
-    <div class="tab-wrapper">
+    <div class="tab-input-wrapper">
       <transition name="tab-transition">
         <div v-if="show">
-          <div v-for="item in content.content" v-bind:key="item.value" class="tab">
-            <span v-if="item.title && item.title.length > 0">{{item.title}} : </span>
-            <span v-if="item.value && item.value.length > 0">{{item.value}}</span>
+          <div class="tab">
+            <input class="tab-input" type="text" :placeholder="content.placeholder"/>
           </div>
         </div>
       </transition>
@@ -62,6 +61,22 @@ $page-color: #012e23;
       height: 100%;
       width: 72px;
     }
+}
+
+.tab-input{
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  margin-left: 4px;
+  margin-right: 4px;
+  border: none;
+  box-sizing: border-box;
+  background-color: black;
+  color: $ice-blue;
+  font-family: 'Orbitron', sans-serif;
+  text-align: center;
 }
 
 .blue-line{

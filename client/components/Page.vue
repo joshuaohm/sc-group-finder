@@ -9,6 +9,9 @@
           <div v-if="component.type.toLowerCase().includes('tab')">
             <component :is="component.type" :content="component"></component>
           </div>
+          <div v-else-if="component.type.toLowerCase().includes('panel')">
+            <component :is="component.type" :content="component"></component>
+          </div>
           <div v-else-if="component.type.toLowerCase() === 'p'">
             <p>{{component.content}}</p>
           </div>
@@ -23,39 +26,29 @@
 
 <script>
 import Tab from 'components/Tab'
+import TabInput from 'components/Tab-Input'
+import TabSelect from 'components/Tab-Select'
+import Panel from 'components/Panel'
 
 export default {
   components: {
-    Tab
-  },
-  data () {
-    return {
-      msg: 'Vetur means "Winter" in icelandic.',
-      show: false,
-    }
+    Tab, TabInput, TabSelect, Panel
   },
   props: {
     content: {
       type: Array
     }
   },
-  created() {
-
-  },
-  computed: {
-    count () {
-      return this.$store.state.count
-    },
+  data () {
+    return {
+      show: false,
+    }
   },
   methods: {
-    hello () {
-      console.log(this.msg)
-    },
     isLoggedIn() {
       return true;
     },
     pageLoaded(){
-      console.log("page loaded 1");
       this.$store.commit("PAGELOADED");
     }
   }
