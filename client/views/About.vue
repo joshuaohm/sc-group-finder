@@ -24,15 +24,11 @@ export default {
       },
       tabProp2: {
         type: "Tab-Select",
-        content: [
-          { 
-            options : [
-              {value: "Aurora"},
-              {value: "Mustang"},
-              {value: "Cutlass Black"},
-              {value: "Prospector"},
-            ]
-          }
+        options : [
+          {value: "Aurora"},
+          {value: "Mustang"},
+          {value: "Cutlass Black"},
+          {value: "Prospector"},
         ]
       },
       panelProp: {

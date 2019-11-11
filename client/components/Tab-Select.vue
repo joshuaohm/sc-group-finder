@@ -3,8 +3,8 @@
       <transition name="tab-transition">
         <div v-if="show">
           <div class="tab">
-            <select class="tab-input">
-              <option v-for="option in content.options" :key="option.value"> 
+            <select class="tab-input" v-model="selected">
+              <option v-for="option in content.options" :key="option.value" > 
                 {{option.value}}
               </option>
             </select>
@@ -23,11 +23,12 @@
 <script>
 export default {
   props: {
-    content: Array,
+    content: Object,
   },
   data () {
     return {
       show: false,
+      selected: '',
     }
   },
   created() {
@@ -81,6 +82,7 @@ $page-color: #012e23;
   color: $ice-blue;
   font-family: 'Orbitron', sans-serif;
   text-align: center;
+  cursor: pointer;
 }
 
 .blue-line{

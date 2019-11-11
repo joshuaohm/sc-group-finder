@@ -8,6 +8,9 @@
           </div>
         </div>
       </transition>
+      <div v-if="show2">
+        
+      </div>
       <div v-if="show">
         <div class="blue-line"></div>
       </div>
@@ -25,6 +28,7 @@ export default {
   data () {
     return {
       show: false,
+      show2: false
     }
   },
   created() {
@@ -33,6 +37,12 @@ export default {
         this.show = true;
       } 
     });
+  },
+  watch: {
+    show(showValue){
+        this.show2 = !showValue;
+        console.log("heelooo");
+    }
   }
 }
 </script>
