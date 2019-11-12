@@ -18,9 +18,15 @@ export default {
     return {
       tabProp: {
           type : "Tab",
-          content : [
+          text : [
             { value: "About" }
-          ]
+          ],
+          subPanel : {
+            lightTheme : true,
+            text : [
+              {value : "About Text."}
+            ]
+          }
       },
       tabProp2: {
         type: "Tab-Select",
@@ -36,9 +42,15 @@ export default {
         content : [
           {
             type: "Tab",
-            content: [
+            text: [
               { value : "Example" }
-            ]
+            ],
+            subPanel : {
+              lightTheme : false,
+              text : [
+                {value : "Example Text."}
+              ]
+            }
           },
           {
             type: "Tab-Input",

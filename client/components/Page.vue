@@ -69,7 +69,7 @@ $page-color: #012e23;
   border: 2px solid;
   border-color: $page-border;
   color: $ice-blue;
-  width: 100%;
+  width: calc(100% - 4px);
 }
 .page code {
   background-color: #f0f0f0;

@@ -1,19 +1,13 @@
 <template>
-    <div class="panel-wrapper">
-      <div class="panel">
-        <div v-for="component in content.content" :key="component.type">
-          <div v-if="component.type.toLowerCase().includes('tab')">
-            <component :is="component.type" :content="component"></component>
-          </div>
-          <div v-else-if="component.type.toLowerCase() === 'p'">
-            <p>{{component.content}}</p>
-          </div>
-          <div v-else-if="component.type.toLowerCase() === 'h3'">
-            <h3>{{component.content}}</h3>
+  <div class="panel-wrapper"> 
+    <transition name="subpanel-transition">  
+        <div v-if="show"  v-bind:class="{'sub-panel':true, 'light':(content.lightTheme)}">
+          <div v-for="item in content.text" v-bind:key="item.value">
+            <p>{{item.value}}</p>
           </div>
         </div>
-      </div>
-    </div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -32,14 +26,24 @@ export default {
   data () {
     return {
       show: false,
+      lightTheme: false,
     }
   },
   created() {
+
+    this.lightTheme = this.props.content.lightTheme;
+
     this.$store.subscribe((mutation, state) => {
       if(mutation.type === 'PAGELOADED'){
-        this.show = true;
+        console.log("sub panel created");
+       
       } 
     });
+  },
+  methods: {
+    togglePanel(){
+      this.show = !this.show;
+    }
   }
 }
 </script>
@@ -49,10 +53,24 @@ $ice-blue: #00bac4;
 $page-border: #014736;
 $page-color: #012e23;
 
-.panel{
-  border: 2px solid $page-border;
+.panel-wrapper{
+  overflow: hidden;
+}
+
+.sub-panel{
+  position: relative;
+  border: 2px solid $ice-blue;
   padding: 12px;
-  margin: 12px;
+  background-color: black;
+  margin-right: 94px;
+  z-index:1;
+  min-height: 150px;
+  color: $ice-blue;
+
+  &.light{
+    background-color: transparent;
+    border: 2px solid $page-border;
+  }
 }
 
 /** Styling for Tabs inside of Panels **/
@@ -71,15 +89,17 @@ $page-color: #012e23;
     }
 }
 
-/deep/ .tab-transition-enter-active, /deep/ .tab-transition-leave-active{
-  transition-delay: .5s;
+.subpanel-transition-enter, .subpanel-transition-leave-to{
+  transform: translateY(-100%);
+  opacity: 0;
 }
 
-/deep/ .blue-line{
-  margin-right: 58px;
+.subpanel-transition-enter-to{
+  transform: translateY(0);
+  opacity: 1;
 }
 
-/deep/ .added-height{
-  margin-top: 44px;
+.subpanel-transition-enter-active, .subpanel-transition-leave-active{
+  transition: transform .25s ease, opacity .25s ease;
 }
 </style>

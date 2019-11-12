@@ -45,7 +45,7 @@ $page-border: #014736;
 $page-color: #012e23;
 
 .navigation{
-  width: 100%;
+  width: calc(100% - 4px);
   position: relative;
   background-color: $page-color;
   border: 2px solid $page-border;

@@ -23,7 +23,7 @@ export default {
       },
       tabProp: {
           type : "Tab",
-          content : [
+          text : [
             { value: "Welcome To BLANK" }
           ]
       }

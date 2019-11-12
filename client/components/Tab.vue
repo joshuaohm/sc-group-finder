@@ -1,27 +1,31 @@
 <template>
     <div class="tab-wrapper">
       <transition name="tab-transition">
-        <div v-if="show">
-          <div v-for="item in content.content" v-bind:key="item.value" class="tab">
+        <div v-if="show" @click="tabClicked">
+          <div v-for="item in content.text" v-bind:key="item.value" class="tab">
             <span v-if="item.title && item.title.length > 0">{{item.title}} : </span>
             <span v-if="item.value && item.value.length > 0">{{item.value}}</span>
           </div>
         </div>
       </transition>
-      <div v-if="show2">
-        
+      <div @v-if="show && show2 && content.subPanel">
+        <SubPanel ref="subPanel" :content="content.subPanel"></SubPanel>
       </div>
-      <div v-if="show">
+      <div v-if="show && !show2">
         <div class="blue-line"></div>
       </div>
-      <div v-else>
+      <div v-else-if="!show && !show2">
         <div class="blue-line added-height"></div>
       </div>
     </div>
 </template>
 
 <script>
+import SubPanel from 'components/Sub-Panel'
 export default {
+  components : {
+    SubPanel
+  },
   props: {
     content: Object,
   },
@@ -38,10 +42,18 @@ export default {
       } 
     });
   },
+  methods : {
+    tabClicked(){
+      
+      if(this.content.subPanel){
+        this.show2 = !this.show2;
+        this.$refs.subPanel.togglePanel();
+      } 
+    }
+  },
   watch: {
     show(showValue){
-        this.show2 = !showValue;
-        console.log("heelooo");
+          
     }
   }
 }
@@ -54,7 +66,7 @@ $page-color: #012e23;
 
 .tab{
   margin-top: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   margin-right: 20px;
   padding-top: 16px;
   padding-bottom: 16px;
@@ -62,6 +74,7 @@ $page-color: #012e23;
   position: relative;
   background-color: #000;
   height: 40px;
+  z-index: 10;
 
   &:before {
       content: '';
