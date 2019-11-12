@@ -2,8 +2,8 @@
     <div class="tab-input-wrapper">
       <transition name="tab-transition">
         <div v-if="show">
-          <div class="tab">
-            <input class="tab-input" type="text" :placeholder="content.placeholder"/>
+          <div v-bind:class="{'tab':true, 'light':(content.lightTheme)}">
+            <input type="text" :placeholder="content.placeholder" v-bind:class="{'tab-input':true, 'light':(content.lightTheme)}"/>
           </div>
         </div>
       </transition>
@@ -52,6 +52,15 @@ $page-color: #012e23;
   background-color: #000;
   height: 40px;
 
+  &.light{
+    background-color: $page-border;
+    color: #000;
+
+    &:before{
+      background: linear-gradient(to top left, $page-color 50%, transparent 50%);
+    }
+  }
+
   &:before {
       content: '';
       position: absolute;
@@ -77,6 +86,11 @@ $page-color: #012e23;
   color: $ice-blue;
   font-family: 'Orbitron', sans-serif;
   text-align: center;
+
+  &.light{
+    background-color: $page-border;
+    color: white;
+  }
 }
 
 .blue-line{

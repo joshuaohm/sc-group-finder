@@ -2,7 +2,7 @@
     <div class="tab-wrapper">
       <transition name="tab-transition">
         <div v-if="show" @click="tabClicked">
-          <div v-for="item in content.text" v-bind:key="item.value" class="tab">
+          <div v-for="item in content.text" v-bind:key="item.value" v-bind:class="{'tab':true, 'light':(content.lightTheme)}">
             <span v-if="item.title && item.title.length > 0">{{item.title}} : </span>
             <span v-if="item.value && item.value.length > 0">{{item.value}}</span>
           </div>
@@ -21,10 +21,9 @@
 </template>
 
 <script>
-import SubPanel from 'components/Sub-Panel'
 export default {
   components : {
-    SubPanel
+    SubPanel: () => import('components/Sub-Panel')
   },
   props: {
     content: Object,
@@ -44,6 +43,8 @@ export default {
   },
   methods : {
     tabClicked(){
+
+      console.log(this.content.subPanel);
       
       if(this.content.subPanel){
         this.show2 = !this.show2;
@@ -75,6 +76,15 @@ $page-color: #012e23;
   background-color: #000;
   height: 40px;
   z-index: 10;
+
+  &.light{
+    background-color: $page-border;
+    color: white;
+
+    &:before{
+      background: linear-gradient(to top left, $page-color 50%, transparent 50%);
+    }
+  }
 
   &:before {
       content: '';

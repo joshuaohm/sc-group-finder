@@ -2,8 +2,16 @@
   <div class="panel-wrapper"> 
     <transition name="subpanel-transition">  
         <div v-if="show"  v-bind:class="{'sub-panel':true, 'light':(content.lightTheme)}">
-          <div v-for="item in content.text" v-bind:key="item.value">
-            <p>{{item.value}}</p>
+          <div v-for="component in content.content" :key="component.id">
+            <div v-if="component.type.toLowerCase().includes('tab')">
+              <component :is="component.type" :content="component"></component>
+            </div>
+            <div v-else-if="component.type.toLowerCase() === 'p'">
+              <p>{{component.value}}</p>
+            </div>
+            <div v-else-if="component.type.toLowerCase() === 'h3'">
+              <h3>{{component.value}}</h3>
+            </div>
           </div>
         </div>
     </transition>
@@ -11,12 +19,10 @@
 </template>
 
 <script>
-import Tab from 'components/Tab'
-import TabInput from 'components/Tab-Input'
-
 export default {
   components: {
-    Tab, TabInput
+    Tab: () => import('components/Tab') ,
+    TabInput: () => import('components/Tab-Input') 
   },
   props: {
     content: {

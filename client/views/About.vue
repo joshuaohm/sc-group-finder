@@ -1,6 +1,6 @@
 <template>
   <div class="about-page">
-    <Page :content="[tabProp, tabProp2, title, panelProp]"></Page>
+    <Page :content="[tabProp, tabProp2, tabProp3, title, panelProp]"></Page>
   </div>
 </template>
 
@@ -30,6 +30,16 @@ export default {
       },
       tabProp2: {
         type: "Tab-Select",
+        lightTheme: true,
+        options : [
+          {value: "Aurora"},
+          {value: "Mustang"},
+          {value: "Cutlass Black"},
+          {value: "Prospector"},
+        ]
+      },
+      tabProp3: {
+        type: "Tab-Select",
         options : [
           {value: "Aurora"},
           {value: "Mustang"},
@@ -39,24 +49,36 @@ export default {
       },
       panelProp: {
         type : "Panel",
+        lightTheme: true,
         content : [
           {
             type: "Tab",
+            lightTheme: true,
             text: [
               { value : "Example" }
             ],
             subPanel : {
+              type: "SubPanel",
               lightTheme : false,
-              text : [
-                {value : "Example Text."}
+              content : [
+                {
+                  type: "Tab",
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel : false
+                },
+                { 
+                  type : "p",
+                  value : "Example Text."
+                }
               ]
             }
           },
           {
             type: "Tab-Input",
-            content: [
-              { placeholder : "Example" }
-            ]
+            lightTheme: true,
+            placeholder : "" 
           },
           { 
             type: "p",  

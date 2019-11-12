@@ -5,7 +5,7 @@
           appear-active-class="page-appeared"
           v-on:after-appear="pageLoaded()">
       <div class="page">
-        <div v-for="component in content" :key="component.type">
+        <div v-for="component in content" :key="component.id">
           <div v-if="component.type.toLowerCase().includes('tab')">
             <component :is="component.type" :content="component"></component>
           </div>

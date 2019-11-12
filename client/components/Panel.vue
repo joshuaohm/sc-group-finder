@@ -1,8 +1,11 @@
 <template>
     <div class="panel-wrapper">
-      <div class="panel">
+      <div v-bind:class="{'panel':true, 'light':(content.lightTheme)}">
         <div v-for="component in content.content" :key="component.type">
           <div v-if="component.type.toLowerCase().includes('tab')">
+            <component :is="component.type" :content="component"></component>
+          </div>
+          <div v-else-if="component.type.toLowerCase().includes('subpanel')">
             <component :is="component.type" :content="component"></component>
           </div>
           <div v-else-if="component.type.toLowerCase() === 'p'">
@@ -17,12 +20,12 @@
 </template>
 
 <script>
-import Tab from 'components/Tab'
-import TabInput from 'components/Tab-Input'
 
 export default {
   components: {
-    Tab, TabInput
+    Tab: () => import('components/Tab') ,
+    TabInput: () => import('components/Tab-Input'),
+    SubPanel: () => import('components/Sub-Panel')
   },
   props: {
     content: {
@@ -53,6 +56,12 @@ $page-color: #012e23;
   border: 2px solid $page-border;
   padding: 12px;
   margin: 12px;
+  background-color: black;
+  color: $ice-blue;
+
+  &.light{
+    background-color: $page-color;
+  }
 }
 
 /** Styling for Tabs inside of Panels **/
