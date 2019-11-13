@@ -48,7 +48,7 @@ $page-color: #012e23;
 
 .tab{
   margin-top: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   margin-right: 20px;
   padding-top: 16px;
   padding-bottom: 16px;
