@@ -1,15 +1,16 @@
 <template>
     <div class="tab-wrapper">
-      <transition name="tab-transition">
+      <transition name="tab-transition"
+         v-on:after-enter="tabLoaded()">
         <div v-if="show" @click="tabClicked">
-          <div v-for="item in content.text" v-bind:key="item.value" v-bind:class="{'tab':true, 'light':(content.lightTheme)}">
+          <div v-for="item in content.text" v-bind:key="item.value" v-bind:class="{'tab':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}">
             <span v-if="item.title && item.title.length > 0">{{item.title}} : </span>
             <span v-if="item.value && item.value.length > 0">{{item.value}}</span>
           </div>
         </div>
       </transition>
-      <div @v-if="show && show2 && content.subPanel">
-        <SubPanel ref="subPanel" :content="content.subPanel"></SubPanel>
+      <div @v-show="show && show2 && content.subPanel !== false">
+        <component :is="content.subPanel.type" ref="subPanel" :name="content.subPanel.name" :content="content.subPanel"></component>
       </div>
       <div v-if="show && !show2">
         <div class="blue-line"></div>
@@ -26,7 +27,13 @@ export default {
     SubPanel: () => import('components/Sub-Panel')
   },
   props: {
+    name : String,
     content: Object,
+  },
+  computed: {
+    parentColorTheme () {
+      return this.$parent.content.lightTheme;
+    }
   },
   data () {
     return {
@@ -38,18 +45,22 @@ export default {
     this.$store.subscribe((mutation, state) => {
       if(mutation.type === 'PAGELOADED'){
         this.show = true;
+      }
+      else if(mutation.type === 'SUBPANELLOADED' && this.$parent.content != null && this.$parent.content.type != null && this.$parent.content.type.toLowerCase().includes('subpanel')){
+        this.show = true;
       } 
     });
   },
   methods : {
     tabClicked(){
-
-      console.log(this.content.subPanel);
       
-      if(this.content.subPanel){
+      if(this.content.subPanel !== false){
         this.show2 = !this.show2;
         this.$refs.subPanel.togglePanel();
       } 
+    },
+    tabLoaded(){
+      this.$store.commit("TABLOADED");
     }
   },
   watch: {
@@ -81,8 +92,18 @@ $page-color: #012e23;
     background-color: $page-border;
     color: white;
 
-    &:before{
-      background: linear-gradient(to top left, $page-color 50%, transparent 50%);
+    &.onLight{
+
+      &:before{
+        background: linear-gradient(to top left, $page-color 50%, transparent 50%);
+      }
+    }
+
+    &.onDark{
+
+      &:before{
+        background: linear-gradient(to top left, black 50%, transparent 50%);
+      }
     }
   }
 

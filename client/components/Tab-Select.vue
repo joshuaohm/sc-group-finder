@@ -2,7 +2,7 @@
     <div class="tab-input-wrapper">
       <transition name="tab-transition">
         <div v-if="show">
-          <div class="tab" v-bind:class="{'tab':true, 'light':(content.lightTheme)}">
+          <div class="tab" v-bind:class="{'tab':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}">
             <select class="tab-input" v-model="selected" v-bind:class="{'tab-input':true, 'light':(content.lightTheme)}">
               <option v-for="option in content.options" :key="option.value" > 
                 {{option.value}}
@@ -23,7 +23,13 @@
 <script>
 export default {
   props: {
+    name : String,
     content: Object,
+  },
+  computed: {
+    parentColorTheme () {
+      return this.$parent.content.lightTheme;
+    }
   },
   data () {
     return {
@@ -61,8 +67,18 @@ $page-color: #012e23;
     background-color: $page-border;
     color: white;
 
-    &:before{
-      background: linear-gradient(to top left, $page-color 50%, transparent 50%);
+    &.onLight{
+
+      &:before{
+        background: linear-gradient(to top left, $page-color 50%, transparent 50%);
+      }
+    }
+
+    &.onDark{
+
+      &:before{
+        background: linear-gradient(to top left, black 50%, transparent 50%);
+      }
     }
   }
 

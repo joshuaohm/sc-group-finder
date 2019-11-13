@@ -4,13 +4,13 @@
           appear-to-class="page-appear"
           appear-active-class="page-appeared"
           v-on:after-appear="pageLoaded()">
-      <div class="page">
-        <div v-for="component in content" :key="component.id">
+      <div v-bind:class="{'page':true, 'light':(content.lightTheme)}">
+        <div v-for="component in content.content" :key="component.id">
           <div v-if="component.type.toLowerCase().includes('tab')">
-            <component :is="component.type" :content="component"></component>
+            <component :is="component.type" :name="component.name" :content="component"></component>
           </div>
           <div v-else-if="component.type.toLowerCase().includes('panel')">
-            <component :is="component.type" :content="component"></component>
+            <component :is="component.type" :name="component.name" :content="component"></component>
           </div>
           <div v-else-if="component.type.toLowerCase() === 'p'">
             <p>{{component.content}}</p>
@@ -35,9 +35,12 @@ export default {
     Tab, TabInput, TabSelect, Panel
   },
   props: {
-    content: {
-      type: Array
-    }
+    name : String,
+    content: Object,
+    lightTheme: Boolean
+  },
+  created () {
+  
   },
   data () {
     return {

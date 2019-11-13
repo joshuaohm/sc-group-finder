@@ -10,6 +10,12 @@ const state = {
   currentPage: {
     name: "",
     isLoaded: false,
+    currentTab : {
+      isLoaded : false,
+      currentSubPanel : {
+        isLoaded : false,
+      }
+    }
   }
 }
 
@@ -21,7 +27,13 @@ const mutations = {
     state.count--
   },
   PAGELOADED (state){
-    state.currentPage.isLoaded = true
+    state.currentPage.isLoaded = true;
+  },
+  TABLOADED (state){
+    state.currentPage.currentTab.isLoaded = true;
+  },
+  SUBPANELLOADED (state){
+    state.currentPage.currentTab.currentSubPanel.isLoaded = true;
   }
 }
 

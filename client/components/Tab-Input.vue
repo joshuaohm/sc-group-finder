@@ -2,7 +2,7 @@
     <div class="tab-input-wrapper">
       <transition name="tab-transition">
         <div v-if="show">
-          <div v-bind:class="{'tab':true, 'light':(content.lightTheme)}">
+          <div v-bind:class="{'tab':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}">
             <input type="text" :placeholder="content.placeholder" v-bind:class="{'tab-input':true, 'light':(content.lightTheme)}"/>
           </div>
         </div>
@@ -19,7 +19,13 @@
 <script>
 export default {
   props: {
+    name : String,
     content: Object,
+  },
+  computed: {
+    parentColorTheme () {
+      return this.$parent.content.lightTheme;
+    }
   },
   data () {
     return {

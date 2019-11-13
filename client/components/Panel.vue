@@ -1,12 +1,12 @@
 <template>
     <div class="panel-wrapper">
-      <div v-bind:class="{'panel':true, 'light':(content.lightTheme)}">
-        <div v-for="component in content.content" :key="component.type">
+      <div v-bind:class="{'panel':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}">
+        <div v-for="component in content.content" :key="component.name">
           <div v-if="component.type.toLowerCase().includes('tab')">
-            <component :is="component.type" :content="component"></component>
+            <component :name="component.name" :is="component.type" :content="component"></component>
           </div>
           <div v-else-if="component.type.toLowerCase().includes('subpanel')">
-            <component :is="component.type" :content="component"></component>
+            <component :name="component.name" :is="component.type" :content="component"></component>
           </div>
           <div v-else-if="component.type.toLowerCase() === 'p'">
             <p>{{component.content}}</p>
@@ -28,8 +28,12 @@ export default {
     SubPanel: () => import('components/Sub-Panel')
   },
   props: {
-    content: {
-      type: Object
+    name : String,
+    content: Object
+  },
+  computed: {
+    parentColorTheme () {
+      return this.$parent.content.lightTheme;
     }
   },
   data () {

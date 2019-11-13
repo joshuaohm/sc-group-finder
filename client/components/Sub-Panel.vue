@@ -1,10 +1,11 @@
 <template>
   <div class="panel-wrapper"> 
-    <transition name="subpanel-transition">  
-        <div v-if="show"  v-bind:class="{'sub-panel':true, 'light':(content.lightTheme)}">
-          <div v-for="component in content.content" :key="component.id">
+    <transition name="subpanel-transition"
+       v-on:after-enter="subPanelLoaded()">  
+        <div v-if="show"  v-bind:class="{'sub-panel':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}">
+          <div v-for="component in content.content" :key="component.name">
             <div v-if="component.type.toLowerCase().includes('tab')">
-              <component :is="component.type" :content="component"></component>
+              <component :name="component.name" :is="component.type" :content="component"></component>
             </div>
             <div v-else-if="component.type.toLowerCase() === 'p'">
               <p>{{component.value}}</p>
@@ -25,8 +26,12 @@ export default {
     TabInput: () => import('components/Tab-Input') 
   },
   props: {
-    content: {
-      type: Object
+    name: String,
+    content: Object
+  },
+  computed: {
+    parentColorTheme () {
+      return this.$parent.content.lightTheme;
     }
   },
   data () {
@@ -36,19 +41,14 @@ export default {
     }
   },
   created() {
-
-    this.lightTheme = this.props.content.lightTheme;
-
-    this.$store.subscribe((mutation, state) => {
-      if(mutation.type === 'PAGELOADED'){
-        console.log("sub panel created");
-       
-      } 
-    });
+  
   },
   methods: {
     togglePanel(){
       this.show = !this.show;
+    },
+    subPanelLoaded(){
+      this.$store.commit('SUBPANELLOADED');
     }
   }
 }
@@ -74,7 +74,7 @@ $page-color: #012e23;
   color: $ice-blue;
 
   &.light{
-    background-color: transparent;
+    background-color: $page-color;
     border: 2px solid $page-border;
   }
 }
@@ -93,6 +93,10 @@ $page-color: #012e23;
   &:before {
       width: 36px;
     }
+}
+
+/deep/ .tab-transition-enter-active, /deep/ .tab-transition-leave-active{
+  transition-delay: .2s;
 }
 
 .subpanel-transition-enter, .subpanel-transition-leave-to{

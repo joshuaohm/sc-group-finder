@@ -1,6 +1,6 @@
 <template>
   <div class="about-page">
-    <Page :content="[tabProp, tabProp2, tabProp3, title, panelProp]"></Page>
+    <Page :content="{content:[tabProp, tabProp2, tabProp3, title, panelProp], lightTheme:true}"></Page>
   </div>
 </template>
 
@@ -11,24 +11,39 @@ export default {
   components: {
     Page
   },
+  props: {
+    name : String,
+    content: Object
+  },
   created () {
     document.title = "About"
   },
   data () {
     return {
       tabProp: {
-          type : "Tab",
-          text : [
-            { value: "About" }
-          ],
-          subPanel : {
-            lightTheme : true,
-            text : [
-              {value : "About Text."}
-            ]
-          }
+        name : "tabProp",
+        type : "Tab",
+        text : [
+          { value: "About" }
+        ],
+        subPanel : {
+          name : "subPanel",
+          type: "SubPanel",
+          lightTheme : true,
+          content : [
+            {
+              type : "h3",
+              value : "About Header."
+            },
+            {
+              type : "p",
+              value : "About Paragraph."
+            }
+          ]
+        }
       },
       tabProp2: {
+        name : "tabProp2",
         type: "Tab-Select",
         lightTheme: true,
         options : [
@@ -39,6 +54,7 @@ export default {
         ]
       },
       tabProp3: {
+        name : "tabProp3",
         type: "Tab-Select",
         options : [
           {value: "Aurora"},
@@ -48,25 +64,65 @@ export default {
         ]
       },
       panelProp: {
+        name : "panelProp",
         type : "Panel",
         lightTheme: true,
         content : [
           {
+            name : "panelTab1",
             type: "Tab",
             lightTheme: true,
             text: [
               { value : "Example" }
             ],
             subPanel : {
+              name : "subPanel2",
               type: "SubPanel",
               lightTheme : false,
               content : [
                 {
+                  name : "subPanel2Tab1",
                   type: "Tab",
+                  lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
-                  subPanel : false
+                  subPanel : {
+                    name : "subPanel3",
+                    type: "SubPanel",
+                    lightTheme : false,
+                    content : [ 
+                      {
+                        name : "subPanel3Tab1",
+                        type: "Tab",
+                        lightTheme : true,
+                        text: [
+                          { value : "Example" }
+                        ],
+                        subPanel : {
+                          name : "subPanel4",
+                          type: "SubPanel",
+                          lightTheme : true,
+                          content : [ 
+                            {
+                              name : "subPanel4Tab1",
+                              type: "Tab",
+                              lightTheme : true,
+                              text: [
+                                { value : "Example" }
+                              ],
+                              subPanel : {
+                                name : "subPanel5",
+                                type: "SubPanel",
+                                lightTheme : false,
+                                content : [ ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
                 },
                 { 
                   type : "p",
@@ -76,6 +132,7 @@ export default {
             }
           },
           {
+            name : "panelTabInput1",
             type: "Tab-Input",
             lightTheme: true,
             placeholder : "" 
