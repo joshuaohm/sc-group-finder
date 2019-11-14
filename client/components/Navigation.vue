@@ -92,4 +92,15 @@ $page-color: #012e23;
 .nav-animation-active{
   animation: slideRight .5s ease;
 }
+
+@media screen and (max-width: 780px){
+  .nav-list{
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 480px){
+  .nav-list{
+    font-size: .8rem;
+  }
+}
 </style>

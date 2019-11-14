@@ -1,8 +1,8 @@
 <template>
   <div class="page-wrapper">
     <transition appear
-          appear-to-class="page-appear"
-          appear-active-class="page-appeared"
+          appear-active-class="page-appear-active"
+
           v-on:after-appear="pageLoaded()">
       <div v-bind:class="{'page':true, 'light':(content.lightTheme)}">
         <div v-for="component in content.content" :key="component.id">
@@ -66,8 +66,6 @@ $page-color: #012e23;
 .page {
   margin-top: 48px;
   text-align: center;
-  min-height: 25vh;
-  opacity: 1;
   background-color: $page-color;
   border: 2px solid;
   border-color: $page-border;
@@ -81,12 +79,27 @@ $page-color: #012e23;
 }
 
 .page-appear{
-  animation: fadeInGrowVert .3s ease;
-  animation-delay: .5s;
+  max-height: 0;
+  overflow: hidden;
 }
 
-.page-appeared{
-  opacity: 0;
+.page-appear-active{
+  animation: fadeInGrowVert .3s ease-in;
 }
 
+.page-appear-to{
+  max-height: 500px;
+  overflow: hidden;
+}
+
+@keyframes fadeInGrowVert {
+  0%{
+    overflow: hidden;
+    max-height: 0;
+  }
+  100%{
+    overflow: hidden;
+    max-height: 500px;
+  }
+}
 </style>

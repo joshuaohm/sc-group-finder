@@ -58,7 +58,7 @@ $page-color: #012e23;
 
 .panel{
   border: 2px solid $page-border;
-  padding: 12px;
+  padding: 8px;
   margin: 12px;
   background-color: black;
   color: $ice-blue;
@@ -70,29 +70,10 @@ $page-color: #012e23;
 
 /** Styling for Tabs inside of Panels **/
 
-/deep/ .tab{
-  height: 20px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  font-size: 1.4rem;
-  line-height: 20px;
-
-  &:before {
-      width: 36px;
-    }
-}
 
 /deep/ .tab-transition-enter-active, /deep/ .tab-transition-leave-active{
   transition-delay: .5s;
 }
 
-/deep/ .blue-line{
-  margin-right: 58px;
-}
 
-/deep/ .added-height{
-  margin-top: 44px;
-}
 </style>

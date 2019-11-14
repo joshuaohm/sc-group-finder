@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <Page :content="[tabProp, msg]"></Page>
+    <Page :content="{content:[tabProp, msg], lightTheme:true}"></Page>
   </div>
 </template>
 
@@ -22,10 +22,12 @@ export default {
         content: "You are not logged in, please log in."
       },
       tabProp: {
-          type : "Tab",
-          text : [
-            { value: "Welcome To BLANK" }
-          ]
+        name : "tabProp",
+        type : "Tab",
+        subPanel : false,
+        text : [
+          { value: "Home" }
+        ]
       }
     }
   }

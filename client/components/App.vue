@@ -38,12 +38,12 @@ p{
 
 @keyframes fadeInGrowVert {
   0%{
-    opacity: 0;
-    transform: scale(0);
+    overflow: hidden;
+    max-height: 0;
   }
   100%{
-    opacity: 1;
-    transform: scale(1);
+    overflow: hidden;
+    max-height: 400px;
   }
 }
 

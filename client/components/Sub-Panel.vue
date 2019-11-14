@@ -66,11 +66,10 @@ $page-color: #012e23;
 .sub-panel{
   position: relative;
   border: 2px solid $ice-blue;
-  padding: 12px;
+  padding: 8px;
   background-color: black;
-  margin-right: 94px;
+  margin-right: 50px;
   z-index:1;
-  min-height: 150px;
   color: $ice-blue;
 
   &.light{
@@ -81,35 +80,45 @@ $page-color: #012e23;
 
 /** Styling for Tabs inside of Panels **/
 
-/deep/ .tab{
-  height: 20px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  font-size: 1.4rem;
-  line-height: 20px;
-
-  &:before {
-      width: 36px;
-    }
-}
-
 /deep/ .tab-transition-enter-active, /deep/ .tab-transition-leave-active{
   transition-delay: .2s;
 }
 
 .subpanel-transition-enter, .subpanel-transition-leave-to{
-  transform: translateY(-100%);
+  max-height: 0;
   opacity: 0;
+  overflow: hidden;
 }
 
 .subpanel-transition-enter-to{
-  transform: translateY(0);
+  max-height: 400px;
   opacity: 1;
+  overflow: hidden;
 }
 
-.subpanel-transition-enter-active, .subpanel-transition-leave-active{
-  transition: transform .25s ease, opacity .25s ease;
+.subpanel-transition-leave{
+  max-height: 400px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.subpanel-transition-enter-active{
+  transition: all .2s ease-in;
+} 
+.subpanel-transition-leave-active{
+  transition: all .2s cubic-bezier(0, 1, 0.5, 1);
+}
+
+@media screen and (max-width: 780px){
+  .sub-panel{
+    font-size: 1rem;
+    margin-right: 32px;
+  }
+
+}
+@media screen and (max-width: 480px){
+  .sub-panel{
+    font-size: .8rem;
+  }
 }
 </style>

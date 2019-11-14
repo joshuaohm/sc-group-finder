@@ -38,7 +38,8 @@ export default {
   data () {
     return {
       show: false,
-      show2: false
+      show2: false,
+      hideBlue: false,
     }
   },
   created() {
@@ -55,8 +56,16 @@ export default {
     tabClicked(){
       
       if(this.content.subPanel !== false){
-        this.show2 = !this.show2;
-        this.$refs.subPanel.togglePanel();
+
+        if(this.show2 === true)
+        {
+          this.show2 = false;
+          this.$refs.subPanel.togglePanel();
+        }
+        else{
+          this.show2 = !this.show2;
+          this.$refs.subPanel.togglePanel();
+        }
       } 
     },
     tabLoaded(){
@@ -79,10 +88,8 @@ $page-color: #012e23;
 .tab{
   margin-top: 8px;
   margin-bottom: 4px;
-  margin-right: 20px;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  padding-right: 72px;
+  margin-right: 8px;
+  padding-right: 40px;
   position: relative;
   background-color: #000;
   height: 40px;
@@ -114,16 +121,16 @@ $page-color: #012e23;
       right: 0;
       background: linear-gradient(to top left, $page-color 50%, transparent 50%);
       height: 100%;
-      width: 72px;
+      width: 40px;
     }
 }
 
 .blue-line{
-  margin-right: 94px;
-  margin-left: 2px;
+  margin-right: 50px;
   height: 2px;
   background-color: $ice-blue;
   opacity: .5;
+  position: relative;
 }
 
 span{
@@ -132,11 +139,11 @@ span{
 }
 
 .added-height {
-  margin-top: 88px;
+  margin-top: 52px;
 }
 
 .tab-transition-enter, .tab-transition-leave-to{
-  transform: translateX(-100%);
+  transform: translateX(-150%);
 }
 
 .tab-transition-enter-to{
@@ -145,5 +152,32 @@ span{
 
 .tab-transition-enter-active, .tab-transition-leave-active{
   transition: transform .25s ease;
+}
+
+@media screen and (max-width: 780px){
+  .tab{
+    font-size: 1rem;
+    margin-right: 10px;
+    padding-right: 20px;
+    height: 20px;
+    line-height: 20px;
+
+    &:before{
+      width: 20px;
+    }
+  }
+
+  .blue-line {
+    margin-right: 32px;
+  }
+
+  .added-height {
+    margin-top: 32px;
+  }
+}
+@media screen and (max-width: 480px){
+  .tab{
+    font-size: .8rem;
+  }
 }
 </style>
