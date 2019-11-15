@@ -1,8 +1,9 @@
 <template>
   <div class="panel-wrapper"> 
     <transition name="subpanel-transition"
-       v-on:after-enter="subPanelLoaded()">  
-        <div v-if="show"  v-bind:class="{'sub-panel':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}">
+       v-on:after-enter="subPanelLoaded()"
+       v-on:after-leave="subPanelCollapsed()">  
+        <div v-if="expanded"  v-bind:class="['sub-panel', parentAlignment, {'light':(content.lightTheme)}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
           <div v-for="component in content.content" :key="component.name">
             <div v-if="component.type.toLowerCase().includes('tab')">
               <component :name="component.name" :is="component.type" :content="component"></component>
@@ -32,11 +33,14 @@ export default {
   computed: {
     parentColorTheme () {
       return this.$parent.content.lightTheme;
+    },
+    parentAlignment () {
+      return this.$parent.content.align;
     }
   },
   data () {
     return {
-      show: false,
+      expanded: false,
       lightTheme: false,
     }
   },
@@ -45,10 +49,13 @@ export default {
   },
   methods: {
     togglePanel(){
-      this.show = !this.show;
+      this.expanded = !this.expanded;
     },
     subPanelLoaded(){
-      this.$store.commit('SUBPANELLOADED');
+      this.$store.commit('SUBPANELEXPANDED');
+    },
+    subPanelCollapsed(){
+      this.$store.commit('SUBPANELCOLLAPSED');
     }
   }
 }
@@ -68,9 +75,19 @@ $page-color: #012e23;
   border: 2px solid $ice-blue;
   padding: 8px;
   background-color: black;
-  margin-right: 50px;
   z-index:1;
   color: $ice-blue;
+
+  &.left, &.mid{
+    margin-right: 50px;
+  }
+  &.center{
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  &.right{
+    margin-left: 50px;
+  }
 
   &.light{
     background-color: $page-color;
@@ -78,15 +95,11 @@ $page-color: #012e23;
   }
 }
 
-/** Styling for Tabs inside of Panels **/
-
-/deep/ .tab-transition-enter-active, /deep/ .tab-transition-leave-active{
-  transition-delay: .2s;
-}
-
 .subpanel-transition-enter, .subpanel-transition-leave-to{
-  max-height: 0;
+  max-height: 0px;
   opacity: 0;
+  padding: 0;
+  margin: 0;
   overflow: hidden;
 }
 
@@ -103,10 +116,10 @@ $page-color: #012e23;
 }
 
 .subpanel-transition-enter-active{
-  transition: all .2s ease-in;
+  transition: all .25s ease-in;
 } 
 .subpanel-transition-leave-active{
-  transition: all .2s cubic-bezier(0, 1, 0.5, 1);
+  transition: all .25s cubic-bezier(0, 1, 0.5, 1);
 }
 
 @media screen and (max-width: 780px){

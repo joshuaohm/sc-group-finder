@@ -67,13 +67,4 @@ $page-color: #012e23;
     background-color: $page-color;
   }
 }
-
-/** Styling for Tabs inside of Panels **/
-
-
-/deep/ .tab-transition-enter-active, /deep/ .tab-transition-leave-active{
-  transition-delay: .5s;
-}
-
-
 </style>

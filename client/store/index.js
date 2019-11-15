@@ -13,7 +13,7 @@ const state = {
     currentTab : {
       isLoaded : false,
       currentSubPanel : {
-        isLoaded : false,
+        isExpanded : false,
       }
     }
   }
@@ -32,8 +32,11 @@ const mutations = {
   TABLOADED (state){
     state.currentPage.currentTab.isLoaded = true;
   },
-  SUBPANELLOADED (state){
-    state.currentPage.currentTab.currentSubPanel.isLoaded = true;
+  SUBPANELEXPANDED (state){
+    state.currentPage.currentTab.currentSubPanel.isExpanded = true;
+  },
+  SUBPANELCOLLAPSED(state){
+    state.currentPage.currentTab.currentSubPanel.isExpanded = false;
   }
 }
 

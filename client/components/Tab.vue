@@ -1,22 +1,21 @@
 <template>
-    <div class="tab-wrapper">
+    <div class="tab-wrapper" :class="[alignment]">
       <transition name="tab-transition"
          v-on:after-enter="tabLoaded()">
-        <div v-if="show" @click="tabClicked">
-          <div v-for="item in content.text" v-bind:key="item.value" v-bind:class="{'tab':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}">
-            <span v-if="item.title && item.title.length > 0">{{item.title}} : </span>
-            <span v-if="item.value && item.value.length > 0">{{item.value}}</span>
+        <div v-if="showTab" @click="tabClicked">
+          <div v-for="item in content.text" v-bind:key="item.value" :class="['tab', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
+            <div v-if="item.value && item.value.length > 0">{{item.value}}</div>
           </div>
         </div>
       </transition>
-      <div @v-show="show && show2 && content.subPanel !== false">
+      <div @v-show="showSubPanel">
         <component :is="content.subPanel.type" ref="subPanel" :name="content.subPanel.name" :content="content.subPanel"></component>
       </div>
-      <div v-if="show && !show2">
-        <div class="blue-line"></div>
+      <div v-if="showBlue && !addedHeight && !showSubPanel">
+        <div :class="['blue-line', alignment]"></div>
       </div>
-      <div v-else-if="!show && !show2">
-        <div class="blue-line added-height"></div>
+      <div v-else-if="showBlue && addedHeight">
+        <div v-bind:class="['blue-line', 'added-height', alignment]"></div>
       </div>
     </div>
 </template>
@@ -33,40 +32,107 @@ export default {
   computed: {
     parentColorTheme () {
       return this.$parent.content.lightTheme;
+    },
+    alignment () {
+      return this.content.align;
     }
   },
   data () {
     return {
-      show: false,
-      show2: false,
-      hideBlue: false,
+      showTab: false,
+      showBlue: true,
+      showSubPanel : false,
+      addedHeight: true,
     }
   },
   created() {
     this.$store.subscribe((mutation, state) => {
       if(mutation.type === 'PAGELOADED'){
-        this.show = true;
+        this.showTab = true;
+        this.addedHeight = false;
       }
-      else if(mutation.type === 'SUBPANELLOADED' && this.$parent.content != null && this.$parent.content.type != null && this.$parent.content.type.toLowerCase().includes('subpanel')){
-        this.show = true;
-      } 
+      else if(mutation.type === 'TABLOADED' && this.showTab){
+        this.showBlue = true;
+        this.addedHeight = false;
+      }
+      else if(mutation.type === 'SUBPANELEXPANDED' &&  this.isSubPanel(this.$parent) && this.$parent.expanded){
+        this.showTab = true;
+        this.addedHeight = false;
+      }
+      else if(mutation.type === 'SUBPANELCOLLAPSED' &&  this.HasSubPanel(this.$children, "collapsed") && this.showTab){
+        this.showBlue = true;
+      }
     });
   },
   methods : {
     tabClicked(){
       
-      if(this.content.subPanel !== false){
+      if(this.content.subPanel){
 
-        if(this.show2 === true)
+        this.showSubPanel = !this.showSubPanel;
+
+        if(this.showTab && this.showSubPanel)
         {
-          this.show2 = false;
+          
           this.$refs.subPanel.togglePanel();
+          this.showBlue = false;
+          this.addedHeight = false;
         }
-        else{
-          this.show2 = !this.show2;
+        else if(this.showTab && !this.showSubPanel){
+          
           this.$refs.subPanel.togglePanel();
+          this.showBlue = true;
+          this.addedHeight = false;
         }
-      } 
+      }
+    },
+    HasSubPanel(elements, state){
+      if(!elements)
+        return false;
+
+      for(var element in elements){
+        switch(state){
+          case "":
+          case typeof(undefined):
+            {
+              if(this.isSubPanel(element)){
+                return true;
+              }
+              else{
+                return false;
+              }
+              break;
+            }
+            case "collapsed": {
+              if(this.isSubPanel(element) && !element.expanded){
+                return true;
+              }
+              else{
+                return false;
+              }
+              break;
+            }
+            case "expanded": {
+              if(this.isSubPanel(element) && element.expanded){
+                return true;
+              }
+              else{
+                return false;
+              }
+              break;
+            } 
+        }
+      }
+
+      return false;
+    },
+    isSubPanel(element){
+      if(element && element.content && element.content.type && element.content.type.toLowerCase().includes('subpanel')){
+        return true;
+      }
+      else{
+        return false;
+      }
     },
     tabLoaded(){
       this.$store.commit("TABLOADED");
@@ -85,36 +151,31 @@ $ice-blue: #00bac4;
 $page-border: #014736;
 $page-color: #012e23;
 
+.tab-wrapper{
+
+  &.addedBottom{
+    margin-bottom: 6px;
+  }
+}
+
 .tab{
   margin-top: 8px;
   margin-bottom: 4px;
-  margin-right: 8px;
-  padding-right: 40px;
   position: relative;
   background-color: #000;
   height: 40px;
   z-index: 10;
 
-  &.light{
-    background-color: $page-border;
-    color: white;
 
-    &.onLight{
+  &.left{
+    margin-right: 8px;
+    padding-right: 40px;
 
-      &:before{
-        background: linear-gradient(to top left, $page-color 50%, transparent 50%);
-      }
+    /deep/ .sub-panel{
+      margin-right: 50px;
     }
 
-    &.onDark{
-
-      &:before{
-        background: linear-gradient(to top left, black 50%, transparent 50%);
-      }
-    }
-  }
-
-  &:before {
+    &:before {
       content: '';
       position: absolute;
       top: 0; 
@@ -123,23 +184,190 @@ $page-color: #012e23;
       height: 100%;
       width: 40px;
     }
+
+    &.light{
+      background-color: $page-border;
+      color: white;
+
+      &.onLight{
+
+        &:before{
+          background: linear-gradient(to top left, $page-color 50%, transparent 50%);
+        }
+      }
+
+      &.onDark{
+
+        &:before{
+          background: linear-gradient(to top left, black 50%, transparent 50%);
+        }
+      }
+    }
+  }
+
+  &.mid{
+    margin-right: 8px;
+    padding-left: 40px;
+    padding-right: 40px;
+
+    & /deep/ .sub-panel{
+      margin-right: 50px;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(to bottom right, $page-color 50%, transparent 50%);
+      height: 100%;
+      width: 40px;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0; 
+      right: 0;
+      background: linear-gradient(to top left, $page-color 50%, transparent 50%);
+      height: 100%;
+      width: 40px;
+    }
+
+    &.light{
+      background-color: $page-border;
+      color: white;
+
+      &.onLight{
+
+        &:before{
+          background: linear-gradient(to bottom right, $page-color 50%, transparent 50%);
+        }
+      }
+
+      &.onDark{
+
+        &:before{
+          background: linear-gradient(to bottom right, black 50%, transparent 50%);
+        }
+
+        &:after{
+          background: linear-gradient(to top left, black 50%, transparent 50%);
+        }
+      }
+    }
+  }
+
+  &.center{
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-left: 40px;
+    padding-right: 40px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(to top right, $page-color 50%, transparent 50%);
+      height: 100%;
+      width: 40px;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0; 
+      right: 0;
+      background: linear-gradient(to top left, $page-color 50%, transparent 50%);
+      height: 100%;
+      width: 40px;
+    }
+
+    &.light{
+      background-color: $page-border;
+      color: white;
+
+      &.onLight{
+
+        &:before{
+          background: linear-gradient(to top right, $page-color 50%, transparent 50%);
+        }
+      }
+
+      &.onDark{
+
+        &:before{
+          background: linear-gradient(to top right, black 50%, transparent 50%);
+        }
+
+        &:after{
+          background: linear-gradient(to top left, black 50%, transparent 50%);
+        }
+      }
+    }
+  }
+
+  &.right{
+    margin-left: 8px;
+    padding-left: 40px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0; 
+      left: 0;
+      background: linear-gradient(to top right, $page-color 50%, transparent 50%);
+      height: 100%;
+      width: 40px;
+    }
+
+    &.light{
+      background-color: $page-border;
+      color: white;
+
+      &.onLight{
+
+        &:before{
+          background: linear-gradient(to top right, $page-color 50%, transparent 50%);
+        }
+      }
+
+      &.onDark{
+
+        &:before{
+          background: linear-gradient(to top right, black 50%, transparent 50%);
+        }
+      }
+    }
+  }
 }
 
 .blue-line{
-  margin-right: 50px;
   height: 2px;
   background-color: $ice-blue;
   opacity: .5;
   position: relative;
+
+  &.added-height {
+    margin-top: 52px;
+  }
+
+  &.left, &.mid{
+    margin-right: 50px;
+  }
+  &.center{
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  &.right{
+    margin-left: 50px;
+  }
 }
 
 span{
   text-transform: uppercase;
   font-family: 'Orbitron', sans-serif;
-}
-
-.added-height {
-  margin-top: 52px;
 }
 
 .tab-transition-enter, .tab-transition-leave-to{
