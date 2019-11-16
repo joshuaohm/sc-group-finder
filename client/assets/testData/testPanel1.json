@@ -1,11 +1,11 @@
 {
-  type: "Panel",
+  contentType: "Panel",
   lightTheme: true,
   content : [
     {
       name: "testTab1",
-      type: "Tab",
-      align: "left",
+      contentType: "Tab",
+      alignType: "left",
       lightTheme : true,
       text: [
         { value : "Example" }
@@ -14,8 +14,8 @@
     },
     {
       name: "testTab2",
-      type: "Tab",
-      align: "mid",
+      contentType: "Tab",
+      alignType: "mid",
       lightTheme : true,
       text: [
         { value : "Example" }
@@ -24,8 +24,8 @@
     },
     {
       name: "testTab3",
-      type: "Tab",
-      align: "center",
+      contentType: "Tab",
+      alignType: "center",
       lightTheme : true,
       text: [
         { value : "Example" }
@@ -34,8 +34,8 @@
     },
     {
       name: "testTab4",
-      type: "Tab",
-      align: "right",
+      contentType: "Tab",
+      alignType: "right",
       lightTheme : true,
       text: [
         { value : "Example" }
@@ -43,8 +43,8 @@
       subPanel: false,
     },
     {
-      type: "Tab",
-      align: "left",
+      contentType: "Tab",
+      alignType: "left",
       lightTheme : false,
       text: [
         { value : "Example" }
@@ -52,8 +52,8 @@
       subPanel: false,
     },
     {
-      type: "Tab",
-      align: "mid",
+      contentType: "Tab",
+      alignType: "mid",
       lightTheme : false,
       text: [
         { value : "Example" }
@@ -61,8 +61,8 @@
       subPanel: false,
     },
     {
-      type: "Tab",
-      align: "center",
+      contentType: "Tab",
+      alignType: "center",
       lightTheme : false,
       text: [
         { value : "Example" }
@@ -70,8 +70,8 @@
       subPanel: false,
     },
     {
-      type: "Tab",
-      align: "right",
+      contentType: "Tab",
+      alignType: "right",
       lightTheme : false,
       text: [
         { value : "Example" }
@@ -80,75 +80,75 @@
     },
     {
       name: "TabTestSubPanels",
-      type: "Tab",
-      align: "left",
+      contentType: "Tab",
+      alignType: "left",
       lightTheme : true,
       text: [
         { value : "Example" }
       ],
       subPanel: {
-        type: 'SubPanel',
+        contentType: 'SubPanel',
         lightTheme : false,
         content : [
           {
-            type: "Tab",
-            align: "left",
+            contentType: "Tab",
+            alignType: "left",
             lightTheme : true,
             text: [
               { value : "Example" }
             ],
             subPanel: {
-              type: 'SubPanel',
+              contentType: 'SubPanel',
               lightTheme : false,
               content : [
                 {
-                  type: "Tab",
-                  align: "left",
+                  contentType: "Tab",
+                  alignType: "left",
                   lightTheme : false,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "mid",
+                  contentType: "Tab",
+                  alignType: "mid",
                   lightTheme : false,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "center",
+                  contentType: "Tab",
+                  alignType: "center",
                   lightTheme : false,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "right",
+                  contentType: "Tab",
+                  alignType: "right",
                   lightTheme : false,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
@@ -157,64 +157,64 @@
             },
           },
           {
-            type: "Tab",
-            align: "mid",
+            contentType: "Tab",
+            alignType: "mid",
             lightTheme : true,
             text: [
               { value : "Example" }
             ],
             subPanel: {
-              type: 'SubPanel',
+              contentType: 'SubPanel',
               lightTheme : false,
               content : [
                                      {
-                  type: "Tab",
-                  align: "left",
+                  contentType: "Tab",
+                  alignType: "left",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "mid",
+                  contentType: "Tab",
+                  alignType: "mid",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "center",
+                  contentType: "Tab",
+                  alignType: "center",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "right",
+                  contentType: "Tab",
+                  alignType: "right",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
@@ -223,64 +223,64 @@
             },
           },
           {
-            type: "Tab",
-            align: "center",
+            contentType: "Tab",
+            alignType: "center",
             lightTheme : true,
             text: [
               { value : "Example" }
             ],
             subPanel: {
-              type: 'SubPanel',
+              contentType: 'SubPanel',
               lightTheme : false,
               content : [
                                      {
-                  type: "Tab",
-                  align: "left",
+                  contentType: "Tab",
+                  alignType: "left",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "mid",
+                  contentType: "Tab",
+                  alignType: "mid",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "center",
+                  contentType: "Tab",
+                  alignType: "center",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "right",
+                  contentType: "Tab",
+                  alignType: "right",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
@@ -289,64 +289,64 @@
             },
           },
           {
-            type: "Tab",
-            align: "right",
+            contentType: "Tab",
+            alignType: "right",
             lightTheme : true,
             text: [
               { value : "Example" }
             ],
             subPanel: {
-              type: 'SubPanel',
+              contentType: 'SubPanel',
               lightTheme : false,
               content : [
                                      {
-                  type: "Tab",
-                  align: "left",
+                  contentType: "Tab",
+                  alignType: "left",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "mid",
+                  contentType: "Tab",
+                  alignType: "mid",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "center",
+                  contentType: "Tab",
+                  alignType: "center",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
                 },
                 {
-                  type: "Tab",
-                  align: "right",
+                  contentType: "Tab",
+                  alignType: "right",
                   lightTheme : true,
                   text: [
                     { value : "Example" }
                   ],
                   subPanel: {
-                    type: 'SubPanel',
+                    contentType: 'SubPanel',
                     lightTheme : false,
                     content : []
                   },
