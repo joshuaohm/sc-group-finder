@@ -23,7 +23,7 @@ export default {
 
       tab1 : {
         contentType: "Tab",
-        align: "center",
+        alignType: "center",
         lightTheme: false,
         subPanel: false,
         text: [
@@ -49,7 +49,7 @@ export default {
             content: [
               {
                 contentType: "Tab",
-                align: "left",
+                alignType: "left",
                 subPanel: false,
                 lightTheme: true,
                 text: [
@@ -58,7 +58,7 @@ export default {
               },
               {
                 contentType: "Tab",
-                align: "center",
+                alignType: "center",
                 subPanel: false,
                 lightTheme: true,
                 text: [
@@ -67,7 +67,7 @@ export default {
               },
               {
                 contentType: "Tab",
-                align: "right",
+                alignType: "right",
                 lightTheme: true,
                 subPanel: false,
                 text: [

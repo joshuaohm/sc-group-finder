@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page">
+  <div class="login-page half-width">
     <Page :content="{content:[panel], lightTheme:true}"></Page>
   </div>
 </template>
@@ -79,5 +79,13 @@ export default {
 </script>
 
 <style lang="scss">
+.login-page{
+  margin:auto;
+}
 
+@media screen and (max-width: 768px){
+  .login-page.half-width{
+    width: 100%;
+  }
+}
 </style>
