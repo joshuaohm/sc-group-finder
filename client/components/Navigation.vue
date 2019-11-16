@@ -22,7 +22,7 @@ export default {
       links: [
         "home",
         "about",
-        "login"
+        "log in"
         ]
     }
   },

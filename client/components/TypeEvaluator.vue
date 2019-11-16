@@ -1,13 +1,11 @@
-<template v-if="component.contentType.toLowerCase() == 'p' || 
-                component.contentType.toLowerCase() == 'h1' ||
-                component.contentType.toLowerCase() == 'h3' ||
-                component.contentType.toLowerCase() == 'label' ">
-  <this.componentType>
-    {{component.value}}
-  </this.componentType>
-</template>
-<template v-else>
-    <this.componentType :name="component.name" :is="component.contentType" :content="component"></this.componentType>
+<template>
+  <div :class="component.contentWidth" :align="component.contentAlign">
+    <div v-if="isHtml" :is="componentType"  :class="'test-a'">
+      {{component.value}}
+    </div>
+    <div v-else :class="'test-b'" :name="component.name" :is="component.contentType" :content="component" >
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -23,6 +21,7 @@ export default {
     return {
       contentType: "TypeEvaluator",
       lightTheme : true,
+      isHtml : (this.component.contentType === 'p' || this.component.contentType  === 'h1' || this.component.contentType === 'h3' || this.component.contentType === 'label' )
     }
   },
   props: {
@@ -30,9 +29,6 @@ export default {
     component: Object,
   },
   computed: {
-    rowClass() {
-      return "row-"+this.content.length;
-    },
     parentColorTheme () {
       if(this.$parent.content)
         return this.$parent.content.lightTheme;
@@ -51,14 +47,6 @@ export default {
   },
   created () {
     this.lightTheme = this.parentColorTheme;
-
-    var truthy = this.component.contentType.toLowerCase() == 'p' || 
-                this.component.contentType.toLowerCase() == 'h1' ||
-                this.component.contentType.toLowerCase() == 'h3' ||
-                this.component.contentType.toLowerCase() == 'label';
-
-    console.log(this.component.contentType.toLowerCase());
-    console.log(truthy);
   }
 }
 </script>

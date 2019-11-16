@@ -23,39 +23,51 @@ export default {
           {
             contentType: "Form",
             lightTheme: true,
+            alignType: "flex-end",
             content : [
               {
                 contentType: "h1",
-                value: "Sign in."
+                value: "Log In",
+                contentWidth: "full-width"
               },
               {
                 contentType: "label",
-                value: "Email"
+                value: "Email",
+                contentWidth: "half-width",
+                contentAlign: "right"
               },
               {
                 contentType: "Tab-Input",
                 inputType: "email",
-                align: "right",
+                alignType: "right",
                 lightTheme: false,
-                placeholder : "Email" 
+                placeholder : "Email",
+                contentWidth: "half-width",
+                contentAlign: "right"
               },
               {
                 contentType: "label",
-                value: "Email"
+                value: "Password",
+                contentWidth: "half-width",
+                contentAlign: "right"
               },
               {
                 contentType: "Tab-Input",
                 inputType: "password",
-                align: "right",
+                alignType: "right",
                 lightTheme: false,
-                placeholder : "Password" 
+                placeholder : "Password",
+                contentWidth: "half-width",
+                contentAlign: "right"
               },
               {
                 contentType: "Tab-Input",
-                lightTheme: true,
-                alighn: "right",
                 inputType: "submit",
-                placeholder : "Submit"
+                alignType: "right",
+                lightTheme: true,
+                placeholder : "Log In",
+                contentWidth: "quarter-width",
+                contentAlign: "right"
               }
             ]
           },

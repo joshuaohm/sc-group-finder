@@ -1,9 +1,9 @@
 <template>
     <div class="panel-wrapper">
       <div v-bind:class="{'panel':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}">
-        <div  v-for="(component, index) in content.content" :key="index">
+        <slot v-for="(component, index) in content.content">
           <TypeEvaluator  :component="component" :name="'Row-TypeEvaluator-'+index"></TypeEvaluator>
-        </div>
+        </slot>
       </div>
     </div>
 </template>

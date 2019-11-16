@@ -1,7 +1,7 @@
 <template>
     <div class="tab-input-wrapper" :class="[alignment]">
       <transition name="tab-transition">
-        <div v-if="show">
+        <slot v-if="show">
           <div :class="['tab', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
             <select v-model="selected" :class="['tab-input', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}]">
               <option v-for="option in content.options" :key="option.value" > 
@@ -9,14 +9,14 @@
               </option>
             </select>
           </div>
-        </div>
+        </slot>
       </transition>
-      <div v-if="show">
+      <slot v-if="show">
         <div :class="['blue-line', alignment]"></div>
-      </div>
-      <div v-else>
+      </slot>
+      <slot v-else>
         <div :class="['blue-line', 'added-height', alignment]"></div>
-      </div>
+      </slot>
     </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
         return this.$parent.lightTheme;
     },
     alignment () {
-      return this.content.align;
+      return this.content.alignType;
     }
   },
   data () {

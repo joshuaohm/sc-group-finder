@@ -1,7 +1,7 @@
 <template>
     <div class="tab-input-wrapper" :class="[alignment]">
       <transition name="tab-transition">
-        <div v-if="show">
+        <slot v-if="show">
           <div v-bind:class="['tab', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
             <slot v-if="content.inputType.toLowerCase() === 'text'">
               <input type="text" :placeholder="content.placeholder" :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"/>
@@ -13,14 +13,14 @@
               <input type="password" :placeholder="content.placeholder" :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"/>
             </slot>
           </div>
-        </div>
+        </slot>
       </transition>
-      <div v-if="show">
+      <slot v-if="show">
         <div :class="['blue-line', alignment]"></div>
-      </div>
-      <div v-else>
+      </slot>
+      <slot v-else>
         <div :class="['blue-line', 'added-height', alignment]"></div>
-      </div>
+      </slot>
     </div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
         return this.$parent.lightTheme;
     },
     alignment () {
-      return this.content.align;
+      return this.content.alignType;
     }
   },
   data () {

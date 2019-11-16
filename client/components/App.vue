@@ -27,6 +27,14 @@ h1, h2, h3{
   text-transform: uppercase;
 }
 
+h1{
+  font-size: 3rem;
+}
+
+label{
+  text-align:center;
+}
+
 p{
   font-family: 'Roboto Mono', monospace;
   font-size: 1.4rem;

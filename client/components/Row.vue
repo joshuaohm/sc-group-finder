@@ -45,7 +45,7 @@ export default {
 .row{
   display: flex;
   position: relative;
-  flex: row nowrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: flex-start;
   z-index: 0;

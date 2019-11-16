@@ -4,9 +4,9 @@
           appear-active-class="page-appear-active"
           v-on:after-appear="pageLoaded()">
       <div v-bind:class="{'page':true, 'light':(content.lightTheme)}">
-        <div v-for="(component, index) in content.content" :key="index">
+        <slot v-for="(component, index) in content.content">
           <TypeEvaluator  :component="component" :name="'Page-TypeEvaluator-'+index"></TypeEvaluator>
-        </div>
+        </slot>
       </div>
     </transition>
   </div>
