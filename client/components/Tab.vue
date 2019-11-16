@@ -9,7 +9,7 @@
         </div>
       </transition>
       <div @v-show="showSubPanel">
-        <component :is="content.subPanel.type" ref="subPanel" :name="content.subPanel.name" :content="content.subPanel"></component>
+        <component :is="content.subPanel.contentType" ref="subPanel" :name="content.subPanel.name" :content="content.subPanel"></component>
       </div>
       <div v-if="showBlue && !addedHeight && !showSubPanel">
         <div :class="['blue-line', alignment]"></div>
@@ -31,7 +31,10 @@ export default {
   },
   computed: {
     parentColorTheme () {
-      return this.$parent.content.lightTheme;
+      if(this.$parent.content)
+        return this.$parent.content.lightTheme;
+      else if(this.$parent.lightTheme)
+        return this.$parent.lightTheme;
     },
     alignment () {
       return this.content.align;
@@ -55,7 +58,7 @@ export default {
         this.showBlue = true;
         this.addedHeight = false;
       }
-      else if(mutation.type === 'SUBPANELEXPANDED' &&  this.isSubPanel(this.$parent) && this.$parent.expanded){
+      else if(mutation.type === 'SUBPANELEXPANDED' && this.isSubPanel(this.$parent) && (this.$parent.expanded || this.$parent.$parent.expanded)){
         this.showTab = true;
         this.addedHeight = false;
       }
@@ -127,7 +130,10 @@ export default {
       return false;
     },
     isSubPanel(element){
-      if(element && element.content && element.content.type && element.content.type.toLowerCase().includes('subpanel')){
+      if(element && element.content && element.content.contentType && element.content.contentType.toLowerCase().includes("row")){
+        element = element.$parent;
+      }
+      if(element && element.content && element.content.contentType && element.content.contentType.toLowerCase().includes('subpanel')){
         return true;
       }
       else{
@@ -147,239 +153,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$ice-blue: #00bac4;
-$page-border: #014736;
-$page-color: #012e23;
+@import "../assets/scss/_variables.scss";
+@import "../assets/scss/tabs.scss";
 
 .tab-wrapper{
 
   &.addedBottom{
     margin-bottom: 6px;
   }
-}
-
-.tab{
-  margin-top: 8px;
-  margin-bottom: 4px;
-  position: relative;
-  background-color: #000;
-  height: 40px;
-  z-index: 10;
-
-
-  &.left{
-    margin-right: 8px;
-    padding-right: 40px;
-
-    /deep/ .sub-panel{
-      margin-right: 50px;
-    }
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0; 
-      right: 0;
-      background: linear-gradient(to top left, $page-color 50%, transparent 50%);
-      height: 100%;
-      width: 40px;
-    }
-
-    &.light{
-      background-color: $page-border;
-      color: white;
-
-      &.onLight{
-
-        &:before{
-          background: linear-gradient(to top left, $page-color 50%, transparent 50%);
-        }
-      }
-
-      &.onDark{
-
-        &:before{
-          background: linear-gradient(to top left, black 50%, transparent 50%);
-        }
-      }
-    }
-  }
-
-  &.mid{
-    margin-right: 8px;
-    padding-left: 40px;
-    padding-right: 40px;
-
-    & /deep/ .sub-panel{
-      margin-right: 50px;
-    }
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: linear-gradient(to bottom right, $page-color 50%, transparent 50%);
-      height: 100%;
-      width: 40px;
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: 0; 
-      right: 0;
-      background: linear-gradient(to top left, $page-color 50%, transparent 50%);
-      height: 100%;
-      width: 40px;
-    }
-
-    &.light{
-      background-color: $page-border;
-      color: white;
-
-      &.onLight{
-
-        &:before{
-          background: linear-gradient(to bottom right, $page-color 50%, transparent 50%);
-        }
-      }
-
-      &.onDark{
-
-        &:before{
-          background: linear-gradient(to bottom right, black 50%, transparent 50%);
-        }
-
-        &:after{
-          background: linear-gradient(to top left, black 50%, transparent 50%);
-        }
-      }
-    }
-  }
-
-  &.center{
-    margin-left: 8px;
-    margin-right: 8px;
-    padding-left: 40px;
-    padding-right: 40px;
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: linear-gradient(to top right, $page-color 50%, transparent 50%);
-      height: 100%;
-      width: 40px;
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: 0; 
-      right: 0;
-      background: linear-gradient(to top left, $page-color 50%, transparent 50%);
-      height: 100%;
-      width: 40px;
-    }
-
-    &.light{
-      background-color: $page-border;
-      color: white;
-
-      &.onLight{
-
-        &:before{
-          background: linear-gradient(to top right, $page-color 50%, transparent 50%);
-        }
-      }
-
-      &.onDark{
-
-        &:before{
-          background: linear-gradient(to top right, black 50%, transparent 50%);
-        }
-
-        &:after{
-          background: linear-gradient(to top left, black 50%, transparent 50%);
-        }
-      }
-    }
-  }
-
-  &.right{
-    margin-left: 8px;
-    padding-left: 40px;
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0; 
-      left: 0;
-      background: linear-gradient(to top right, $page-color 50%, transparent 50%);
-      height: 100%;
-      width: 40px;
-    }
-
-    &.light{
-      background-color: $page-border;
-      color: white;
-
-      &.onLight{
-
-        &:before{
-          background: linear-gradient(to top right, $page-color 50%, transparent 50%);
-        }
-      }
-
-      &.onDark{
-
-        &:before{
-          background: linear-gradient(to top right, black 50%, transparent 50%);
-        }
-      }
-    }
-  }
-}
-
-.blue-line{
-  height: 2px;
-  background-color: $ice-blue;
-  opacity: .5;
-  position: relative;
-
-  &.added-height {
-    margin-top: 52px;
-  }
-
-  &.left, &.mid{
-    margin-right: 50px;
-  }
-  &.center{
-    margin-left: 50px;
-    margin-right: 50px;
-  }
-  &.right{
-    margin-left: 50px;
-  }
-}
-
-span{
-  text-transform: uppercase;
-  font-family: 'Orbitron', sans-serif;
-}
-
-.tab-transition-enter, .tab-transition-leave-to{
-  transform: translateX(-150%);
-}
-
-.tab-transition-enter-to{
-  transform: translateX(0);
-}
-
-.tab-transition-enter-active, .tab-transition-leave-active{
-  transition: transform .25s ease;
 }
 
 @media screen and (max-width: 780px){

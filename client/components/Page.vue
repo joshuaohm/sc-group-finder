@@ -2,22 +2,10 @@
   <div class="page-wrapper">
     <transition appear
           appear-active-class="page-appear-active"
-
           v-on:after-appear="pageLoaded()">
       <div v-bind:class="{'page':true, 'light':(content.lightTheme)}">
-        <div v-for="component in content.content" :key="component.id">
-          <div v-if="component.type.toLowerCase().includes('tab')">
-            <component :is="component.type" :name="component.name" :content="component"></component>
-          </div>
-          <div v-else-if="component.type.toLowerCase().includes('panel')">
-            <component :is="component.type" :name="component.name" :content="component"></component>
-          </div>
-          <div v-else-if="component.type.toLowerCase() === 'p'">
-            <p>{{component.content}}</p>
-          </div>
-          <div v-else-if="component.type.toLowerCase() === 'h3'">
-            <h3>{{component.content}}</h3>
-          </div>
+        <div v-for="(component, index) in content.content" :key="index">
+          <TypeEvaluator  :component="component" :name="'Page-TypeEvaluator-'+index"></TypeEvaluator>
         </div>
       </div>
     </transition>
@@ -25,14 +13,12 @@
 </template>
 
 <script>
-import Tab from 'components/Tab'
-import TabInput from 'components/Tab-Input'
-import TabSelect from 'components/Tab-Select'
-import Panel from 'components/Panel'
+
+import TypeEvaluator from 'components/TypeEvaluator'
 
 export default {
   components: {
-    Tab, TabInput, TabSelect, Panel
+    TypeEvaluator
   },
   props: {
     name : String,
@@ -59,9 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$ice-blue: #00bac4;
-$page-border: #014736;
-$page-color: #012e23;
+@import "../assets/scss/_variables.scss";
 
 .page {
   margin-top: 48px;
@@ -71,6 +55,7 @@ $page-color: #012e23;
   border-color: $page-border;
   color: $ice-blue;
   width: calc(100% - 4px);
+  padding-bottom: 8px;
 }
 .page code {
   background-color: #f0f0f0;

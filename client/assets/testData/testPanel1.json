@@ -1,0 +1,361 @@
+{
+  type: "Panel",
+  lightTheme: true,
+  content : [
+    {
+      name: "testTab1",
+      type: "Tab",
+      align: "left",
+      lightTheme : true,
+      text: [
+        { value : "Example" }
+      ],
+      subPanel: false,
+    },
+    {
+      name: "testTab2",
+      type: "Tab",
+      align: "mid",
+      lightTheme : true,
+      text: [
+        { value : "Example" }
+      ],
+      subPanel: false,
+    },
+    {
+      name: "testTab3",
+      type: "Tab",
+      align: "center",
+      lightTheme : true,
+      text: [
+        { value : "Example" }
+      ],
+      subPanel: false,
+    },
+    {
+      name: "testTab4",
+      type: "Tab",
+      align: "right",
+      lightTheme : true,
+      text: [
+        { value : "Example" }
+      ],
+      subPanel: false,
+    },
+    {
+      type: "Tab",
+      align: "left",
+      lightTheme : false,
+      text: [
+        { value : "Example" }
+      ],
+      subPanel: false,
+    },
+    {
+      type: "Tab",
+      align: "mid",
+      lightTheme : false,
+      text: [
+        { value : "Example" }
+      ],
+      subPanel: false,
+    },
+    {
+      type: "Tab",
+      align: "center",
+      lightTheme : false,
+      text: [
+        { value : "Example" }
+      ],
+      subPanel: false,
+    },
+    {
+      type: "Tab",
+      align: "right",
+      lightTheme : false,
+      text: [
+        { value : "Example" }
+      ],
+      subPanel: false,
+    },
+    {
+      name: "TabTestSubPanels",
+      type: "Tab",
+      align: "left",
+      lightTheme : true,
+      text: [
+        { value : "Example" }
+      ],
+      subPanel: {
+        type: 'SubPanel',
+        lightTheme : false,
+        content : [
+          {
+            type: "Tab",
+            align: "left",
+            lightTheme : true,
+            text: [
+              { value : "Example" }
+            ],
+            subPanel: {
+              type: 'SubPanel',
+              lightTheme : false,
+              content : [
+                {
+                  type: "Tab",
+                  align: "left",
+                  lightTheme : false,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "mid",
+                  lightTheme : false,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "center",
+                  lightTheme : false,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "right",
+                  lightTheme : false,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },                     
+              ]
+            },
+          },
+          {
+            type: "Tab",
+            align: "mid",
+            lightTheme : true,
+            text: [
+              { value : "Example" }
+            ],
+            subPanel: {
+              type: 'SubPanel',
+              lightTheme : false,
+              content : [
+                                     {
+                  type: "Tab",
+                  align: "left",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "mid",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "center",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "right",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },        
+              ]
+            },
+          },
+          {
+            type: "Tab",
+            align: "center",
+            lightTheme : true,
+            text: [
+              { value : "Example" }
+            ],
+            subPanel: {
+              type: 'SubPanel',
+              lightTheme : false,
+              content : [
+                                     {
+                  type: "Tab",
+                  align: "left",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "mid",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "center",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "right",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },        
+              ]
+            },
+          },
+          {
+            type: "Tab",
+            align: "right",
+            lightTheme : true,
+            text: [
+              { value : "Example" }
+            ],
+            subPanel: {
+              type: 'SubPanel',
+              lightTheme : false,
+              content : [
+                                     {
+                  type: "Tab",
+                  align: "left",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "mid",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "center",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },
+                {
+                  type: "Tab",
+                  align: "right",
+                  lightTheme : true,
+                  text: [
+                    { value : "Example" }
+                  ],
+                  subPanel: {
+                    type: 'SubPanel',
+                    lightTheme : false,
+                    content : []
+                  },
+                },        
+              ]
+            },
+          },                 
+        ]
+      },
+    },
+  ]
+}

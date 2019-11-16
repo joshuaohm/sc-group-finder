@@ -5,14 +5,14 @@
        v-on:after-leave="subPanelCollapsed()">  
         <div v-if="expanded"  v-bind:class="['sub-panel', parentAlignment, {'light':(content.lightTheme)}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
           <div v-for="component in content.content" :key="component.name">
-            <div v-if="component.type.toLowerCase().includes('tab')">
-              <component :name="component.name" :is="component.type" :content="component"></component>
-            </div>
-            <div v-else-if="component.type.toLowerCase() === 'p'">
+            <div v-if="component.contentType.toLowerCase() === 'p'">
               <p>{{component.value}}</p>
             </div>
-            <div v-else-if="component.type.toLowerCase() === 'h3'">
+            <div v-else-if="component.contentType.toLowerCase() === 'h3'">
               <h3>{{component.value}}</h3>
+            </div>
+            <div v-else-if="component.contentType">
+              <component :name="component.name" :is="component.contentType" :content="component"></component>
             </div>
           </div>
         </div>
@@ -24,7 +24,8 @@
 export default {
   components: {
     Tab: () => import('components/Tab') ,
-    TabInput: () => import('components/Tab-Input') 
+    TabInput: () => import('components/Tab-Input'),
+    Row: () => import('components/Row')
   },
   props: {
     name: String,
@@ -32,7 +33,10 @@ export default {
   },
   computed: {
     parentColorTheme () {
-      return this.$parent.content.lightTheme;
+      if(this.$parent.content)
+        return this.$parent.content.lightTheme;
+      else if(this.$parent.lightTheme)
+        return this.$parent.lightTheme;
     },
     parentAlignment () {
       return this.$parent.content.align;
@@ -62,9 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$ice-blue: #00bac4;
-$page-border: #014736;
-$page-color: #012e23;
+@import "../assets/scss/_variables.scss";
 
 .panel-wrapper{
   overflow: hidden;

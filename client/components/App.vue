@@ -28,7 +28,8 @@ h1, h2, h3{
 }
 
 p{
-  font-family: 'Robo Mono', monospace;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.4rem;
 }
 
 #app{

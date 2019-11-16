@@ -1,19 +1,8 @@
 <template>
     <div class="panel-wrapper">
       <div v-bind:class="{'panel':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}">
-        <div v-for="component in content.content" :key="component.name">
-          <div v-if="component.type.toLowerCase().includes('tab')">
-            <component :name="component.name" :is="component.type" :content="component"></component>
-          </div>
-          <div v-else-if="component.type.toLowerCase().includes('subpanel')">
-            <component :name="component.name" :is="component.type" :content="component"></component>
-          </div>
-          <div v-else-if="component.type.toLowerCase() === 'p'">
-            <p>{{component.content}}</p>
-          </div>
-          <div v-else-if="component.type.toLowerCase() === 'h3'">
-            <h3>{{component.content}}</h3>
-          </div>
+        <div  v-for="(component, index) in content.content" :key="index">
+          <TypeEvaluator  :component="component" :name="'Row-TypeEvaluator-'+index"></TypeEvaluator>
         </div>
       </div>
     </div>
@@ -25,7 +14,9 @@ export default {
   components: {
     Tab: () => import('components/Tab') ,
     TabInput: () => import('components/Tab-Input'),
-    SubPanel: () => import('components/Sub-Panel')
+    SubPanel: () => import('components/Sub-Panel'),
+    Row: () => import('components/Row'),
+    TypeEvaluator: () => import('components/TypeEvaluator')
   },
   props: {
     name : String,
@@ -33,8 +24,11 @@ export default {
   },
   computed: {
     parentColorTheme () {
-      return this.$parent.content.lightTheme;
-    }
+      if(this.$parent.content)
+        return this.$parent.content.lightTheme;
+      else if(this.$parent.lightTheme)
+        return this.$parent.lightTheme;
+    },
   },
   data () {
     return {
@@ -52,9 +46,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$ice-blue: #00bac4;
-$page-border: #014736;
-$page-color: #012e23;
+@import "../assets/scss/_variables.scss";
 
 .panel{
   border: 2px solid $page-border;
