@@ -44,7 +44,7 @@ export default {
                 alignType: "right",
                 lightTheme: false,
                 placeholder : "Email",
-                contentWidth: "half-width",
+                contentWidth: "three-quarter-width",
                 contentAlign: "right",
                 name:"loginEmail"
               },
@@ -60,7 +60,7 @@ export default {
                 alignType: "right",
                 lightTheme: false,
                 placeholder : "Password",
-                contentWidth: "half-width",
+                contentWidth: "three-quarter-width",
                 contentAlign: "right",
                 name:"loginPassword"
               },
@@ -70,7 +70,6 @@ export default {
                 alignType: "right",
                 lightTheme: true,
                 placeholder : "Log in",
-                contentWidth: "quarter-width",
                 contentAlign: "right",
                 name: "formSubmit"
               }

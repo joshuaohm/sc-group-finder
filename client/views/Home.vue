@@ -23,7 +23,7 @@ export default {
       tabProp: {
         name : "tabProp",
         contentType : "Tab",
-        align : "center",
+        alignType : "center",
         lightTheme: false,
         subPanel : false,
         text : [

@@ -1,9 +1,9 @@
 <template>
-  <div :class="component.contentWidth" :align="component.contentAlign">
-    <div v-if="isHtml" :is="componentType"  :class="'test-a'">
+  <div :class="[component.contentWidth, 'component-wrapper']" :align="component.contentAlign">
+    <div v-if="isHtml" :is="componentType"  >
       {{component.value}}
     </div>
-    <div v-else :class="'test-b'" :name="component.name" :is="component.contentType" :content="component" >
+    <div v-else :name="component.name" :is="component.contentType" :content="component" >
     </div>
   </div>
 </template>

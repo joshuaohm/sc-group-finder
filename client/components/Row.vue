@@ -19,6 +19,7 @@ export default {
   },
   data () {
     return {
+      contentType: "Row",
     }
   },
   computed: {
@@ -49,6 +50,20 @@ export default {
   justify-content: space-between;
   align-items: flex-start;
   z-index: 0;
+}
+
+.row > div {
+  flex: 1 1 100%;
+}
+
+@media screen and (max-width: 480px){
+  .row{
+    flex-flow: row wrap;
+  }
+  .row > div{
+    flex: 1 0 100%;
+    width: 100%;
+  }
 }
 
 </style>

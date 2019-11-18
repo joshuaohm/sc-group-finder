@@ -53,7 +53,7 @@ export default {
   created() {
     this.$store.subscribe((mutation, state) => {
       if(mutation.type === 'PAGELOADED'){
-        this.show = true;
+      this.show = true;
       } 
     });
   },
@@ -71,37 +71,4 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_variables.scss";
 @import "../assets/scss/tabs.scss";
-
-@media screen and (max-width: 780px){
-  .tab{
-    font-size: 1rem;
-    margin-right: 10px;
-    padding-right: 20px;
-    height: 20px;
-
-    &:before{
-      width: 20px;
-    }
-  }
-
-  .tab-input{
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    top: 2px;
-    font-size: .8rem;
-  }
-
-  .blue-line {
-    margin-right: 32px;
-  }
-
-  .added-height {
-    margin-top: 32px;
-  }
-}
-@media screen and (max-width: 480px){
-  .tab{
-    font-size: .8rem;
-  }
-}
 </style>

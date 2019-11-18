@@ -1,10 +1,10 @@
 <template>
-    <div class="tab-wrapper" :class="[alignment]">
+    <div class="tab-wrapper" :class="[mobileAlignOverride()]">
       <transition name="tab-transition"
          v-on:after-enter="tabLoaded()">
         <div v-if="showTab" @click="tabClicked">
-          <div v-for="item in content.text" v-bind:key="item.value" :class="['tab', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
-            <div v-if="item.value && item.value.length > 0">{{item.value}}</div>
+          <div v-for="(item, index) in content.text" :key="index" :class="['tab', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
+            <slot v-if="item.value && item.value.length > 0">{{item.value}}</slot>
           </div>
         </div>
       </transition>
@@ -142,6 +142,18 @@ export default {
     },
     tabLoaded(){
       this.$store.commit("TABLOADED");
+    },
+    mobileAlignOverride(){
+      if(screen.width > 480)
+        return this.alignment;
+      //Tab is in a row that has been split into multiple rows for mobile; make them all the same alignType
+      else if( this.$parent.contentType && this.$parent.contentType.toLowerCase() === "typeevaluator" && this.$parent.$parent &&      this.$parent.$parent.contentType && this.$parent.$parent.contentType.toLowerCase() === "row" ){
+        console.log(this);
+        this.content.alignType = "center";
+        return "center";
+      }
+        
+
     }
   },
   watch: {
@@ -155,38 +167,4 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/scss/_variables.scss";
 @import "../assets/scss/tabs.scss";
-
-.tab-wrapper{
-
-  &.addedBottom{
-    margin-bottom: 6px;
-  }
-}
-
-@media screen and (max-width: 780px){
-  .tab{
-    font-size: 1rem;
-    margin-right: 10px;
-    padding-right: 20px;
-    height: 20px;
-    line-height: 20px;
-
-    &:before{
-      width: 20px;
-    }
-  }
-
-  .blue-line {
-    margin-right: 32px;
-  }
-
-  .added-height {
-    margin-top: 32px;
-  }
-}
-@media screen and (max-width: 480px){
-  .tab{
-    font-size: .8rem;
-  }
-}
 </style>

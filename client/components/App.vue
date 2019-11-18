@@ -66,7 +66,7 @@ p{
 
 @keyframes slideRight{
   0%{
-    transform: translateX(-100%);
+    transform: translateX(-150%);
   }
   60%{
     transform: translateX(0px);
@@ -76,6 +76,18 @@ p{
   }
   100%{
     transform: translateX(0%);
+  }
+}
+
+@media screen and (max-width: 768px){
+
+  
+  .form > .half-width.component-wrapper, .form > .three-quarter-width.component-wrapper{
+    width: 100%;
+  }
+
+  .form > .quarter-width.component-wrapper{
+    width: 50%;
   }
 }
 </style>

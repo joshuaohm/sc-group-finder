@@ -1,6 +1,6 @@
-.tab-wrapper{
+.tab-wrapper, .tab-input-wrapper{
   flex-grow: 10;
-
+  margin-bottom: 4px;
 
   &.focused{
 
@@ -15,8 +15,7 @@
   position: relative;
   display: block;
   width: calc(100% - 8px);
-  height: calc(100% - 8px);
-  top: 4px;
+  
   margin: 0;
   margin-left: 4px;
   margin-right: 4px;
@@ -57,19 +56,24 @@
 .tab{
   margin-top: 8px;
   margin-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
   position: relative;
   background-color: #000;
   height: 40px;
   z-index: 10;
   color: $ice-blue;
   font-size: 1rem;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &.submit{
-    transition: all .2s ease-in-out;
     cursor: pointer;
 
     &:hover{
-      transition: all .2s ease-in-out;
+      transition: transform .2s ease-in-out;
       cursor: pointer;
       transform: scale(1.05);
       background-color: $page-border;
@@ -198,6 +202,16 @@
       width: 40px;
     }
 
+    &.onLight{
+      &:before{
+        background: linear-gradient(to top right, page-color 50%, transparent 50%);
+      }
+
+      &:after{
+        background: linear-gradient(to top left, page-color 50%, transparent 50%);
+      }
+    }
+
     &.light{
       background-color: $page-border;
       color: white;
@@ -302,7 +316,9 @@
   background-color: $ice-blue;
   opacity: .5;
   position: relative;
-  transition: all .1s ease-in-out;
+  transition: opacity .1s ease-in-out;
+  position: relative;
+  top: 0;
 
   &.added-height {
     margin-top: 52px;
@@ -330,10 +346,6 @@ span{
   font-family: 'Orbitron', sans-serif;
 }
 
-.added-height {
-  margin-top: 52px;
-}
-
 .tab-transition-enter, .tab-transition-leave-to{
   transform: translateX(-150%);
 }
@@ -344,4 +356,23 @@ span{
 
 .tab-transition-enter-active, .tab-transition-leave-active{
   transition: transform .25s ease;
+}
+
+@media screen and (max-width: 780px){
+  .tab{
+    font-size: 1rem;
+
+    &:before{
+      width: 20px;
+    }
+  }
+}
+@media screen and (max-width: 480px){
+  .tab{
+    font-size: .8rem;
+  }
+
+  .tab.submit{
+    font-size: 1rem;
+  }
 }

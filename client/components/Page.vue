@@ -56,6 +56,7 @@ export default {
   color: $ice-blue;
   width: calc(100% - 4px);
   padding-bottom: 8px;
+  overflow: hidden;
 }
 .page code {
   background-color: #f0f0f0;
@@ -65,7 +66,6 @@ export default {
 
 .page-appear{
   max-height: 0;
-  overflow: hidden;
 }
 
 .page-appear-active{
@@ -74,16 +74,15 @@ export default {
 
 .page-appear-to{
   max-height: 500px;
-  overflow: hidden;
 }
 
 @keyframes fadeInGrowVert {
   0%{
-    overflow: hidden;
+   
     max-height: 0;
   }
   100%{
-    overflow: hidden;
+  
     max-height: 500px;
   }
 }
