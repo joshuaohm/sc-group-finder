@@ -1,5 +1,14 @@
 .tab-wrapper{
   flex-grow: 10;
+
+
+  &.focused{
+
+    .blue-line{
+      opacity: 1;
+    }
+  }
+  
 }
 
 .tab-input{
@@ -13,14 +22,35 @@
   margin-right: 4px;
   border: none;
   background-color: black;
-  color: $ice-blue;
   font-family: 'Orbitron', sans-serif;
   text-align: center;
-  font-size: 1.4rem;
+  cursor: pointer;
+  color: $ice-blue;
+  font-size: inherit;
+
+  &:-webkit-autofill {
+    font-family: 'Orbitron', sans-serif;
+    font-size: inherit;
+    color: inherit;
+    border: none;
+    -webkit-text-fill-color: $ice-blue;
+    -webkit-box-shadow: 0 0 0px 1000px black inset;
+  }
+  
+  &:focus{
+    &:parent > .blue-line{
+      opacity: 1;
+    }
+  }
 
   &.light{
     background-color: $page-border;
     color: white;
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px $page-border inset;
+      -webkit-text-fill-color: white;
+    }
   }
 }
 
@@ -31,6 +61,25 @@
   background-color: #000;
   height: 40px;
   z-index: 10;
+  color: $ice-blue;
+  font-size: 1rem;
+
+  &.submit{
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+
+    &:hover{
+      transition: all .2s ease-in-out;
+      cursor: pointer;
+      transform: scale(1.05);
+      background-color: $page-border;
+      color: $ice-blue;
+
+      & > .tab-input{
+        color: $ice-blue;
+      }
+    }
+  }
 
   &.left{
     margin-right: 8px;
@@ -253,6 +302,7 @@
   background-color: $ice-blue;
   opacity: .5;
   position: relative;
+  transition: all .1s ease-in-out;
 
   &.added-height {
     margin-top: 52px;
@@ -268,6 +318,11 @@
   &.right{
     margin-left: 50px;
   }
+  
+  &.active{
+    opacity: 1;
+  }
+
 }
 
 span{

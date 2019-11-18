@@ -15,6 +15,14 @@ html, body{
   width: 100%;
 }
 
+input[type="submit"]{
+  color: inherit;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
 body {
   background-color: #000;
   margin: 0;
