@@ -4,13 +4,16 @@
         <slot v-if="show">
           <div v-bind:class="['tab', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
             <slot v-if="content.inputType.toLowerCase() === 'text'">
-              <input type="text" :placeholder="content.placeholder" :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"/>
+              <input type="text" :placeholder="content.placeholder" :name="content.name" :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"/>
             </slot>
             <slot v-else-if="content.inputType.toLowerCase() === 'email'">
-              <input type="email" :placeholder="content.placeholder" :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"/>
+              <input type="email" :placeholder="content.placeholder" :name="content.name" :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"/>
             </slot>
             <slot v-else-if="content.inputType.toLowerCase() === 'password'">
-              <input type="password" :placeholder="content.placeholder" :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"/>
+              <input type="password" :placeholder="content.placeholder" :name="content.name" :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"/>
+            </slot>
+            <slot v-else-if="content.inputType.toLowerCase() === 'submit'">
+              <input type="submit" :value="content.placeholder" :name="content.name" :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}" /> 
             </slot>
           </div>
         </slot>

@@ -1,5 +1,5 @@
 <template>
-  <form @click="formClicked" :style="'align-items: '+content.alignType+';'" :class="['form', {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
+  <form :action="content.action" :method="content.method" :style="'align-items: '+content.alignType+';'" :class="['form', {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
     <slot v-for="(component, index) in content.content">
       <TypeEvaluator  :component="component" :name="'Form-TypeEvaluator-'+index"></TypeEvaluator>
     </slot>
@@ -30,7 +30,7 @@ export default {
     }
   },
   methods : {
-    formClicked (e){
+    handleSubmit (e){
       e.stopPropagation();
     }
   }

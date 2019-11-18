@@ -24,6 +24,8 @@ export default {
             contentType: "Form",
             lightTheme: true,
             alignType: "flex-end",
+            action: "/login",
+            method: "post",
             content : [
               {
                 contentType: "h1",
@@ -43,7 +45,8 @@ export default {
                 lightTheme: false,
                 placeholder : "Email",
                 contentWidth: "half-width",
-                contentAlign: "right"
+                contentAlign: "right",
+                name:"loginEmail"
               },
               {
                 contentType: "label",
@@ -58,16 +61,18 @@ export default {
                 lightTheme: false,
                 placeholder : "Password",
                 contentWidth: "half-width",
-                contentAlign: "right"
+                contentAlign: "right",
+                name:"loginPassword"
               },
               {
                 contentType: "Tab-Input",
                 inputType: "submit",
                 alignType: "right",
                 lightTheme: true,
-                placeholder : "Log In",
+                placeholder : "Log in",
                 contentWidth: "quarter-width",
-                contentAlign: "right"
+                contentAlign: "right",
+                name: "formSubmit"
               }
             ]
           },

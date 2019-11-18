@@ -18,7 +18,7 @@ export default {
     return {
       msg: {
         contentType: "p",
-        content: "You are not logged in, please log in."
+        value: "You are not logged in, please log in."
       },
       tabProp: {
         name : "tabProp",
@@ -29,7 +29,7 @@ export default {
         text : [
           { value: "Home" }
         ]
-      }
+      },
     }
   }
 }
