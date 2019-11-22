@@ -5,15 +5,23 @@
 </template>
 
 <script>
-import Page from 'components/Page'
+import Page from 'components/Page';
 import { RepositoryFactory } from './../repository/RepositoryFactory';
+import LoginCheck from './../mixins/LoginCheck';
 
 export default {
+  mixins: [LoginCheck],
   components: {
     Page
   },
   created () {
     document.title = "Login"
+  },
+  methods : {
+    afterLoggedIn(){
+      if(LoginCheck.loginCheck(this.$store))
+        this.$router.push({name: 'home'});
+    }
   },
   data () {
     return {
@@ -29,7 +37,6 @@ export default {
             method: "post",
             formId: "#loginForm",
             async onSubmit (data, store, router) {
-
               const LoginRepository = RepositoryFactory.get('login');
               const retData = await LoginRepository.login(data);
 

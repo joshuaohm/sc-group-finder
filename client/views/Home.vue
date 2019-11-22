@@ -8,6 +8,7 @@
 <script>
 import Page from 'components/Page';
 import { RepositoryFactory } from './../repository/RepositoryFactory';
+import LoginCheck from './../mixins/LoginCheck';
 
 export default {
   components: {
@@ -73,7 +74,7 @@ export default {
                   lightTheme: true,
                   subPanel: false,
                   onClick() {
-                    
+
                   },
                   text: [{ value: 'View Ship Fleets' }]
                 },
@@ -84,7 +85,7 @@ export default {
                   lightTheme: true,
                   subPanel: false,
                   onClick() {
-                    
+
                   },
                   text: [{ value: 'View Misc./On Foot Groups' }]
                 }
@@ -94,8 +95,9 @@ export default {
         }
       ]
     };
-  }
-};
+  },
+  mixins: [LoginCheck]
+}
 </script>
 
 <style lang="scss">

@@ -3,7 +3,7 @@
       <transition name="tab-transition"
          v-on:after-enter="tabLoaded()">
         <div v-if="showTab" @click="tabClicked">
-          <div v-for="(item, index) in content.text" :key="index" :class="['tab', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
+          <div v-for="(item, index) in content.text" :key="index" :class="['tab', alignment, {'btn':(content.onClick)}, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
             <slot v-if="item.value && item.value.length > 0">{{item.value}}</slot>
           </div>
         </div>
@@ -69,20 +69,20 @@ export default {
   },
   methods : {
     tabClicked(){
-      
+
       if(this.content.subPanel){
 
         this.showSubPanel = !this.showSubPanel;
 
         if(this.showTab && this.showSubPanel)
         {
-          
+
           this.$refs.subPanel.togglePanel();
           this.showBlue = false;
           this.addedHeight = false;
         }
         else if(this.showTab && !this.showSubPanel){
-          
+
           this.$refs.subPanel.togglePanel();
           this.showBlue = true;
           this.addedHeight = false;
@@ -126,7 +126,7 @@ export default {
                 return false;
               }
               break;
-            } 
+            }
         }
       }
 
@@ -154,13 +154,13 @@ export default {
         this.content.alignType = "center";
         return "center";
       }
-        
+
 
     }
   },
   watch: {
     show(showValue){
-          
+
     }
   }
 }

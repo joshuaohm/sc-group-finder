@@ -5,15 +5,14 @@
 </template>
 
 <script>
-import Page from 'components/Page'
+import Page from 'components/Page';
+import LoginCheck from './../mixins/LoginCheck';
 
 export default {
   components: {
     Page
   },
   props: {
-    name : String,
-    content: Object
   },
   created () {
     document.title = "About"
@@ -37,11 +36,11 @@ export default {
         content : [
           {
             contentType : "h4",
-            value : "Find Groups In The Verse" 
+            value : "Find Groups In The Verse"
           },
           {
             contentType : "p",
-            value : "You can search through listings and make postings for:" 
+            value : "You can search through listings and make postings for:"
           },
           {
             contentType: "Row",
@@ -81,6 +80,7 @@ export default {
 
 
     }
-  }
+  },
+  mixins: [LoginCheck]
 }
 </script>

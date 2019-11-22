@@ -46,6 +46,7 @@ const mutations = {
   LOGGEDIN(state, token){
     state.currentUser.token = token;
     state.isLoggedIn = true;
+    window.localStorage.setItem('scgf-token', token);
   },
   POSTSLOADED(state, data){
     state.currentPosts = data;
