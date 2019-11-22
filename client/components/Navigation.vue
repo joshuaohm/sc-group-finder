@@ -13,7 +13,8 @@
         <ul class="nav-list">
           <li class="nav-item" id="nav-item-1"><router-link :to="{ name: links[0] }">{{links[0]}}</router-link></li>
           <li class="nav-item" id="nav-item-2"><router-link :to="{ name: links[1] }">{{links[1]}}</router-link></li>
-          <li class="nav-item" id="nav-item-3"><router-link :to="{ name: links[2] }">{{links[2]}}</router-link></li>
+          <li v-if="!this.$store.state.isLoggedIn" class="nav-item" id="nav-item-3"><router-link :to="{ name: links[2] }">{{links[2]}}</router-link></li>
+          <li v-else @click="logOut()" class="nav-item" id="nav-item-3">Log Out</li>
         </ul>
       </div>
     </transition-group>
@@ -23,15 +24,18 @@
         <ul class="nav-list">
           <li class="nav-item" id="nav-item-1"><router-link :to="{ name: links[0] }">{{links[0]}}</router-link></li>
           <li class="nav-item" id="nav-item-2"><router-link :to="{ name: links[1] }">{{links[1]}}</router-link></li>
-          <li class="nav-item" id="nav-item-3"><router-link :to="{ name: links[2] }">{{links[2]}}</router-link></li>
+          <li v-if="!this.$store.state.isLoggedIn" class="nav-item" id="nav-item-3"><router-link :to="{ name: links[2] }">{{links[2]}}</router-link></li>
+          <li v-else  @click="logOut()" class="nav-item" id="nav-item-3">Log Out</li>
         </ul>
       </div>
     </transition>
   </div>
-  
+
 </template>
 
 <script>
+import { RepositoryFactory } from './../repository/RepositoryFactory';
+
 export default {
   data () {
     return {
@@ -54,6 +58,18 @@ export default {
     },
     toggleMobileNav(){
       this.mobileShow = !this.mobileShow;
+    },
+    logOutError(){
+      console.log('error logging out');
+    },
+    async logOut() {
+      const LoginRepository = RepositoryFactory.get('login');
+      const retData = await LoginRepository.logOut(this.logOutError());
+
+      if(retData.data.success){
+        this.$store.commit("LOGGEDOUT");
+        this.$router.push({name: 'log in'});
+      }
     }
   }
 }
@@ -75,8 +91,9 @@ $page-color: #012e23;
 .nav-item, .nav-item a:link, .nav-item a:visited {
   position: relative;
   text-decoration: none;
-  text-transform: capitalize;  
+  text-transform: capitalize;
   color: $ice-blue;
+  cursor: pointer;
 }
 
 .nav-list{
@@ -99,12 +116,12 @@ $page-color: #012e23;
   height: 80px;
   padding-right: 80px;
   background-color: #000;
-  
+
 
   &:before {
     content: '';
     position: absolute;
-    top: 0; 
+    top: 0;
     right: 0;
     background: linear-gradient(to top left, $page-color 50%, transparent 50%);
     height: 100%;
@@ -132,7 +149,7 @@ $page-color: #012e23;
   padding-right: 80px;
   padding-top: 8px;
   padding-bottom: 8px;
-  
+
 
   .nav-list{
     width: 100%;
@@ -140,7 +157,7 @@ $page-color: #012e23;
     flex-flow: row wrap;
     text-align: center;
     float: none;
-    
+
     .nav-item{
       flex: 1 0 25%;
     }
@@ -169,7 +186,7 @@ $page-color: #012e23;
 
 .mobile-nav-transition-enter-active{
   transition: all .25s ease-in;
-} 
+}
 .mobile-nav-transition-leave-active{
   transition: all .25s cubic-bezier(0, 1, 0.5, 1);
 }

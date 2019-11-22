@@ -21,7 +21,15 @@ export default {
     afterLoggedIn(){
       if(LoginCheck.loginCheck(this.$store))
         this.$router.push({name: 'home'});
+    },
+    loginError(){
+      document.getElementById('loginError').innerHTML='Error: Username or Password incorrect!';
     }
+  },
+  mounted() {
+    this.$root.$on('loginError', () => {
+      this.loginError();
+    });
   },
   data () {
     return {
@@ -36,18 +44,31 @@ export default {
             action: "/login",
             method: "post",
             formId: "#loginForm",
-            async onSubmit (data, store, router) {
-              const LoginRepository = RepositoryFactory.get('login');
-              const retData = await LoginRepository.login(data);
+            async onSubmit (data, store, router, self) {
 
-              store.commit("LOGGEDIN", retData.data.data.token);
-              router.push({name: 'home'});
+
+              var callBack = (self) => {
+                self.$root.$emit('loginError')
+              };
+              const LoginRepository = RepositoryFactory.get('login');
+              const retData = await LoginRepository.login(data, callBack(self));
+
+              if(retData.data.success){
+                store.commit("LOGGEDIN", retData.data.data.token);
+                router.push({name: 'home'});
+              }
             },
             content : [
               {
                 contentType: "h1",
                 value: "Log In",
                 contentWidth: "full-width"
+              },
+              {
+                contentType: "span",
+                id: "loginError",
+                contentWidth: "full-width",
+                value: "",
               },
               {
                 contentType: "label",
@@ -102,6 +123,12 @@ export default {
 <style lang="scss">
 .login-page{
   margin:auto;
+}
+
+#loginError{
+  color: red;
+  font-size: 1rem;
+  text-align: center;
 }
 
 @media screen and (max-width: 768px){

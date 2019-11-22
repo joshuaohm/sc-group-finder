@@ -3,7 +3,7 @@ export default {
 
     if(!this.$store.state.IsLoggedIn){
       var token = window.localStorage.getItem('scgf-token');
-      if(token)
+      if(token && token !== "")
         this.$store.commit("LOGGEDIN", token);
     }
   },

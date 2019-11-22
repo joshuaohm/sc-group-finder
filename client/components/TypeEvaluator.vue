@@ -1,9 +1,9 @@
 <template>
   <div :class="[component.contentWidth, 'component-wrapper']" :align="component.contentAlign">
-    <div v-if="isHtml" :is="componentType" :name="component.name"  >
+    <div v-if="isHtml" :is="componentType" :id="component.id" :name="component.name"  >
       {{component.value}}
     </div>
-    <div v-else :name="component.name" :is="component.contentType" :content="component" v-model="inputVal" >
+    <div v-else :name="component.name" :is="component.contentType" :id="component.id" :content="component" v-model="inputVal" >
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
       contentType: "TypeEvaluator",
       lightTheme : true,
       inputVal : this.value,
-      isHtml : (this.component.contentType === 'p' || this.component.contentType  === 'h1' || this.component.contentType === 'h3' || this.component.contentType === 'label' )
+      isHtml : (this.component.contentType === 'span' || this.component.contentType === 'p' || this.component.contentType  === 'h1' || this.component.contentType === 'h3' || this.component.contentType === 'label' )
     }
   },
   props: {

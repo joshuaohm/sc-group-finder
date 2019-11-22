@@ -48,6 +48,11 @@ const mutations = {
     state.isLoggedIn = true;
     window.localStorage.setItem('scgf-token', token);
   },
+  LOGGEDOUT(state){
+    state.currentUser.token = "";
+    state.isLoggedIn = false;
+    window.localStorage.setItem('scgf-token', "");
+  },
   POSTSLOADED(state, data){
     state.currentPosts = data;
   }

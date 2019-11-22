@@ -42,7 +42,7 @@ export default {
         }
       }
 
-      this.content.onSubmit(formData, this.$store, this.$router);
+      this.content.onSubmit(formData, this.$store, this.$router, this);
     }
   },
 }
