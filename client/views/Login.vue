@@ -6,6 +6,7 @@
 
 <script>
 import Page from 'components/Page'
+import { RepositoryFactory } from './../repository/RepositoryFactory';
 
 export default {
   components: {
@@ -26,6 +27,15 @@ export default {
             alignType: "flex-end",
             action: "/login",
             method: "post",
+            formId: "#loginForm",
+            async onSubmit (data, store, router) {
+
+              const LoginRepository = RepositoryFactory.get('login');
+              const retData = await LoginRepository.login(data);
+
+              store.commit("LOGGEDIN");
+              router.push({name: 'home'});
+            },
             content : [
               {
                 contentType: "h1",
@@ -46,7 +56,7 @@ export default {
                 placeholder : "Email",
                 contentWidth: "three-quarter-width",
                 contentAlign: "right",
-                name:"loginEmail"
+                name:"email"
               },
               {
                 contentType: "label",
@@ -62,7 +72,7 @@ export default {
                 placeholder : "Password",
                 contentWidth: "three-quarter-width",
                 contentAlign: "right",
-                name:"loginPassword"
+                name:"password"
               },
               {
                 contentType: "Tab-Input",

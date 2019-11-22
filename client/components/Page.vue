@@ -5,7 +5,7 @@
           v-on:after-appear="pageLoaded()">
       <div v-bind:class="{'page':true, 'light':(content.lightTheme)}">
         <slot v-for="(component, index) in content.content">
-          <TypeEvaluator  :component="component" :name="'Page-TypeEvaluator-'+index"></TypeEvaluator>
+          <TypeEvaluator  :component="component" :id="'Page-TypeEvaluator-'+index"></TypeEvaluator>
         </slot>
       </div>
     </transition>
@@ -26,7 +26,7 @@ export default {
     lightTheme: Boolean
   },
   created () {
-  
+
   },
   data () {
     return {
@@ -78,11 +78,11 @@ export default {
 
 @keyframes fadeInGrowVert {
   0%{
-   
+
     max-height: 0;
   }
   100%{
-  
+
     max-height: 500px;
   }
 }

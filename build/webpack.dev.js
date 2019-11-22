@@ -5,11 +5,14 @@ const webpack = require('webpack')
 const base = require('./webpack.base')
 const _ = require('./utils')
 const FriendlyErrors = require('friendly-errors-webpack-plugin')
+const dotenv = require('dotenv')
+dotenv.config();
 
 base.devtool = 'source-map'
 base.plugins.push(
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify('development')
+    'process.env.NODE_ENV': JSON.stringify('development'),
+    'process.env.VUE_APP_CLIENT_SECRET': JSON.stringify(process.env.VUE_APP_CLIENT_SECRET),
   }),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),

@@ -1,6 +1,7 @@
 <template>
   <div class="home-page">
-    <Page :content="{content:[tabProp, msg], lightTheme:true}"></Page>
+    <Page v-if="this.$store.state.isLoggedIn" :content="{content:[loggedIn], lightTheme:true}"></Page>
+    <Page v-else :content="{content:[loggedOut], lightTheme:true}"></Page>
   </div>
 </template>
 
@@ -16,20 +17,38 @@ export default {
   },
   data () {
     return {
-      msg: {
-        contentType: "p",
-        value: "You are not logged in, please log in."
-      },
-      tabProp: {
-        name : "tabProp",
-        contentType : "Tab",
-        alignType : "center",
-        lightTheme: false,
-        subPanel : false,
-        text : [
-          { value: "Home" }
-        ]
-      },
+      loggedOut: [
+        {
+          contentType: "p",
+          value: "You are not logged in, please log in."
+        },
+        {
+          name : "tabProp",
+          contentType : "Tab",
+          alignType : "center",
+          lightTheme: false,
+          subPanel : false,
+          text : [
+            { value: "Home" }
+          ]
+        }
+      ],
+      loggedIn: [
+        {
+          contentType: "p",
+          value: "Hello."
+        },
+        {
+          name : "tabProp",
+          contentType : "Tab",
+          alignType : "center",
+          lightTheme: false,
+          subPanel : false,
+          text : [
+            { value: "Welcome" }
+          ]
+        }
+      ]
     }
   }
 }

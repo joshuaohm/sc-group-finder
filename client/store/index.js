@@ -6,6 +6,7 @@ Vue.use(Vuex)
 
 const state = {
   count: 0,
+  isLoggedIn: false,
   initialLoad: false,
   currentPage: {
     name: "",
@@ -37,6 +38,9 @@ const mutations = {
   },
   SUBPANELCOLLAPSED(state){
     state.currentPage.currentTab.currentSubPanel.isExpanded = false;
+  },
+  LOGGEDIN(state){
+    state.isLoggedIn = true;
   }
 }
 
