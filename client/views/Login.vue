@@ -33,7 +33,7 @@ export default {
               const LoginRepository = RepositoryFactory.get('login');
               const retData = await LoginRepository.login(data);
 
-              store.commit("LOGGEDIN");
+              store.commit("LOGGEDIN", retData.data.data.token);
               router.push({name: 'home'});
             },
             content : [

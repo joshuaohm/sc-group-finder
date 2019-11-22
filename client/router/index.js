@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '../views/Home'
 import About from '../views/About'
 import Login from '../views/Login'
+import ShipCrews from '../views/ShipCrews'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/login',
       name: 'log in',
       component: Login
+    },
+    {
+      path: '/scPosts',
+      name: 'Ship Crew Posts',
+      component: ShipCrews
     }
   ]
 })

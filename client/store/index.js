@@ -8,6 +8,9 @@ const state = {
   count: 0,
   isLoggedIn: false,
   initialLoad: false,
+  currentUser: {
+    token: "",
+  },
   currentPage: {
     name: "",
     isLoaded: false,
@@ -17,7 +20,8 @@ const state = {
         isExpanded : false,
       }
     }
-  }
+  },
+  currentPosts: null
 }
 
 const mutations = {
@@ -39,8 +43,12 @@ const mutations = {
   SUBPANELCOLLAPSED(state){
     state.currentPage.currentTab.currentSubPanel.isExpanded = false;
   },
-  LOGGEDIN(state){
+  LOGGEDIN(state, token){
+    state.currentUser.token = token;
     state.isLoggedIn = true;
+  },
+  POSTSLOADED(state, data){
+    state.currentPosts = data;
   }
 }
 

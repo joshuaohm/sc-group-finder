@@ -1,9 +1,11 @@
 import Repository from "./Repository";
+import store from '../store'
 
 const resource = "/posts/shipcrews";
+
 export default {
-  get() {
-    return Repository.get(`${resource}`);
+  get(userToken) {
+    return Repository.get(`${resource}`, { headers: {'Authorization' : 'Bearer '+userToken } });
   },
 
   getPost(postId){

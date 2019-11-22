@@ -2,7 +2,7 @@ import ShipCrewPostsRepository from "./ShipCrewPostsRepository";
 import LoginRepository from "./LoginRepository";
 
 const repositories = {
-  posts: ShipCrewPostsRepository,
+  scPosts: ShipCrewPostsRepository,
   login: LoginRepository
 
 };

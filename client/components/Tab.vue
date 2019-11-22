@@ -88,6 +88,9 @@ export default {
           this.addedHeight = false;
         }
       }
+      else if(this.content.onClick){
+        this.content.onClick(this.$store, this.$router);
+      }
     },
     HasSubPanel(elements, state){
       if(!elements)
@@ -148,7 +151,6 @@ export default {
         return this.alignment;
       //Tab is in a row that has been split into multiple rows for mobile; make them all the same alignType
       else if( this.$parent.contentType && this.$parent.contentType.toLowerCase() === "typeevaluator" && this.$parent.$parent &&      this.$parent.$parent.contentType && this.$parent.$parent.contentType.toLowerCase() === "row" ){
-        console.log(this);
         this.content.alignType = "center";
         return "center";
       }
