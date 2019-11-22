@@ -19,10 +19,6 @@ export default {
     return {
       loggedOut: [
         {
-          contentType: "p",
-          value: "You are not logged in, please log in."
-        },
-        {
           name : "tabProp",
           contentType : "Tab",
           alignType : "center",
@@ -31,13 +27,13 @@ export default {
           text : [
             { value: "Home" }
           ]
+        },
+        {
+          contentType: "p",
+          value: "You are not logged in, please log in."
         }
       ],
       loggedIn: [
-        {
-          contentType: "p",
-          value: "Hello."
-        },
         {
           name : "tabProp",
           contentType : "Tab",
@@ -47,6 +43,10 @@ export default {
           text : [
             { value: "Welcome" }
           ]
+        },
+        {
+          contentType: "p",
+          value: "Hello."
         }
       ]
     }

@@ -5,7 +5,14 @@
           v-on:after-appear="pageLoaded()">
       <div v-bind:class="{'page':true, 'light':(content.lightTheme)}">
         <slot v-for="(component, index) in content.content">
-          <TypeEvaluator  :component="component" :id="'Page-TypeEvaluator-'+index"></TypeEvaluator>
+          <slot v-if="Array.isArray(component)">
+            <slot v-for="(subcomponent, index2) in component">
+              <TypeEvaluator  :component="subcomponent" :id="'Page-TypeEvaluator-'+index+'-sub-'+index2"></TypeEvaluator>
+            </slot>
+          </slot>
+          <slot v-else>
+            <TypeEvaluator  :component="component" :id="'Page-TypeEvaluator-'+index"></TypeEvaluator>
+          </slot>
         </slot>
       </div>
     </transition>
