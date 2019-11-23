@@ -44,19 +44,20 @@ export default {
             action: "/login",
             method: "post",
             formId: "#loginForm",
-            async onSubmit (data, store, router, self) {
+            onSubmit (data, self) {
 
-              var callBack = (self) => {
+              var successCallBack = (retData) => {
+                self.$store.commit("LOGGEDIN", retData.data.data.token);
+                self.$router.push({name: 'home'});
+              };
+
+              var errorCallBack = () => {
                 self.$root.$emit('loginError')
               };
 
               const LoginRepository = RepositoryFactory.get('login');
-              const retData = await LoginRepository.login(data, callBack(self));
+              LoginRepository.login(data, successCallBack, errorCallBack);
 
-              if(retData && retData.data.success){
-                store.commit("LOGGEDIN", retData.data.data.token);
-                router.push({name: 'home'});
-              }
             },
             content : [
               {

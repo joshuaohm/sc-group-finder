@@ -1,25 +1,27 @@
 import { RepositoryFactory } from './../repository/RepositoryFactory';
 
-var loginCheck = async function(store, router){
+var loginCheck = function(store, router){
 
   if(store.state.isLoggedIn){
 
-    const LoginRepository = RepositoryFactory.get('login');
-    const retData = await LoginRepository.loginCheck(store.state.currentUser.token,
-      function() {
-        console.log("loginCheckSuccess callback");
-        console.log(retData);
-        store.commit("LOGGEDIN", retData.data.data.token);
-        return true;
-      },
-      function() {
-        console.log("loginCheckError callback");
-        console.log(retData);
-        store.commit("LOGGEDOUT");
-        if(router.currentRoute.name !== "log in")
+    var onSuccess = (retData) => {
+      console.log("loginCheckSuccess callback");
+      console.log(retData);
+      console.log(store);
+      store.commit("LOGGEDIN", retData.data.data.token);
+    };
+
+    var onError = () => {
+      console.log("loginCheckError callback");
+      console.log(retData);
+      store.commit("LOGGEDOUT");
+      if(router.currentRoute.name !== "log in")
         router.push({name: 'log in'});
-      }
-    );
+
+    };
+
+    const LoginRepository = RepositoryFactory.get('login');
+    LoginRepository.loginCheck(store.state.currentUser.token, onSuccess, onError);
   }
 
   return false;

@@ -59,19 +59,23 @@ export default {
     toggleMobileNav(){
       this.mobileShow = !this.mobileShow;
     },
-    logOutError(){
-      console.log('error logging out');
-      this.$store.commit("LOGGEDOUT");
-      this.$router.push({name: 'log in'});
-    },
-    async logOut() {
-      const LoginRepository = RepositoryFactory.get('login');
-      const retData = await LoginRepository.logOut(this.$store.state.currentUser.token, this.logOutError());
+    logOut() {
 
-      if(retData.data.success){
+      var onSuccess = () => {
         this.$store.commit("LOGGEDOUT");
-        this.$router.push({name: 'log in'});
-      }
+        if(this.$router.currentRoute.name !== "log in")
+          this.$router.push({name: 'log in'});
+      };
+
+      var onError = () => {
+        console.log("logout error callback");
+        this.$store.commit("LOGGEDOUT");
+        if(this.$router.currentRoute.name !== "log in")
+          this.$router.push({name: 'log in'});
+      };
+
+      const LoginRepository = RepositoryFactory.get('login');
+      LoginRepository.logOut(this.$store.state.currentUser.token, onSuccess, onError);
     }
   }
 }

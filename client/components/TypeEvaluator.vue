@@ -50,7 +50,7 @@ export default {
   },
   watch: {
     inputVal(val) {
-      this.$emit('input', val);
+      //this.$emit('input', val);
     }
   }
 }

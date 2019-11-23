@@ -54,7 +54,7 @@ export default {
   created() {
     this.$store.subscribe((mutation, state) => {
       if(mutation.type === 'PAGELOADED'){
-      this.show = true;
+        this.show = true;
       }
     });
   },

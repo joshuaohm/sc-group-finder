@@ -3,61 +3,72 @@ import Repository from "./Repository";
 
 export default {
 
-  login(payload, errorCallBack){
+  login(payload, successCallBack = null,  errorCallBack = null){
     var resource = "/login";
 
-    return Repository.swapToken(process.env.VUE_APP_CLIENT_SECRET).post(`${resource}`, payload).catch(
-      function() {
-        if(errorCallBack){
-          errorCallBack();
-        }
+    return Repository.swapToken(process.env.VUE_APP_CLIENT_SECRET).post(`${resource}`, payload)
+    .catch(() => {
+      if(errorCallBack){
+        successCallBack = null;
+        errorCallBack();
       }
-    );
+    })
+    .then((data) => {
+      if(successCallBack){
+        successCallBack(data);
+      }
+    });
   },
 
-  register(payload, errorCallBack){
+  register(payload, successCallBack = null, errorCallBack = null){
     var resource = "/register";
 
     return Repository.$http.post(`${resource}`, payload)
-    .catch(
-      function() {
-        if(errorCallBack){
-          errorCallBack();
-        }
+    .catch(() => {
+      if(errorCallBack){
+        successCallBack = null;
+        errorCallBack();
       }
-    );
+    })
+    .then((data) => {
+      if(successCallBack){
+        successCallBack(data);
+      }
+    });
   },
 
   loginCheck(userToken, successCallBack = null, errorCallBack = null){
     var resource = "/logincheck";
 
     return Repository.swapToken(userToken).post(`${resource}`)
-    .then(response => {
-      if(successCallBack){
-        console.log("success");
-        console.log(response);
-        successCallBack(response);
+    .catch(() => {
+      if(errorCallBack){
+        successCallBack = null;
+        errorCallBack();
       }
     })
-    .catch(error => {
-      if(errorCallBack){
-        console.log("error");
-        errorCallBack();
+    .then((data) => {
+      if(successCallBack){
+        successCallBack(data);
       }
     });
   },
 
-  logOut(userToken, errorCallBack = null){
+  logOut(userToken, successCallBack = null, errorCallBack = null){
     var resource = "/logout";
 
     return Repository.swapToken(userToken).post(`${resource}`)
-    .catch(
-      function() {
-        if(errorCallBack){
-          errorCallBack();
-        }
+    .catch(() => {
+      if(errorCallBack){
+        successCallBack = null;
+        errorCallBack();
       }
-    );
+    })
+    .then((data) => {
+      if(successCallBack){
+        successCallBack(data);
+      }
+    });
   }
 
 }
