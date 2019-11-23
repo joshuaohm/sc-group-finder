@@ -6,7 +6,6 @@
 
 <script>
 import Page from 'components/Page';
-import LoginCheck from './../mixins/LoginCheck';
 
 export default {
   components: {
@@ -80,7 +79,6 @@ export default {
 
 
     }
-  },
-  mixins: [LoginCheck]
+  }
 }
 </script>

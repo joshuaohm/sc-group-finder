@@ -44,6 +44,7 @@ const mutations = {
     state.currentPage.currentTab.currentSubPanel.isExpanded = false;
   },
   LOGGEDIN(state, token){
+    console.log("logged in mutation "+token );
     state.currentUser.token = token;
     state.isLoggedIn = true;
     window.localStorage.setItem('scgf-token', token);

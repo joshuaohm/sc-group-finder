@@ -58,12 +58,18 @@ export default {
                   subPanel: false,
                   async onClick(store, router) {
 
+                    var callBack = (error) => {
+                      console.log(error);
+                    };
+
                     const ShipCrewPostsRepository = RepositoryFactory.get('scPosts');
-                    const retData = await ShipCrewPostsRepository.get(store.state.currentUser.token);
+                    const retData = await ShipCrewPostsRepository.get(store.state.currentUser.token, callBack);
 
-                    store.commit("POSTSLOADED", retData.data.data);
+                    if(retData.data.success){
+                      store.commit("POSTSLOADED", retData.data.data);
+                      router.push({name: 'Ship Crew Posts'});
+                    }
 
-                    router.push({name: 'Ship Crew Posts'});
                   },
                   text: [{ value: 'View Ship Crews' }]
                 },

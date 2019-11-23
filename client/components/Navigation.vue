@@ -61,10 +61,12 @@ export default {
     },
     logOutError(){
       console.log('error logging out');
+      this.$store.commit("LOGGEDOUT");
+      this.$router.push({name: 'log in'});
     },
     async logOut() {
       const LoginRepository = RepositoryFactory.get('login');
-      const retData = await LoginRepository.logOut(this.logOutError());
+      const retData = await LoginRepository.logOut(this.$store.state.currentUser.token, this.logOutError());
 
       if(retData.data.success){
         this.$store.commit("LOGGEDOUT");

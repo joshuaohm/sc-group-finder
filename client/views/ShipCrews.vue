@@ -1,6 +1,6 @@
 <template>
   <div class="ship-crews-page">
-    <Page :content="{content:[], lightTheme:true}"></Page>
+    <Page :content="{content:[shipCrews], lightTheme:true}"></Page>
   </div>
 </template>
 
@@ -33,7 +33,9 @@ export default {
          contentType: "Panel",
          lightTheme: true,
          content: [
-           
+           {
+
+           }
          ]
        }
      ]

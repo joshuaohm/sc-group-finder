@@ -19,7 +19,7 @@ export default {
   },
   methods : {
     afterLoggedIn(){
-      if(LoginCheck.loginCheck(this.$store))
+      if(LoginCheck.localLoginCheck(this.$store))
         this.$router.push({name: 'home'});
     },
     loginError(){
@@ -46,14 +46,14 @@ export default {
             formId: "#loginForm",
             async onSubmit (data, store, router, self) {
 
-
               var callBack = (self) => {
                 self.$root.$emit('loginError')
               };
+
               const LoginRepository = RepositoryFactory.get('login');
               const retData = await LoginRepository.login(data, callBack(self));
 
-              if(retData.data.success){
+              if(retData && retData.data.success){
                 store.commit("LOGGEDIN", retData.data.data.token);
                 router.push({name: 'home'});
               }
