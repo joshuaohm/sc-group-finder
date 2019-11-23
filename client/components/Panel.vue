@@ -16,7 +16,8 @@ export default {
     TabInput: () => import('components/Tab-Input'),
     SubPanel: () => import('components/Sub-Panel'),
     Row: () => import('components/Row'),
-    TypeEvaluator: () => import('components/TypeEvaluator')
+    TypeEvaluator: () => import('components/TypeEvaluator'),
+    ShipCrewPostDisplayer: () => import('components/ShipCrewPostDisplayer')
   },
   props: {
     name : String,

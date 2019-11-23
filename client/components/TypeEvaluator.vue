@@ -15,7 +15,8 @@ export default {
     TabSelect: () => import('components/Tab-Select'),
     Panel: () => import('components/Panel'),
     Row: () => import('components/Row'),
-    Form: () => import('components/Form')
+    Form: () => import('components/Form'),
+    ShipCrewPostDisplayer: () => import('components/ShipCrewPostDisplayer')
   },
   data () {
     return {

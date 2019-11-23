@@ -56,20 +56,19 @@ export default {
                   alignType: 'left',
                   lightTheme: true,
                   subPanel: false,
-                  async onClick(store, router) {
+                  onClick(self) {
 
-                    var callBack = (error) => {
+                    var successCallBack = (retData) => {
+                      self.$store.commit("POSTSLOADED", retData.data.data);
+                      self.$router.push({name: 'Ship Crew Posts'});
+                    };
+
+                    var errorCallBack = () => {
                       console.log(error);
                     };
 
                     const ShipCrewPostsRepository = RepositoryFactory.get('scPosts');
-                    const retData = await ShipCrewPostsRepository.get(store.state.currentUser.token, callBack);
-
-                    if(retData.data.success){
-                      store.commit("POSTSLOADED", retData.data.data);
-                      router.push({name: 'Ship Crew Posts'});
-                    }
-
+                    ShipCrewPostsRepository.get(self.$store.state.currentUser.token, successCallBack, errorCallBack);
                   },
                   text: [{ value: 'View Ship Crews' }]
                 },

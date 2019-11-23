@@ -89,7 +89,7 @@ export default {
         }
       }
       else if(this.content.onClick){
-        this.content.onClick(this.$store, this.$router);
+        this.content.onClick(this);
       }
     },
     HasSubPanel(elements, state){

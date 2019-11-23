@@ -20,7 +20,6 @@
 </template>
 
 <script>
-
 import TypeEvaluator from 'components/TypeEvaluator'
 
 export default {

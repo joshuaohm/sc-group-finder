@@ -4,24 +4,50 @@ import store from '../store'
 const resource = "/posts/shipcrews";
 
 export default {
-  get(userToken, errorCallBack = null) {
+  get(userToken, successCallBack = null, errorCallBack = null) {
     return Repository.$http.get(`${resource}`, { headers: {'Authorization' : 'Bearer '+userToken } })
-      .catch(
-        function() {
-          if(errorCallBack){
-            errorCallBack();
-          }
-        }
-      );
+    .catch(() => {
+      if(errorCallBack){
+        successCallBack = null;
+        errorCallBack();
+      }
+    })
+    .then((data) => {
+      if(successCallBack){
+        successCallBack(data);
+      }
+    });
   },
 
-  getPost(postId){
-    return Repository.$http.get(`${resource}/${postId}`);
+  getPost(postId, successCallBack = null, errorCallBack = null){
+    return Repository.$http.get(`${resource}/${postId}`)
+    .catch(() => {
+      if(errorCallBack){
+        successCallBack = null;
+        errorCallBack();
+      }
+    })
+    .then((data) => {
+      if(successCallBack){
+        successCallBack(data);
+      }
+    });
   },
 
 
-  createPost(payload){
-    return Repository.$http.post(`${resource}`, payload);
+  createPost(payload, successCallBack = null, errorCallBack = null){
+    return Repository.$http.post(`${resource}`, payload)
+    .catch(() => {
+      if(errorCallBack){
+        successCallBack = null;
+        errorCallBack();
+      }
+    })
+    .then((data) => {
+      if(successCallBack){
+        successCallBack(data);
+      }
+    });
   }
 
 }
