@@ -1,21 +1,26 @@
 <template>
-  <div class="panel-wrapper"> 
-    <transition name="subpanel-transition"
-       v-on:after-enter="subPanelLoaded()"
-       v-on:after-leave="subPanelCollapsed()">  
-        <div v-if="expanded"  v-bind:class="['sub-panel', parentAlignment, {'light':(content.lightTheme)}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
-          <div v-for="component in content.content" :key="component.name">
-            <div v-if="component.contentType.toLowerCase() === 'p'">
-              <p>{{component.value}}</p>
-            </div>
-            <div v-else-if="component.contentType.toLowerCase() === 'h3'">
-              <h3>{{component.value}}</h3>
-            </div>
-            <div v-else-if="component.contentType">
-              <component :name="component.name" :is="component.contentType" :content="component"></component>
-            </div>
+  <div class="panel-wrapper">
+    <transition
+      name="subpanel-transition"
+      v-on:after-enter="subPanelLoaded()"
+      v-on:after-leave="subPanelCollapsed()"
+    >
+      <div
+        v-if="expanded"
+        v-bind:class="['sub-panel', parentAlignment, {'light':(content.lightTheme)}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
+      >
+        <div v-for="component in content.content" :key="component.name">
+          <div v-if="component.contentType.toLowerCase() === 'p'">
+            <p>{{component.value}}</p>
+          </div>
+          <div v-else-if="component.contentType.toLowerCase() === 'h3'">
+            <h3>{{component.value}}</h3>
+          </div>
+          <div v-else-if="component.contentType">
+            <component :name="component.name" :is="component.contentType" :content="component"></component>
           </div>
         </div>
+      </div>
     </transition>
   </div>
 </template>
@@ -23,81 +28,80 @@
 <script>
 export default {
   components: {
-    Tab: () => import('components/Tab') ,
+    Tab: () => import('components/Tab'),
     TabInput: () => import('components/Tab-Input'),
-    Row: () => import('components/Row')
+    Row: () => import('components/Row'),
+    ShipCrewPositionsDisplayer: () => import('components/ShipCrewPositionsDisplayer')
   },
   props: {
     name: String,
     content: Object
   },
   computed: {
-    parentColorTheme () {
-      if(this.$parent.content)
-        return this.$parent.content.lightTheme;
-      else if(this.$parent.lightTheme)
-        return this.$parent.lightTheme;
+    parentColorTheme() {
+      if (this.$parent.content) return this.$parent.content.lightTheme;
+      else if (this.$parent.lightTheme) return this.$parent.lightTheme;
     },
-    parentAlignment () {
+    parentAlignment() {
       return this.$parent.content.align;
     }
   },
-  data () {
+  data() {
     return {
       expanded: false,
-      lightTheme: false,
-    }
+      lightTheme: false
+    };
   },
-  created() {
-  
-  },
+  created() {},
   methods: {
-    togglePanel(){
+    togglePanel() {
       this.expanded = !this.expanded;
     },
-    subPanelLoaded(){
+    subPanelLoaded() {
       this.$store.commit('SUBPANELEXPANDED');
     },
-    subPanelCollapsed(){
+    subPanelCollapsed() {
       this.$store.commit('SUBPANELCOLLAPSED');
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/scss/_variables.scss";
+@import '../assets/scss/_variables.scss';
 
-.panel-wrapper{
+.panel-wrapper {
   overflow: hidden;
 }
 
-.sub-panel{
+.sub-panel {
   position: relative;
   border: 2px solid $ice-blue;
   padding: 8px;
   background-color: black;
-  z-index:1;
+  z-index: 1;
   color: $ice-blue;
 
-  &.left, &.mid{
+  &.left,
+  &.mid {
     margin-right: 50px;
   }
-  &.center{
+  &.center {
     margin-left: 50px;
     margin-right: 50px;
   }
-  &.right{
+  &.right {
     margin-left: 50px;
   }
 
-  &.light{
+  &.light {
     background-color: $page-color;
     border: 2px solid $page-border;
   }
 }
 
-.subpanel-transition-enter, .subpanel-transition-leave-to{
+.subpanel-transition-enter,
+.subpanel-transition-leave-to {
   max-height: 0px;
   opacity: 0;
   padding: 0;
@@ -105,35 +109,34 @@ export default {
   overflow: hidden;
 }
 
-.subpanel-transition-enter-to{
+.subpanel-transition-enter-to {
   max-height: 400px;
   opacity: 1;
   overflow: hidden;
 }
 
-.subpanel-transition-leave{
+.subpanel-transition-leave {
   max-height: 400px;
   opacity: 0;
   overflow: hidden;
 }
 
-.subpanel-transition-enter-active{
-  transition: all .25s ease-in;
-} 
-.subpanel-transition-leave-active{
-  transition: all .25s cubic-bezier(0, 1, 0.5, 1);
+.subpanel-transition-enter-active {
+  transition: all 0.25s ease-in;
+}
+.subpanel-transition-leave-active {
+  transition: all 0.25s cubic-bezier(0, 1, 0.5, 1);
 }
 
-@media screen and (max-width: 780px){
-  .sub-panel{
+@media screen and (max-width: 780px) {
+  .sub-panel {
     font-size: 1rem;
     margin-right: 32px;
   }
-
 }
-@media screen and (max-width: 480px){
-  .sub-panel{
-    font-size: .8rem;
+@media screen and (max-width: 480px) {
+  .sub-panel {
+    font-size: 0.8rem;
   }
 }
 </style>

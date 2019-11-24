@@ -1,22 +1,17 @@
 import { RepositoryFactory } from './../repository/RepositoryFactory';
 
-var loginCheck = function(store, router){
+var loginCheck = function (store, router) {
 
-  if(store.state.isLoggedIn){
+  if (store.state.isLoggedIn) {
 
     var onSuccess = (retData) => {
-      console.log("loginCheckSuccess callback");
-      console.log(retData);
-      console.log(store);
       store.commit("LOGGEDIN", retData.data.data.token);
     };
 
     var onError = () => {
-      console.log("loginCheckError callback");
-      console.log(retData);
       store.commit("LOGGEDOUT");
-      if(router.currentRoute.name !== "log in")
-        router.push({name: 'log in'});
+      if (router.currentRoute.name !== "log in")
+        router.push({ name: 'log in' });
 
     };
 
@@ -27,46 +22,44 @@ var loginCheck = function(store, router){
   return false;
 };
 
-var beforeMount = function (){
+var beforeMount = function () {
 
-  if(!this.$store.state.IsLoggedIn){
+  if (!this.$store.state.IsLoggedIn) {
 
     var token = "";
 
-    if(this.$store.state.currentUser.token)
+    if (this.$store.state.currentUser.token)
       token = this.$store.state.currentUser.token;
     else
       token = window.localStorage.getItem('scgf-token');
 
-    if(token != null && token != ""){
+    if (token != null && token != "") {
 
       this.$store.commit("LOGGEDIN", token);
       var self = this;
 
-      setTimeout(function(){
+      setTimeout(function () {
         loginCheck(self.$store, self.$router);
       }, 10);
     }
-    else{
+    else {
       this.$store.commit("LOGGEDOUT");
 
-      if(this.$router.currentRoute.name !== "log in")
-        this.$router.push({name: "log in"});
+      if (this.$router.currentRoute.name !== "log in")
+        this.$router.push({ name: "log in" });
     }
   }
 };
 
-var mounted = function(){
+var mounted = function () {
 
-  console.log("mounted");
-
-  if(this.afterLoggedIn)
-      this.afterLoggedIn();
+  if (this.afterLoggedIn)
+    this.afterLoggedIn();
 };
 
-var localLoginCheck = function(store){
+var localLoginCheck = function (store) {
 
-  if(store.state.isLoggedIn && store.state.currentUser.token)
+  if (store.state.isLoggedIn && store.state.currentUser.token)
     return true;
 
   return false;
@@ -74,9 +67,9 @@ var localLoginCheck = function(store){
 
 export default {
 
-  loginCheck : loginCheck,
+  loginCheck: loginCheck,
   beforeMount: beforeMount,
   mounted: mounted,
-  localLoginCheck : localLoginCheck
+  localLoginCheck: localLoginCheck
 
 };
