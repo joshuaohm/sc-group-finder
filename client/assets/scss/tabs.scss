@@ -92,10 +92,17 @@
   &.left{
     margin-right: 8px;
     padding-right: 40px;
+    justify-content: flex-start;
+
+    & span{
+      margin-right: 1.5rem;
+    }
 
     /deep/ .sub-panel{
       margin-right: 50px;
     }
+
+
 
     &:before {
       content: '';
@@ -346,7 +353,6 @@
 }
 
 span{
-  text-transform: uppercase;
   font-family: 'Orbitron', sans-serif;
 }
 
