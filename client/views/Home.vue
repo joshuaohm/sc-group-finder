@@ -11,6 +11,7 @@ import { RepositoryFactory } from './../repository/RepositoryFactory';
 import LoginCheck from './../mixins/LoginCheck';
 
 export default {
+  mixins: [LoginCheck],
   components: {
     Page
   },
@@ -57,10 +58,9 @@ export default {
                   lightTheme: true,
                   subPanel: false,
                   onClick(self) {
-
-                    var successCallBack = (retData) => {
-                      self.$store.commit("POSTSLOADED", retData.data.data);
-                      self.$router.push({name: 'Ship Crew Posts'});
+                    var successCallBack = retData => {
+                      self.$store.commit('POSTSLOADED', retData.data.data);
+                      self.$router.push({ name: 'Ship Crew Posts' });
                     };
 
                     var errorCallBack = () => {
@@ -78,9 +78,7 @@ export default {
                   alignType: 'mid',
                   lightTheme: true,
                   subPanel: false,
-                  onClick() {
-
-                  },
+                  onClick() {},
                   text: [{ value: 'View Ship Fleets' }]
                 },
                 {
@@ -89,9 +87,7 @@ export default {
                   alignType: 'row-right',
                   lightTheme: true,
                   subPanel: false,
-                  onClick() {
-
-                  },
+                  onClick() {},
                   text: [{ value: 'View Misc./On Foot Groups' }]
                 }
               ]
@@ -100,9 +96,8 @@ export default {
         }
       ]
     };
-  },
-  mixins: [LoginCheck]
-}
+  }
+};
 </script>
 
 <style lang="scss">

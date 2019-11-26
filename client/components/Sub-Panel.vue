@@ -9,17 +9,17 @@
         v-if="expanded"
         v-bind:class="['sub-panel', parentAlignment, {'light':(content.lightTheme)}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
       >
-        <div v-for="component in content.content" :key="component.name">
-          <div v-if="component.contentType.toLowerCase() === 'p'">
+        <slot v-for="(component, index) in content.content">
+          <slot v-if="component.contentType.toLowerCase() === 'p'">
             <p>{{component.value}}</p>
-          </div>
-          <div v-else-if="component.contentType.toLowerCase() === 'h3'">
+          </slot>
+          <slot v-else-if="component.contentType.toLowerCase() === 'h3'">
             <h3>{{component.value}}</h3>
-          </div>
-          <div v-else-if="component.contentType">
-            <component :name="component.name" :is="component.contentType" :content="component"></component>
-          </div>
-        </div>
+          </slot>
+          <slot v-else-if="component.contentType">
+            <TypeEvaluator :component="component" :name="'SubPanel-TypeEvaluator-'+index"></TypeEvaluator>
+          </slot>
+        </slot>
       </div>
     </transition>
   </div>
@@ -31,7 +31,7 @@ export default {
     Tab: () => import('components/Tab'),
     TabInput: () => import('components/Tab-Input'),
     Row: () => import('components/Row'),
-    ShipCrewPositionsDisplayer: () => import('components/ShipCrewPositionsDisplayer')
+    TypeEvaluator: () => import('components/TypeEvaluator')
   },
   props: {
     name: String,
@@ -72,6 +72,10 @@ export default {
 
 .panel-wrapper {
   overflow: hidden;
+
+  &.left {
+    margin-right: 50px;
+  }
 }
 
 .sub-panel {

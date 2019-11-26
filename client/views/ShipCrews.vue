@@ -6,8 +6,10 @@
 
 <script>
 import Page from 'components/Page';
+import LoginCheck from './../mixins/LoginCheck';
 
 export default {
+  mixins: [LoginCheck],
   components: {
     Page
   },
@@ -22,10 +24,27 @@ export default {
     return {
       shipCrews: [
         {
+          contentType: 'Panel',
+          lightTheme: true,
+          content: [
+            {
+              contentType: 'Tab',
+              alignType: 'center',
+              lightTheme: true,
+              text: [{ value: 'List Your Ship' }],
+              contentWidth: 'quarter-width grow',
+              subPanel: false,
+              onClick(self) {
+                self.$router.push({ name: 'New Ship Crew Post' });
+              }
+            }
+          ]
+        },
+        {
           contentType: 'Tab',
           alignType: 'center',
           lightTheme: false,
-          text: [{ value: 'Active Ship Crews:' }],
+          text: [{ value: 'View Ship Crews:' }],
           subPanel: false
         },
         {
@@ -33,8 +52,8 @@ export default {
           lightTheme: true,
           content: [
             {
-              contentType: "ShipCrewPostDisplayer",
-              content:  this.$store.state.currentPosts,
+              contentType: 'ShipCrewPostDisplayer',
+              content: this.$store.state.currentPosts,
               lightTheme: true
             }
           ]

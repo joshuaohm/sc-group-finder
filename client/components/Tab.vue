@@ -7,24 +7,25 @@
         :class="['tab', alignment, {'btn':(content.onClick)}, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
       >
         <slot v-for="(item, index) in content.text">
-          <span v-if="item.value && item.value.length > 0">{{item.value}}</span>
+          <span v-if="item.value && item.value.length > 0" :class="item.class">{{item.value}}</span>
         </slot>
       </div>
     </transition>
-    <div @v-show="showSubPanel">
+    <slot @v-show="showSubPanel">
       <component
         :is="content.subPanel.contentType"
         ref="subPanel"
         :name="content.subPanel.name"
         :content="content.subPanel"
+        :class="[alignment]"
       ></component>
-    </div>
-    <div v-if="showBlue && !addedHeight && !showSubPanel">
+    </slot>
+    <slot v-if="showBlue && !addedHeight && !showSubPanel">
       <div :class="['blue-line', alignment]"></div>
-    </div>
-    <div v-else-if="showBlue && addedHeight">
+    </slot>
+    <slot v-else-if="showBlue && addedHeight">
       <div v-bind:class="['blue-line', 'added-height', alignment]"></div>
-    </div>
+    </slot>
   </div>
 </template>
 

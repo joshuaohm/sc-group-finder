@@ -2,18 +2,34 @@ $ice-blue: #00bac4;
 $page-border: #014736;
 $page-color: #012e23;
 
-.full-width{
+.full-width {
   width: 100%;
 }
 
-.three-quarter-width{
+.three-quarter-width {
   width: 75%;
 }
 
-.half-width{
+.half-width {
   width: 50%;
 }
 
-.quarter-width{
+.quarter-width {
   width: 25%;
+}
+
+@media screen and (max-width: 768px) {
+
+  .half-width,
+  .three-quarter-width {
+    width: 100%;
+  }
+
+  .quarter-width {
+    width: 50%;
+  }
+
+  .quarter-width.grow {
+    width: 100%;
+  }
 }

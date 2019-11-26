@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navigation></navigation>    
+    <navigation></navigation>
     <router-view></router-view>
   </div>
 </template>
@@ -10,17 +10,19 @@ $ice-blue: #00bac4;
 $page-border: #014736;
 $page-color: #012e23;
 
-html, body{
+html,
+body {
   height: 100%;
   width: 100%;
 }
 
-input[type="submit"]{
+input[type='submit'] {
   color: inherit;
 }
 
-textarea:focus, input:focus{
-    outline: none;
+textarea:focus,
+input:focus {
+  outline: none;
 }
 
 body {
@@ -30,78 +32,68 @@ body {
   font-family: 'Orbitron', sans-serif;
 }
 
-h1, h2, h3{
+h1,
+h2,
+h3 {
   font-family: 'Orbitron', sans-serif;
   text-transform: uppercase;
 }
 
-h1{
+h1 {
   font-size: 3rem;
 }
 
-label{
-  text-align:center;
+label {
+  text-align: center;
 }
 
-p{
+p {
   font-family: 'Roboto Mono', monospace;
   font-size: 1.4rem;
 }
 
-#app{
+#app {
   width: 100%;
   height: 100%;
 }
 
 @keyframes fadeInGrowVert {
-  0%{
+  0% {
     overflow: hidden;
     max-height: 0;
   }
-  100%{
+  100% {
     overflow: hidden;
     max-height: 400px;
   }
 }
 
-@keyframes slideRight{
-  0%{
+@keyframes slideRight {
+  0% {
     transform: translateX(-150%);
   }
-  60%{
+  60% {
     transform: translateX(0px);
   }
-  80%{
+  80% {
     transform: translateX(-4px);
   }
-  100%{
+  100% {
     transform: translateX(0%);
-  }
-}
-
-@media screen and (max-width: 768px){
-
-  
-  .form > .half-width.component-wrapper, .form > .three-quarter-width.component-wrapper{
-    width: 100%;
-  }
-
-  .form > .quarter-width.component-wrapper{
-    width: 50%;
   }
 }
 </style>
 <script>
-import Navigation from 'components/Navigation'
+import Navigation from 'components/Navigation';
 
 export default {
   components: {
     Navigation
   },
   methods: {
-    appLoaded(){
-      this.$store.commit("APPLOADED");
+    appLoaded() {
+      this.$store.commit('APPLOADED');
     }
   }
-}
+};
 </script>
