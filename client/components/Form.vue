@@ -1,7 +1,23 @@
 <template>
-  <form :action="content.action" :method="content.method" :id="content.formId" @submit.prevent="stopSubmit" :style="'align-items: '+content.alignType+';'" :class="['form', {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
-    <slot v-for="(component, index) in content.content">
-      <TypeEvaluator  :component="component" :name="component.name" :id="'Form-TypeEvaluator-'+index" @key="index" v-model="component.inputVal"></TypeEvaluator>
+  <form
+    :action="content.action"
+    :method="content.method"
+    :id="content.formId"
+    @submit.prevent="stopSubmit"
+    :style="'align-items: '+content.alignType+';'"
+    :class="['form', {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
+  >
+    <slot v-if="content.formType === 'reveal'"></slot>
+    <slot v-else>
+      <slot v-for="(component, index) in content.content">
+        <TypeEvaluator
+          :component="component"
+          :name="component.name"
+          :id="'Form-TypeEvaluator-'+index"
+          :key="index"
+          v-model="component.inputVal"
+        ></TypeEvaluator>
+      </slot>
     </slot>
   </form>
 </template>
@@ -16,50 +32,46 @@ export default {
   },
   computed: {
     rowClass() {
-      return "row-"+this.content.content.length;
+      return 'row-' + this.content.content.length;
     },
-    parentColorTheme () {
-      if(this.$parent.content)
-        return this.$parent.content.lightTheme;
-      else if(this.$parent.lightTheme)
-        return this.$parent.lightTheme;
+    parentColorTheme() {
+      if (this.$parent.content) return this.$parent.content.lightTheme;
+      else if (this.$parent.lightTheme) return this.$parent.lightTheme;
     }
   },
-  data () {
-    return {
-    }
+  data() {
+    return {};
   },
-  methods : {
-    stopSubmit(e){
+  methods: {
+    stopSubmit(e) {
       e.stopPropagation();
-      e.preventDefault();;
+      e.preventDefault();
 
       var formData = new Object();
 
-      for(var child of this.$children){
-        if(child.inputVal && child.name){
+      for (var child of this.$children) {
+        if (child.inputVal && child.name) {
           formData[child.name] = child.inputVal;
         }
       }
 
       this.content.onSubmit(formData, this);
     }
-  },
-}
+  }
+};
 </script>
 <style lang="scss">
-@import "../assets/scss/_variables.scss";
+@import '../assets/scss/_variables.scss';
 
-.form{
+.form {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: center;
 
-  label{
+  label {
     padding-left: 8px;
     padding-right: 8px;
   }
 }
-
 </style>

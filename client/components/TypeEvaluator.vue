@@ -44,7 +44,8 @@ export default {
   },
   props: {
     name: String,
-    component: Object
+    component: Object,
+    test: String
   },
   computed: {
     parentColorTheme() {
