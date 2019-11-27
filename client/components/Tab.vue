@@ -170,9 +170,7 @@ export default {
       }
     }
   },
-  watch: {
-    show(showValue) {}
-  }
+  watch: {}
 };
 </script>
 

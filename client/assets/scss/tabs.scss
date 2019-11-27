@@ -3,6 +3,13 @@
   flex-grow: 10;
   margin-bottom: 4px;
 
+  & textarea,
+  select,
+  input,
+  button {
+    outline: none;
+  }
+
   &.focused {
 
     .blue-line {

@@ -1,7 +1,7 @@
 import Repository from "./Repository";
 import store from '../store'
 
-const resource = "/posts/shipcrews";
+const resource = "/ships";
 
 export default {
   get(userToken, successCallBack = null, errorCallBack = null) {
@@ -19,7 +19,7 @@ export default {
       });
   },
 
-  getPost(postId, successCallBack = null, errorCallBack = null) {
+  getShip(postId, successCallBack = null, errorCallBack = null) {
     return Repository.$http.get(`${resource}/${postId}`)
       .catch((error) => {
         if (errorCallBack) {
@@ -32,22 +32,5 @@ export default {
           successCallBack(data);
         }
       });
-  },
-
-
-  createPost(payload, successCallBack = null, errorCallBack = null) {
-    return Repository.$http.post(`${resource}`, payload)
-      .catch((error) => {
-        if (errorCallBack) {
-          successCallBack = null;
-          errorCallBack(error);
-        }
-      })
-      .then((data) => {
-        if (successCallBack) {
-          successCallBack(data);
-        }
-      });
   }
-
 }

@@ -58,17 +58,7 @@ export default {
                   lightTheme: true,
                   subPanel: false,
                   onClick(self) {
-                    var successCallBack = retData => {
-                      self.$store.commit('POSTSLOADED', retData.data.data);
-                      self.$router.push({ name: 'Ship Crew Posts' });
-                    };
-
-                    var errorCallBack = () => {
-                      console.log(error);
-                    };
-
-                    const ShipCrewPostsRepository = RepositoryFactory.get('scPosts');
-                    ShipCrewPostsRepository.get(self.$store.state.currentUser.token, successCallBack, errorCallBack);
+                    self.$router.push({ name: 'Ship Crew Posts' });
                   },
                   text: [{ value: 'View Ship Crews' }]
                 },

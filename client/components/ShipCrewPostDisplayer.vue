@@ -56,13 +56,11 @@ export default {
     } else {
       this.parsePosts();
     }
-
-    console.log('before mount 2');
   },
   methods: {
     parsePosts() {
       for (var i = 0; i < this.$store.state.currentPosts.length; i++) {
-        console.log(i);
+        //trick to deep copy object.
         var tabCopy = JSON.parse(JSON.stringify(this.tab1data));
         this.createContent(tabCopy, this.$store.state.currentPosts[i]);
       }
@@ -93,7 +91,7 @@ export default {
         this.parsePosts();
       };
 
-      var errorCallBack = () => {
+      var errorCallBack = error => {
         console.log(error);
       };
 

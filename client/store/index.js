@@ -14,53 +14,57 @@ const state = {
   currentPage: {
     name: "",
     isLoaded: false,
-    currentTab : {
-      isLoaded : false,
-      currentSubPanel : {
-        isExpanded : false,
+    currentTab: {
+      isLoaded: false,
+      currentSubPanel: {
+        isExpanded: false,
       }
     }
   },
+  allShips: null,
   currentPosts: null,
   filteredPosts: null,
 }
 
 const mutations = {
-  INCREMENT (state) {
+  INCREMENT(state) {
     state.count++
   },
-  DECREMENT (state) {
+  DECREMENT(state) {
     state.count--
   },
-  PAGELOADED (state){
+  PAGELOADED(state) {
     state.currentPage.isLoaded = true;
   },
-  TABLOADED (state){
+  TABLOADED(state) {
     state.currentPage.currentTab.isLoaded = true;
   },
-  SUBPANELEXPANDED (state){
+  SUBPANELEXPANDED(state) {
     state.currentPage.currentTab.currentSubPanel.isExpanded = true;
   },
-  SUBPANELCOLLAPSED(state){
+  SUBPANELCOLLAPSED(state) {
     state.currentPage.currentTab.currentSubPanel.isExpanded = false;
   },
-  LOGGEDIN(state, token){
+  LOGGEDIN(state, token) {
     state.currentUser.token = token;
     state.isLoggedIn = true;
     window.localStorage.setItem('scgf-token', token);
   },
-  LOGGEDOUT(state){
+  LOGGEDOUT(state) {
     state.currentUser.token = "";
     state.isLoggedIn = false;
     window.localStorage.setItem('scgf-token', "");
   },
-  POSTSLOADED(state, data){
+  POSTSLOADED(state, data) {
     state.currentPosts = data;
+  },
+  SHIPSLOADED(state, data) {
+    state.allShips = data;
   }
 }
 
 const actions = {
-  incrementAsync ({ commit }) {
+  incrementAsync({ commit }) {
     setTimeout(() => {
       commit('INCREMENT')
     }, 200)

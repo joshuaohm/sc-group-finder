@@ -3,72 +3,72 @@ import Repository from "./Repository";
 
 export default {
 
-  login(payload, successCallBack = null,  errorCallBack = null){
+  login(payload, successCallBack = null, errorCallBack = null) {
     var resource = "/login";
 
     return Repository.swapToken(process.env.VUE_APP_CLIENT_SECRET).post(`${resource}`, payload)
-    .catch(() => {
-      if(errorCallBack){
-        successCallBack = null;
-        errorCallBack();
-      }
-    })
-    .then((data) => {
-      if(successCallBack){
-        successCallBack(data);
-      }
-    });
+      .catch((error) => {
+        if (errorCallBack) {
+          successCallBack = null;
+          errorCallBack(error);
+        }
+      })
+      .then((data) => {
+        if (successCallBack) {
+          successCallBack(data);
+        }
+      });
   },
 
-  register(payload, successCallBack = null, errorCallBack = null){
+  register(payload, successCallBack = null, errorCallBack = null) {
     var resource = "/register";
 
     return Repository.$http.post(`${resource}`, payload)
-    .catch(() => {
-      if(errorCallBack){
-        successCallBack = null;
-        errorCallBack();
-      }
-    })
-    .then((data) => {
-      if(successCallBack){
-        successCallBack(data);
-      }
-    });
+      .catch((error) => {
+        if (errorCallBack) {
+          successCallBack = null;
+          errorCallBack(error);
+        }
+      })
+      .then((data) => {
+        if (successCallBack) {
+          successCallBack(data);
+        }
+      });
   },
 
-  loginCheck(userToken, successCallBack = null, errorCallBack = null){
+  loginCheck(userToken, successCallBack = null, errorCallBack = null) {
     var resource = "/logincheck";
 
     return Repository.swapToken(userToken).post(`${resource}`)
-    .catch(() => {
-      if(errorCallBack){
-        successCallBack = null;
-        errorCallBack();
-      }
-    })
-    .then((data) => {
-      if(successCallBack){
-        successCallBack(data);
-      }
-    });
+      .catch((error) => {
+        if (errorCallBack) {
+          successCallBack = null;
+          errorCallBack(error);
+        }
+      })
+      .then((data) => {
+        if (successCallBack) {
+          successCallBack(data);
+        }
+      });
   },
 
-  logOut(userToken, successCallBack = null, errorCallBack = null){
+  logOut(userToken, successCallBack = null, errorCallBack = null) {
     var resource = "/logout";
 
     return Repository.swapToken(userToken).post(`${resource}`)
-    .catch(() => {
-      if(errorCallBack){
-        successCallBack = null;
-        errorCallBack();
-      }
-    })
-    .then((data) => {
-      if(successCallBack){
-        successCallBack(data);
-      }
-    });
+      .catch((error) => {
+        if (errorCallBack) {
+          successCallBack = null;
+          errorCallBack(error);
+        }
+      })
+      .then((data) => {
+        if (successCallBack) {
+          successCallBack(data);
+        }
+      });
   }
 
 }
