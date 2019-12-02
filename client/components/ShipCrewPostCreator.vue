@@ -39,43 +39,63 @@ export default {
       shipOptions: null,
       manufacturerOptions: null,
       shipCrew: {
+        justifyType: 'center',
         action: '',
-        method: '',
+        method: 'post',
+        formId: '#newShipCrewForm',
         lightTheme: true,
         content: [
           {
-            contentType: 'label',
-            value: 'Select Manufacturer:',
-            contentWidth: 'half-width',
-            contentAlign: 'center'
-          },
-          {
-            contentType: 'Tab-Select',
-            alignType: 'right',
-            lightTheme: false,
-            placeholder: 'Ship',
+            contentType: 'div',
+            class: 'step1 container',
             contentWidth: 'three-quarter-width',
-            contentAlign: 'right',
-            name: 'manufacturer',
-            id: 'manufacturer-selector',
-            options: this.allOptions
+            contentAlign: 'align-center',
+            content: [
+              {
+                contentType: 'label',
+                value: 'Select Manufacturer:',
+                contentWidth: 'half-width',
+                contentAlign: 'align-left'
+              },
+              {
+                contentType: 'Tab-Select',
+                alignType: 'left',
+                lightTheme: false,
+                placeholder: 'Ship',
+                contentWidth: 'full-width',
+                contentAlign: 'align-center',
+                name: 'manufacturer',
+                id: 'manufacturer-selector',
+                optionType: 'allShips',
+                options: this.allOptions
+              }
+            ]
           },
           {
-            contentType: 'label',
-            value: 'Select Ship:',
-            contentWidth: 'half-width',
-            contentAlign: 'center'
-          },
-          {
-            contentType: 'Tab-Select',
-            alignType: 'right',
-            lightTheme: false,
-            placeholder: 'Ship',
+            contentType: 'div',
+            class: 'step2 container',
+            contentAlign: 'align-center',
             contentWidth: 'three-quarter-width',
-            contentAlign: 'right',
-            name: 'ship',
-            id: 'ship-selector',
-            options: this.allOptions
+            content: [
+              {
+                contentType: 'label',
+                value: 'Select Ship:',
+                contentWidth: 'half-width',
+                contentAlign: 'align-left'
+              },
+              {
+                contentType: 'Tab-Select',
+                alignType: 'left',
+                lightTheme: false,
+                placeholder: 'Ship',
+                contentWidth: 'full-width',
+                contentAlign: 'align-center',
+                name: 'ship',
+                id: 'ship-selector',
+                optionType: 'allShips',
+                options: this.allOptions
+              }
+            ]
           }
         ]
       }

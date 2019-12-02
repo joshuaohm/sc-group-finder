@@ -22,6 +22,7 @@ const state = {
     }
   },
   allShips: null,
+  allManus: null,
   currentPosts: null,
   filteredPosts: null,
 }
@@ -60,6 +61,9 @@ const mutations = {
   },
   SHIPSLOADED(state, data) {
     state.allShips = data;
+  },
+  MANUSLOADED(state, data) {
+    state.allManus = data;
   }
 }
 

@@ -1,11 +1,39 @@
 <template>
-  <div :class="[component.contentWidth, 'component-wrapper']" :align="component.contentAlign">
+  <div :class="['full-width']">
     <div
-      v-if="isHtml"
-      :is="componentType"
+      v-if="isElementHTML(component) && component.value && component.value.length > 0"
+      :is="component.contentType"
       :id="component.id"
       :name="component.name"
+      :class="[component.class, component.contentWidth, component.contentAlign]"
     >{{component.value}}</div>
+    <div
+      v-else-if="isElementHTML(component) && component.content && component.content.length > 0"
+      :is="component.contentType"
+      :id="component.id"
+      :name="component.name"
+      :class="[component.class, component.contentWidth, component.contentAlign]"
+    >
+      <slot v-for="content in component.content">
+        <div
+          v-if="isElementHTML(content) && content.value && content.value.length > 0"
+          :is="content.contentType"
+          :id="content.id"
+          :name="content.name"
+          :align="content.contentAlign"
+          :class="[content.class, content.contentWidth, content.contentAlign]"
+        >{{content.value}}</div>
+        <div
+          v-else
+          :name="content.name"
+          :is="content.contentType"
+          :id="content.id"
+          :content="content"
+          :class="[content.class, content.contentWidth, content.contentAlign]"
+          v-model="inputVal"
+        ></div>
+      </slot>
+    </div>
     <div
       v-else
       :name="component.name"
@@ -13,6 +41,7 @@
       :id="component.id"
       :content="component"
       v-model="inputVal"
+      :class="[component.class, component.contentWidth, component.contentAlign]"
     ></div>
   </div>
 </template>
@@ -39,7 +68,8 @@ export default {
         this.component.contentType === 'p' ||
         this.component.contentType === 'h1' ||
         this.component.contentType === 'h3' ||
-        this.component.contentType === 'label'
+        this.component.contentType === 'label' ||
+        this.component.contentType === 'div'
     };
   },
   props: {
@@ -60,6 +90,21 @@ export default {
       }
     }
   },
+  methods: {
+    isElementHTML(obj) {
+      var ret =
+        obj.contentType === 'span' ||
+        obj.contentType === 'p' ||
+        obj.contentType === 'h1' ||
+        obj.contentType === 'h3' ||
+        obj.contentType === 'label' ||
+        obj.contentType === 'div';
+
+      if (obj.contentType.toLowerCase().includes('label')) console.log(ret);
+
+      return ret;
+    }
+  },
   created() {
     this.lightTheme = this.parentColorTheme;
   },
@@ -70,5 +115,37 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+label {
+  position: relative;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.align-left {
+  align-self: flex-start;
+}
+label.align-left {
+  text-align: left;
+}
+
+.align-center {
+  align-self: center;
+  margin: auto;
+}
+label.align-center {
+  text-align: center;
+}
+
+.align-right {
+  align-self: flex-end;
+}
+label.align-right {
+  text-align: right;
+}
 </style>

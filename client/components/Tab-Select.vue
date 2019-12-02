@@ -50,9 +50,23 @@ export default {
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'PAGELOADED') {
         this.show = true;
+
+        if (!this.options) {
+          switch (this.content.optionType) {
+            case 'allShips': {
+              this.content.options = this.$store.state.allShips;
+              break;
+            }
+            case 'allManus': {
+              this.content.options = this.$store.state.allShips;
+              break;
+            }
+          }
+        }
       }
     });
   },
+  mounted() {},
   methods: {
     onChange(e) {
       this.$root.$emit('option-selected', { id: e.target.id, value: e.target.value });

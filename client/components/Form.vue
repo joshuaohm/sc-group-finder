@@ -40,7 +40,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      stepIds: new Array()
+    };
   },
   methods: {
     stopSubmit(e) {
