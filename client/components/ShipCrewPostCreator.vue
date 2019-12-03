@@ -20,9 +20,6 @@ export default {
     name: String,
     content: Object
   },
-  created() {
-    document.title = 'About';
-  },
   computed: {
     parentColorTheme() {
       if (this.$parent.content) return this.$parent.content.lightTheme;
@@ -88,6 +85,7 @@ export default {
               },
               {
                 contentType: 'Tab-Select',
+                delayedReveal: true,
                 alignType: 'left',
                 lightTheme: false,
                 placeholder: 'Ship',
@@ -107,28 +105,28 @@ export default {
   },
   methods: {
     getAllShips() {
-      var successCallBack = retData => {
-        this.$store.commit('SHIPSLOADED', retData.data.data);
+      var successCallBack1 = shipData => {
+        this.$store.commit('SHIPSLOADED', shipData.data.data);
       };
 
-      var errorCallBack = error => {
+      var errorCallBack1 = error => {
         console.log(error);
       };
 
       const repo = RepositoryFactory.get('ships');
-      repo.get(this.$store.state.currentUser.token, successCallBack, errorCallBack);
+      repo.get(this.$store.state.currentUser.token, successCallBack1, errorCallBack1);
     },
     getAllManus() {
-      var successCallBack = retData => {
-        this.$store.commit('MANUSLOADED', retData.data.data);
+      var successCallBack2 = manuData => {
+        this.$store.commit('MANUSLOADED', manuData.data.data);
       };
 
-      var errorCallBack = error => {
+      var errorCallBack2 = error => {
         console.log(error);
       };
 
       const repo = RepositoryFactory.get('ships');
-      repo.getAllManus(this.$store.state.currentUser.token, successCallBack, errorCallBack);
+      repo.getAllManus(this.$store.state.currentUser.token, successCallBack2, errorCallBack2);
     },
     createOptions(type) {
       if (type === 'ships' && !this.$store.state.allShips) return false;
@@ -137,38 +135,32 @@ export default {
       if (type === 'ships') {
         for (var option of this.$store.state.allShips) {
           option.displayValue = option.name;
+          option.value = option.id;
         }
-        this.shipOptions = this.$store.state.allShips;
       } else if (type === 'manus') {
         for (var option of this.$store.state.allManus) {
           option.displayValue = option.manufacturer;
           option.value = option.manufacturer;
         }
-        this.manuOptions = this.$store.state.allManus;
       }
     }
   },
-  beforeMount() {
+  mounted() {
+    this.getAllManus();
+    this.getAllShips();
+
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'SHIPSLOADED') {
         this.createOptions('ships');
-      }
-      if (mutation.type === 'MANUSLOADED') {
+      } else if (mutation.type === 'MANUSLOADED') {
         this.createOptions('manus');
       }
     });
-
-    this.getAllShips();
-    this.getAllManus();
-  },
-  mounted() {
     this.$root.$on('option-selected', el => {
-      console.log(el);
       if (el.id === 'manufacturer-selector' && el.value !== '') {
         this.shipOptions = this.$store.state.allShips.filter(x => x.manufacturer === el.value);
-        console.log(this.shipOptions);
-        //this.$store.state.selectedManu = el.value;
         this.$store.commit('SHIPOPTIONSFILTERED', this.shipOptions);
+        this.$root.$emit('reveal-next-tab', { id: 'ship-selector' });
       }
     });
   }

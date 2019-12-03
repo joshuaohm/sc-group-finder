@@ -79,7 +79,6 @@ export default {
   },
   mounted() {
     this.$root.$on('form-step-completed', el => {
-      console.log(el);
       this.formStep = el.formStep + 1;
       this.$set(this.stepIds, el.formStep + 1, true);
     });

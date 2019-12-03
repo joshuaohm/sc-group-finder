@@ -1,7 +1,7 @@
 <template>
   <div class="tab-input-wrapper" :class="[alignment]">
-    <transition name="tab-transition">
-      <slot v-if="show">
+    <transition name="tab-transition" v-on:after-enter="tabLoaded()">
+      <slot v-if="showTab">
         <div
           :class="['tab', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
         >
@@ -13,16 +13,17 @@
           >
             <option
               v-for="option in content.options"
-              :value="option.id ? option.id : option.value "
+              :value="option.value"
+              :key="option.value"
             >{{option.displayValue}}</option>
           </select>
         </div>
       </slot>
     </transition>
-    <slot v-if="show">
+    <slot v-if="showBlue && !addedHeight">
       <div :class="['blue-line', alignment]"></div>
     </slot>
-    <slot v-else>
+    <slot v-else-if="showBlue && addedHeight">
       <div :class="['blue-line', 'added-height', alignment]"></div>
     </slot>
   </div>
@@ -46,13 +47,18 @@ export default {
   data() {
     return {
       show: false,
+      showTab: false,
+      showBlue: true,
+      showSubPanel: false,
+      addedHeight: true,
       selected: ''
     };
   },
   created() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'PAGELOADED') {
-        this.show = true;
+      if (mutation.type === 'PAGELOADED' && !this.content.delayedReveal) {
+        this.showTab = true;
+        this.addedHeight = false;
 
         if (!this.options) {
           switch (this.content.optionType) {
@@ -60,26 +66,48 @@ export default {
               this.content.options = this.$store.state.allManus;
               break;
             }
+            case 'allShips': {
+              this.content.options = this.$store.state.allShips;
+              break;
+            }
           }
         }
+      } else if (
+        mutation.type === 'TABLOADED' &&
+        this.showTab &&
+        mutation.payload === this.content.id &&
+        !this.content.delayedReveal
+      ) {
+        this.showBlue = true;
+        this.addedHeight = false;
       }
-      if (mutation.type === 'OPTIONSFILTERED') {
-        if (!this.options) {
-          switch (this.content.optionType) {
-            case 'allShips': {
-              this.content.options = this.$store.state.filteredShips;
-              break;
-            }
-            case 'allManus': {
-              this.content.options = this.$store.state.allManus;
-              break;
-            }
+      //Watch for state lists that Tab Selects use to be updated and push the changes to the select's options
+      //forceUpdate() seems to be necessary, this.$set on all values did not work.
+      if (mutation.type === 'SHIPOPTIONSFILTERED') {
+        switch (this.content.optionType) {
+          case 'allShips': {
+            this.content.options = this.$store.state.filteredShips;
+            this.$forceUpdate();
+            break;
+          }
+          case 'allManus': {
+            this.content.options = this.$store.state.allManus;
+            this.$forceUpdate();
+            break;
           }
         }
       }
     });
   },
-  mounted() {},
+  mounted() {
+    this.$root.$on('reveal-next-tab', tab => {
+      if (tab.id === this.content.id) {
+        this.showTab = true;
+        this.showBlue = true;
+        this.addedHeight = false;
+      }
+    });
+  },
   methods: {
     onChange(e) {
       this.$root.$emit('option-selected', { id: e.target.id, value: e.target.value });
@@ -88,6 +116,9 @@ export default {
         form: this.content.formId,
         id: this.content.id
       });
+    },
+    tabLoaded() {
+      this.$store.commit('TABLOADED', this.content.id);
     }
   }
 };
