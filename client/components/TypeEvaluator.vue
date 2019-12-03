@@ -100,8 +100,6 @@ export default {
         obj.contentType === 'label' ||
         obj.contentType === 'div';
 
-      if (obj.contentType.toLowerCase().includes('label')) console.log(ret);
-
       return ret;
     }
   },

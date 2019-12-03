@@ -11,7 +11,10 @@
             :id="content.id"
             :class="['tab-input', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}]"
           >
-            <option v-for="option in content.options" :value="option.id">{{option.displayValue}}</option>
+            <option
+              v-for="option in content.options"
+              :value="option.id ? option.id : option.value "
+            >{{option.displayValue}}</option>
           </select>
         </div>
       </slot>
@@ -53,12 +56,22 @@ export default {
 
         if (!this.options) {
           switch (this.content.optionType) {
+            case 'allManus': {
+              this.content.options = this.$store.state.allManus;
+              break;
+            }
+          }
+        }
+      }
+      if (mutation.type === 'OPTIONSFILTERED') {
+        if (!this.options) {
+          switch (this.content.optionType) {
             case 'allShips': {
-              this.content.options = this.$store.state.allShips;
+              this.content.options = this.$store.state.filteredShips;
               break;
             }
             case 'allManus': {
-              this.content.options = this.$store.state.allShips;
+              this.content.options = this.$store.state.allManus;
               break;
             }
           }
@@ -70,6 +83,11 @@ export default {
   methods: {
     onChange(e) {
       this.$root.$emit('option-selected', { id: e.target.id, value: e.target.value });
+      this.$root.$emit('form-step-completed', {
+        formStep: this.content.formStep,
+        form: this.content.formId,
+        id: this.content.id
+      });
     }
   }
 };

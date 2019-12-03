@@ -35,19 +35,20 @@ export default {
   data() {
     return {
       selectedShip: 0,
-      allOptions: null,
+      manuOptions: null,
       shipOptions: null,
       manufacturerOptions: null,
       shipCrew: {
-        justifyType: 'center',
         action: '',
         method: 'post',
-        formId: '#newShipCrewForm',
+        formId: 'newShipCrewForm',
+        formType: 'reveal',
         lightTheme: true,
         content: [
           {
             contentType: 'div',
-            class: 'step1 container',
+            class: 'container',
+            id: 'newShipCrewFormStep1',
             contentWidth: 'three-quarter-width',
             contentAlign: 'align-center',
             content: [
@@ -64,16 +65,18 @@ export default {
                 placeholder: 'Ship',
                 contentWidth: 'full-width',
                 contentAlign: 'align-center',
+                formStep: 0,
+                formId: 'newShipCrewForm',
                 name: 'manufacturer',
                 id: 'manufacturer-selector',
-                optionType: 'allShips',
-                options: this.allOptions
+                optionType: 'allManus'
               }
             ]
           },
           {
             contentType: 'div',
-            class: 'step2 container',
+            class: 'container',
+            id: 'newShipCrewFormStep2',
             contentAlign: 'align-center',
             contentWidth: 'three-quarter-width',
             content: [
@@ -90,10 +93,11 @@ export default {
                 placeholder: 'Ship',
                 contentWidth: 'full-width',
                 contentAlign: 'align-center',
+                formStep: 1,
+                formId: 'newShipCrewForm',
                 name: 'ship',
                 id: 'ship-selector',
-                optionType: 'allShips',
-                options: this.allOptions
+                optionType: 'allShips'
               }
             ]
           }
@@ -114,30 +118,57 @@ export default {
       const repo = RepositoryFactory.get('ships');
       repo.get(this.$store.state.currentUser.token, successCallBack, errorCallBack);
     },
-    createOptions() {
-      if (!this.$store.state.allShips) return false;
+    getAllManus() {
+      var successCallBack = retData => {
+        this.$store.commit('MANUSLOADED', retData.data.data);
+      };
 
-      for (var option of this.$store.state.allShips) {
-        option.displayValue = option.manufacturer + ' ' + option.name;
+      var errorCallBack = error => {
+        console.log(error);
+      };
+
+      const repo = RepositoryFactory.get('ships');
+      repo.getAllManus(this.$store.state.currentUser.token, successCallBack, errorCallBack);
+    },
+    createOptions(type) {
+      if (type === 'ships' && !this.$store.state.allShips) return false;
+      else if (type === 'manus' && !this.$store.state.allManus) return false;
+
+      if (type === 'ships') {
+        for (var option of this.$store.state.allShips) {
+          option.displayValue = option.name;
+        }
+        this.shipOptions = this.$store.state.allShips;
+      } else if (type === 'manus') {
+        for (var option of this.$store.state.allManus) {
+          option.displayValue = option.manufacturer;
+          option.value = option.manufacturer;
+        }
+        this.manuOptions = this.$store.state.allManus;
       }
-
-      this.allOptions = this.$store.state.allShips;
     }
   },
   beforeMount() {
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'SHIPSLOADED') {
-        this.createOptions();
+        this.createOptions('ships');
+      }
+      if (mutation.type === 'MANUSLOADED') {
+        this.createOptions('manus');
       }
     });
 
     this.getAllShips();
+    this.getAllManus();
   },
   mounted() {
     this.$root.$on('option-selected', el => {
-      if (el.id === 'ship-selector' && el.value > 0) {
-        this.selectedShip = el.value;
-        this.showStep2 = true;
+      console.log(el);
+      if (el.id === 'manufacturer-selector' && el.value !== '') {
+        this.shipOptions = this.$store.state.allShips.filter(x => x.manufacturer === el.value);
+        console.log(this.shipOptions);
+        //this.$store.state.selectedManu = el.value;
+        this.$store.commit('SHIPOPTIONSFILTERED', this.shipOptions);
       }
     });
   }

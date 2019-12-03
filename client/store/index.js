@@ -22,9 +22,12 @@ const state = {
     }
   },
   allShips: null,
+  filteredShips: null,
   allManus: null,
+  selectedManu: null,
   currentPosts: null,
   filteredPosts: null,
+
 }
 
 const mutations = {
@@ -64,6 +67,9 @@ const mutations = {
   },
   MANUSLOADED(state, data) {
     state.allManus = data;
+  },
+  SHIPOPTIONSFILTERED(state, data) {
+    state.filteredShips = data;
   }
 }
 

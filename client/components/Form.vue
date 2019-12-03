@@ -7,14 +7,27 @@
     :style="'align-items: '+content.alignType+';'"
     :class="['form', {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
   >
-    <slot v-if="content.formType === 'reveal'"></slot>
+    <slot v-if="content.formType === 'reveal'">
+      <slot v-for="(component, index) in content.content">
+        <TypeEvaluator
+          v-show="stepIds[index]"
+          :component="component"
+          :name="component.name"
+          :class="[content.formId+'-formStep'+index, 'container']"
+          :id="content.formId+'-TypeEvaluator-'+index"
+          :key="content.formId+'-formStep'+index"
+          v-model="component.inputVal"
+        ></TypeEvaluator>
+      </slot>
+    </slot>
     <slot v-else>
       <slot v-for="(component, index) in content.content">
         <TypeEvaluator
           :component="component"
           :name="component.name"
-          :id="'Form-TypeEvaluator-'+index"
-          :key="index"
+          :class="[content.formId+'-formStep'+index, 'container']"
+          :id="content.formId+'-TypeEvaluator-'+index"
+          :key="content.formId+'-formStep'+index"
           v-model="component.inputVal"
         ></TypeEvaluator>
       </slot>
@@ -31,6 +44,9 @@ export default {
     content: Object
   },
   computed: {
+    getStepIds() {
+      return this.stepIds;
+    },
     rowClass() {
       return 'row-' + this.content.content.length;
     },
@@ -41,7 +57,8 @@ export default {
   },
   data() {
     return {
-      stepIds: new Array()
+      formStep: 0,
+      stepIds: []
     };
   },
   methods: {
@@ -58,6 +75,19 @@ export default {
       }
 
       this.content.onSubmit(formData, this);
+    }
+  },
+  mounted() {
+    this.$root.$on('form-step-completed', el => {
+      console.log(el);
+      this.formStep = el.formStep + 1;
+      this.$set(this.stepIds, el.formStep + 1, true);
+    });
+  },
+  created() {
+    for (var i = 0; i < this.content.content.length; i++) {
+      if (i == 0) this.stepIds[0] = true;
+      else this.stepIds[i] = false;
     }
   }
 };

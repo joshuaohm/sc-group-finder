@@ -40,9 +40,11 @@ export default {
             contentType: 'Form',
             lightTheme: true,
             alignType: 'flex-end',
+            justifyType: 'center',
             action: '/login',
             method: 'post',
             formId: '#loginForm',
+            class: 'container',
             onSubmit(data, self) {
               var successCallBack = retData => {
                 self.$store.commit('LOGGEDIN', retData.data.data.token);
@@ -72,7 +74,7 @@ export default {
                 contentType: 'label',
                 value: 'Email',
                 contentWidth: 'half-width',
-                contentAlign: 'right'
+                contentAlign: 'align-right'
               },
               {
                 contentType: 'Tab-Input',
@@ -81,14 +83,14 @@ export default {
                 lightTheme: false,
                 placeholder: 'Email',
                 contentWidth: 'three-quarter-width',
-                contentAlign: 'right',
+                contentAlign: 'align-right',
                 name: 'email'
               },
               {
                 contentType: 'label',
                 value: 'Password',
                 contentWidth: 'half-width',
-                contentAlign: 'right'
+                contentAlign: 'align-right'
               },
               {
                 contentType: 'Tab-Input',
@@ -97,7 +99,7 @@ export default {
                 lightTheme: false,
                 placeholder: 'Password',
                 contentWidth: 'three-quarter-width',
-                contentAlign: 'right',
+                contentAlign: 'align-right',
                 name: 'password'
               },
               {
@@ -106,7 +108,7 @@ export default {
                 alignType: 'right',
                 lightTheme: true,
                 placeholder: 'Log in',
-                contentAlign: 'right',
+                contentAlign: 'align-right',
                 name: 'formSubmit'
               }
             ]
