@@ -1,17 +1,18 @@
 <template>
   <div class="page-wrapper">
-    <transition appear
-          appear-active-class="page-appear-active"
-          v-on:after-appear="pageLoaded()">
+    <transition appear appear-active-class="page-appear-active" v-on:after-appear="pageLoaded()">
       <div v-bind:class="{'page':true, 'light':(content.lightTheme)}">
         <slot v-for="(component, index) in content.content">
           <slot v-if="Array.isArray(component)">
             <slot v-for="(subcomponent, index2) in component">
-              <TypeEvaluator  :component="subcomponent" :id="'Page-TypeEvaluator-'+index+'-sub-'+index2"></TypeEvaluator>
+              <TypeEvaluator
+                :component="subcomponent"
+                :id="'Page-TypeEvaluator-'+index+'-sub-'+index2"
+              ></TypeEvaluator>
             </slot>
           </slot>
           <slot v-else>
-            <TypeEvaluator  :component="component" :id="'Page-TypeEvaluator-'+index"></TypeEvaluator>
+            <TypeEvaluator :component="component" :id="'Page-TypeEvaluator-'+index"></TypeEvaluator>
           </slot>
         </slot>
       </div>
@@ -20,38 +21,36 @@
 </template>
 
 <script>
-import TypeEvaluator from 'components/TypeEvaluator'
+import TypeEvaluator from 'components/TypeEvaluator';
 
 export default {
   components: {
     TypeEvaluator
   },
   props: {
-    name : String,
+    name: String,
     content: Object,
     lightTheme: Boolean
   },
-  created () {
-
-  },
-  data () {
+  created() {},
+  data() {
     return {
-      show: false,
-    }
+      show: false
+    };
   },
   methods: {
     isLoggedIn() {
       return true;
     },
-    pageLoaded(){
-      this.$store.commit("PAGELOADED");
+    pageLoaded() {
+      this.$store.commit('PAGELOADED');
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/scss/_variables.scss";
+@import '../assets/scss/_variables.scss';
 
 .page {
   margin-top: 48px;
@@ -60,7 +59,8 @@ export default {
   border: 2px solid;
   border-color: $page-border;
   color: $ice-blue;
-  width: calc(100% - 4px);
+  box-sizing: border-box;
+  width: 100%;
   padding-bottom: 8px;
   overflow: hidden;
 }
@@ -70,25 +70,23 @@ export default {
   border-radius: 2px;
 }
 
-.page-appear{
+.page-appear {
   max-height: 0;
 }
 
-.page-appear-active{
-  animation: fadeInGrowVert .3s ease-in;
+.page-appear-active {
+  animation: fadeInGrowVert 0.3s ease-in;
 }
 
-.page-appear-to{
+.page-appear-to {
   max-height: 500px;
 }
 
 @keyframes fadeInGrowVert {
-  0%{
-
+  0% {
     max-height: 0;
   }
-  100%{
-
+  100% {
     max-height: 500px;
   }
 }

@@ -1,227 +1,225 @@
 tabProp: {
-  name : "tabProp",
-  type : "Tab",
-  align: "left",
-  text : [
-    { value: "About" }
-  ],
-  subPanel : {
-    name : "subPanel",
-    type : "SubPanel",
-    lightTheme : true,
-    content : [
-      {
-        type: "Row",
-        lightTheme: true,
-        content : [
-          {
-            type : "Tab",
-            align : "left",
-            subPanel : {
-              type : "SubPanel",
-              lightTheme: false,
-              content : [
-                {
+    name: "tabProp",
+    type: "Tab",
+    align: "left",
+    text: [{
+      value: "About"
+    }],
+    subPanel: {
+      name: "subPanel",
+      type: "SubPanel",
+      lightTheme: true,
+      content: [{
+          type: "Row",
+          lightTheme: true,
+          content: [{
+              type: "Tab",
+              align: "left",
+              subPanel: {
+                type: "SubPanel",
+                lightTheme: false,
+                content: [{
                   type: "p",
                   value: "Hello!"
-                }
-              ], 
+                }],
+              },
+              lightTheme: true,
+              text: [{
+                value: "Example"
+              }],
             },
-            lightTheme : true,
-            text: [
-              { value : "Example" }
-            ],
-          },
-          {
-            type : "Tab",
-            align : "mid",
-            subPanel : {
-              type : "SubPanel",
-              lightTheme: false,
-              content : [
-                {
+            {
+              type: "Tab",
+              align: "mid",
+              subPanel: {
+                type: "SubPanel",
+                lightTheme: false,
+                content: [{
                   type: "p",
                   value: "Hi!"
-                }
-              ], 
-            },
-            lightTheme : false,
-            text: [
-              { value : "Example" }
-            ],
-          },
-          {
-            type : "Tab",
-            align : "mid",
-            subPanel : {
-              type : "SubPanel",
+                }],
+              },
               lightTheme: false,
-              content : [
-                {
+              text: [{
+                value: "Example"
+              }],
+            },
+            {
+              type: "Tab",
+              align: "mid",
+              subPanel: {
+                type: "SubPanel",
+                lightTheme: false,
+                content: [{
                   type: "p",
                   value: "Hola!"
-                }
-              ], 
+                }],
+              },
+              lightTheme: true,
+              text: [{
+                value: "Example"
+              }],
             },
-            lightTheme : true,
-            text: [
-              { value : "Example" }
-            ],
-          },
-          {
-            type : "Tab",
-            align : "row-right",
-            subPanel : {
-              type : "SubPanel",
-              lightTheme: false,
-              content : [
-                {
+            {
+              type: "Tab",
+              align: "row-right",
+              subPanel: {
+                type: "SubPanel",
+                lightTheme: false,
+                content: [{
                   type: "p",
                   value: "Aloha!"
-                }
-              ], 
+                }],
+              },
+              lightTheme: true,
+              text: [{
+                value: "Example"
+              }],
             },
-            lightTheme : true,
-            text: [
-              { value : "Example" }
-            ],
-          },
-        ]
+          ]
+        },
+        {
+          type: "h3",
+          value: "About Header."
+        },
+        {
+          type: "p",
+          value: "About Paragraph."
+        }
+      ]
+    }
+  },
+  tabProp2: {
+    name: "tabProp2",
+    type: "Tab-Select",
+    align: "center",
+    lightTheme: true,
+    options: [{
+        value: "Aurora"
       },
       {
-        type : "h3",
-        value : "About Header."
+        value: "Mustang"
       },
       {
-        type : "p",
-        value : "About Paragraph."
-      }
+        value: "Cutlass Black"
+      },
+      {
+        value: "Prospector"
+      },
     ]
-  }
-},
-tabProp2: {
-  name : "tabProp2",
-  type: "Tab-Select",
-  align: "center",
-  lightTheme: true,
-  options : [
-    {value: "Aurora"},
-    {value: "Mustang"},
-    {value: "Cutlass Black"},
-    {value: "Prospector"},
-  ]
-},
-tabProp3: {
-  name : "tabProp3",
-  type: "Tab-Select",
-  align: "mid",
-  options : [
-    {value: "Aurora"},
-    {value: "Mustang"},
-    {value: "Cutlass Black"},
-    {value: "Prospector"},
-  ]
-},
-panelProp: {
-  name : "panelProp",
-  type : "Panel",
-  lightTheme: true,
-  content : [
-    {
-      name : "panelTab1",
-      type: "Tab",
-      align: "left",
-      lightTheme: true,
-      text: [
-        { value : "Example" }
-      ],
-      subPanel : {
-        name : "subPanel2",
-        type: "SubPanel",
-        lightTheme : false,
-        content : [
-          {
-            name : "subPanel2Tab1",
-            type: "Tab",
-            align: "right",
-            lightTheme : true,
-            text: [
-              { value : "Example" }
-            ],
-            subPanel : {
-              name : "subPanel3",
-              type: "SubPanel",
-              lightTheme : false,
-              content : [ 
-                {
-                  name : "subPanel3Tab1",
+  },
+  tabProp3: {
+    name: "tabProp3",
+    type: "Tab-Select",
+    align: "mid",
+    options: [{
+        value: "Aurora"
+      },
+      {
+        value: "Mustang"
+      },
+      {
+        value: "Cutlass Black"
+      },
+      {
+        value: "Prospector"
+      },
+    ]
+  },
+  panelProp: {
+    name: "panelProp",
+    type: "Panel",
+    lightTheme: true,
+    content: [{
+        name: "panelTab1",
+        type: "Tab",
+        align: "left",
+        lightTheme: true,
+        text: [{
+          value: "Example"
+        }],
+        subPanel: {
+          name: "subPanel2",
+          type: "SubPanel",
+          lightTheme: false,
+          content: [{
+              name: "subPanel2Tab1",
+              type: "Tab",
+              align: "right",
+              lightTheme: true,
+              text: [{
+                value: "Example"
+              }],
+              subPanel: {
+                name: "subPanel3",
+                type: "SubPanel",
+                lightTheme: false,
+                content: [{
+                  name: "subPanel3Tab1",
                   type: "Tab",
                   align: "mid",
-                  lightTheme : true,
-                  text: [
-                    { value : "Example" }
-                  ],
-                  subPanel : {
-                    name : "subPanel4",
+                  lightTheme: true,
+                  text: [{
+                    value: "Example"
+                  }],
+                  subPanel: {
+                    name: "subPanel4",
                     type: "SubPanel",
-                    lightTheme : true,
-                    content : [ 
-                      {
-                        name : "subPanel4Tab1",
-                        type: "Tab",
-                        align: "center",
-                        lightTheme : true,
-                        text: [
-                          { value : "Example" }
-                        ],
-                        subPanel : {
-                          name : "subPanel5",
-                          type: "SubPanel",
-                          lightTheme : false,
-                          content : [ ]
-                        }
+                    lightTheme: true,
+                    content: [{
+                      name: "subPanel4Tab1",
+                      type: "Tab",
+                      align: "center",
+                      lightTheme: true,
+                      text: [{
+                        value: "Example"
+                      }],
+                      subPanel: {
+                        name: "subPanel5",
+                        type: "SubPanel",
+                        lightTheme: false,
+                        content: []
                       }
-                    ]
+                    }]
                   }
-                }
-              ]
+                }]
+              }
+            },
+            {
+              type: "p",
+              value: "Example Text."
             }
-          },
-          { 
-            type : "p",
-            value : "Example Text."
-          }
-        ]
+          ]
+        }
+      },
+      {
+        name: "panelTabInput1",
+        type: "Tab-Input",
+        align: "left",
+        lightTheme: true,
+        placeholder: ""
+      },
+      {
+        name: "panelTabInput2",
+        type: "Tab-Input",
+        align: "mid",
+        lightTheme: false,
+        placeholder: ""
+      },
+      {
+        name: "panelTabInput3",
+        type: "Tab-Input",
+        align: "right",
+        lightTheme: false,
+        placeholder: ""
+      },
+      {
+        type: "p",
+        content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel incidunt saepe omnis voluptatem culpa nesciunt rem suscipit, ad repudiandae enim non quas voluptates, quod quae. Facere architecto aut necessitatibus deleniti?"
       }
-    },
-    {
-      name : "panelTabInput1",
-      type: "Tab-Input",
-      align: "left",
-      lightTheme: true,
-      placeholder : "" 
-    },
-    {
-      name : "panelTabInput2",
-      type: "Tab-Input",
-      align: "mid",
-      lightTheme: false,
-      placeholder : "" 
-    },
-    {
-      name : "panelTabInput3",
-      type: "Tab-Input",
-      align: "right",
-      lightTheme: false,
-      placeholder : "" 
-    },
-    { 
-      type: "p",  
-      content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel incidunt saepe omnis voluptatem culpa nesciunt rem suscipit, ad repudiandae enim non quas voluptates, quod quae. Facere architecto aut necessitatibus deleniti?"
-    }
-  ]
-},
-title: {
-  content: "Use this website to {INSERT ACTIVITY}",
-  type: "h3"
-},
+    ]
+  },
+  title: {
+    content: "Use this website to {INSERT ACTIVITY}",
+    type: "h3"
+  },

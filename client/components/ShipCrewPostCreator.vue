@@ -40,7 +40,12 @@ export default {
         method: 'post',
         formId: 'newShipCrewForm',
         formType: 'reveal',
+        contentType: 'Form',
         lightTheme: true,
+        onSubmit(data, self) {
+          console.log(data);
+          console.log(this.inputVal);
+        },
         content: [
           {
             contentType: 'div',
@@ -60,8 +65,8 @@ export default {
                 alignType: 'left',
                 lightTheme: false,
                 placeholder: 'Ship',
-                contentWidth: 'full-width',
-                contentAlign: 'align-center',
+                contentWidth: 'three-quarter-width',
+                contentAlign: 'align-left',
                 formStep: 0,
                 formId: 'newShipCrewForm',
                 name: 'manufacturer',
@@ -89,13 +94,44 @@ export default {
                 alignType: 'left',
                 lightTheme: false,
                 placeholder: 'Ship',
-                contentWidth: 'full-width',
-                contentAlign: 'align-center',
-                formStep: 1,
+                contentWidth: 'three-quarter-width',
+                contentAlign: 'align-left',
                 formId: 'newShipCrewForm',
-                name: 'ship',
+                formStep: 1,
+                formStepCallBack: e => {
+                  this.$store.commit('SHIPSELECTED', this.$store.state.filteredShips.find(x => x.id == e.target.value));
+                  this.$root.$emit('reveal-positions-selector', { id: 'shipCrewSelector' });
+                },
+                name: 'ship_id',
                 id: 'ship-selector',
                 optionType: 'allShips'
+              }
+            ]
+          },
+          {
+            contentType: 'div',
+            class: 'container',
+            id: 'newShipCrewFormStep3',
+            contentAlign: 'align-center',
+            contentWidth: 'three-quarter-width',
+            content: [
+              {
+                contentType: 'label',
+                value: 'Select Crew:',
+                contentWidth: 'half-width',
+                contentAlign: 'align-left'
+              },
+              {
+                contentType: 'ShipCrewPositionsSelector',
+                delayedReveal: true,
+                lightTheme: true,
+                contentWidth: 'full-width',
+                contentAlign: 'align-center',
+                members: null,
+                formStep: 3,
+                formId: 'newShipCrewForm',
+                name: 'shipCrewSelector',
+                id: 'ship-crew-selector'
               }
             ]
           }

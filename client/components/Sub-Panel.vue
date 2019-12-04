@@ -85,6 +85,7 @@ export default {
   background-color: black;
   z-index: 1;
   color: $ice-blue;
+  box-sizing: border-box;
 
   &.left,
   &.mid {

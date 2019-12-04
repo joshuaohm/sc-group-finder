@@ -10,6 +10,8 @@ const state = {
   initialLoad: false,
   currentUser: {
     token: "",
+    id: 0,
+    name: null,
   },
   currentPage: {
     name: "",
@@ -23,6 +25,7 @@ const state = {
   },
   allShips: null,
   filteredShips: null,
+  currentShip: null,
   allManus: null,
   selectedManu: null,
   currentPosts: null,
@@ -70,6 +73,9 @@ const mutations = {
   },
   SHIPOPTIONSFILTERED(state, data) {
     state.filteredShips = data;
+  },
+  SHIPSELECTED(state, data) {
+    state.currentShip = data;
   }
 }
 

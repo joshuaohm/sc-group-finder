@@ -6,6 +6,7 @@
       :id="component.id"
       :name="component.name"
       :class="[component.class, component.contentWidth, component.contentAlign]"
+      v-model="inputVal"
     >{{component.value}}</div>
     <div
       v-else-if="isElementHTML(component) && component.content && component.content.length > 0"
@@ -13,6 +14,7 @@
       :id="component.id"
       :name="component.name"
       :class="[component.class, component.contentWidth, component.contentAlign]"
+      v-model="inputVal"
     >
       <slot v-for="content in component.content">
         <div
@@ -22,6 +24,7 @@
           :name="content.name"
           :align="content.contentAlign"
           :class="[content.class, content.contentWidth, content.contentAlign]"
+          v-model="inputVal"
         >{{content.value}}</div>
         <div
           v-else
@@ -56,7 +59,8 @@ export default {
     Form: () => import('components/Form'),
     ShipCrewPostDisplayer: () => import('components/ShipCrewPostDisplayer'),
     ShipCrewPositionsDisplayer: () => import('components/ShipCrewPositionsDisplayer'),
-    ShipCrewPostCreator: () => import('components/ShipCrewPostCreator')
+    ShipCrewPostCreator: () => import('components/ShipCrewPostCreator'),
+    ShipCrewPositionsSelector: () => import('components/ShipCrewPositionsSelector')
   },
   data() {
     return {
@@ -69,7 +73,8 @@ export default {
         this.component.contentType === 'h1' ||
         this.component.contentType === 'h3' ||
         this.component.contentType === 'label' ||
-        this.component.contentType === 'div'
+        this.component.contentType === 'div' ||
+        this.component.contentType === 'textarea'
     };
   },
   props: {
@@ -108,42 +113,10 @@ export default {
   },
   watch: {
     inputVal(val) {
-      //this.$emit('input', val);
+      this.$emit('input', val);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-label {
-  position: relative;
-}
-
-.container {
-  position: relative;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-}
-
-.align-left {
-  align-self: flex-start;
-}
-label.align-left {
-  text-align: left;
-}
-
-.align-center {
-  align-self: center;
-  margin: auto;
-}
-label.align-center {
-  text-align: center;
-}
-
-.align-right {
-  align-self: flex-end;
-}
-label.align-right {
-  text-align: right;
-}
 </style>

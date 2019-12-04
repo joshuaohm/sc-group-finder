@@ -9,6 +9,7 @@
             v-model="selected"
             @change="onChange($event)"
             :id="content.id"
+            :name="content.name"
             :class="['tab-input', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}]"
           >
             <option
@@ -114,7 +115,8 @@ export default {
       this.$root.$emit('form-step-completed', {
         formStep: this.content.formStep,
         form: this.content.formId,
-        id: this.content.id
+        id: this.content.id,
+        callBack: this.content.formStepCallBack ? this.content.formStepCallBack(e) : null
       });
     },
     tabLoaded() {

@@ -48,6 +48,19 @@
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
+          <slot v-else-if="content.inputType.toLowerCase() === 'number'">
+            <input
+              type="number"
+              v-model="inputVal"
+              min="0"
+              max="50"
+              @focus="tabFocused()"
+              @blur="tabBlurred()"
+              :placeholder="content.placeholder"
+              :name="content.name"
+              :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
+            />
+          </slot>
         </div>
       </slot>
     </transition>

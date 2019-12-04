@@ -18,6 +18,63 @@ $page-color: #012e23;
   width: 25%;
 }
 
+textarea {
+  border: 2px solid $ice-blue;
+  background-color: black;
+  color: $ice-blue;
+  position: relative;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  min-height: 150px;
+  box-sizing: border-box;
+  padding: 8px;
+
+  &.light {
+    border-color: $page-border;
+    background-color: $page-color;
+    color: white;
+  }
+}
+
+label {
+  position: relative;
+  display: block;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.align-left {
+  align-self: flex-start;
+}
+
+label.align-left {
+  text-align: left;
+}
+
+.align-center {
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+label.align-center {
+  text-align: center;
+}
+
+.align-right {
+  align-self: flex-end;
+}
+
+label.align-right {
+  text-align: right;
+}
+
 @media screen and (max-width: 768px) {
 
   label {

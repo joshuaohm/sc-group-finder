@@ -62,17 +62,25 @@ export default {
     };
   },
   methods: {
+    parseChildren(data, tree) {
+      for (var child of tree) {
+        if (child.inputVal && child.name) {
+          data[child.name] = child.inputVal;
+        } else if (child.selected && child.name) {
+          data[child.name] = child.selected;
+        }
+        if (child.$children.length > 0) data = this.parseChildren(data, child.$children);
+      }
+
+      return data;
+    },
     stopSubmit(e) {
       e.stopPropagation();
       e.preventDefault();
 
       var formData = new Object();
 
-      for (var child of this.$children) {
-        if (child.inputVal && child.name) {
-          formData[child.name] = child.inputVal;
-        }
-      }
+      formData = this.parseChildren(formData, this.$children);
 
       this.content.onSubmit(formData, this);
     }
@@ -81,6 +89,7 @@ export default {
     this.$root.$on('form-step-completed', el => {
       this.formStep = el.formStep + 1;
       this.$set(this.stepIds, el.formStep + 1, true);
+      if (el.callBack) el.callBack();
     });
   },
   created() {
@@ -99,6 +108,7 @@ export default {
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 
   label {
     padding-left: 8px;
