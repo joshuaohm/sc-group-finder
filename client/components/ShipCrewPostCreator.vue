@@ -44,7 +44,21 @@ export default {
         lightTheme: true,
         onSubmit(data, self) {
           console.log(data);
-          console.log(this.inputVal);
+          console.log(self.$store.state.currentShip.members);
+
+          data.members = JSON.stringify(self.$store.state.currentShip.members);
+
+          var successCallBack = postData => {
+            //this.$store.commit('SCPOSTSUCCESS', shipData.data.data);
+            self.$router.push({ name: 'Ship Crew Posts' });
+          };
+
+          var errorCallBack = error => {
+            console.log(error);
+          };
+
+          const repo = RepositoryFactory.get('scPosts');
+          repo.createPost(self.$store.state.currentUser.token, data, successCallBack, errorCallBack);
         },
         content: [
           {
@@ -141,28 +155,28 @@ export default {
   },
   methods: {
     getAllShips() {
-      var successCallBack1 = shipData => {
+      var successCallBack = shipData => {
         this.$store.commit('SHIPSLOADED', shipData.data.data);
       };
 
-      var errorCallBack1 = error => {
+      var errorCallBack = error => {
         console.log(error);
       };
 
       const repo = RepositoryFactory.get('ships');
-      repo.get(this.$store.state.currentUser.token, successCallBack1, errorCallBack1);
+      repo.get(this.$store.state.currentUser.token, successCallBack, errorCallBack);
     },
     getAllManus() {
-      var successCallBack2 = manuData => {
+      var successCallBack = manuData => {
         this.$store.commit('MANUSLOADED', manuData.data.data);
       };
 
-      var errorCallBack2 = error => {
+      var errorCallBack = error => {
         console.log(error);
       };
 
       const repo = RepositoryFactory.get('ships');
-      repo.getAllManus(this.$store.state.currentUser.token, successCallBack2, errorCallBack2);
+      repo.getAllManus(this.$store.state.currentUser.token, successCallBack, errorCallBack);
     },
     createOptions(type) {
       if (type === 'ships' && !this.$store.state.allShips) return false;

@@ -6,7 +6,6 @@
       :id="component.id"
       :name="component.name"
       :class="[component.class, component.contentWidth, component.contentAlign]"
-      v-model="inputVal"
     >{{component.value}}</div>
     <div
       v-else-if="isElementHTML(component) && component.content && component.content.length > 0"
@@ -14,7 +13,6 @@
       :id="component.id"
       :name="component.name"
       :class="[component.class, component.contentWidth, component.contentAlign]"
-      v-model="inputVal"
     >
       <slot v-for="content in component.content">
         <div
@@ -24,7 +22,6 @@
           :name="content.name"
           :align="content.contentAlign"
           :class="[content.class, content.contentWidth, content.contentAlign]"
-          v-model="inputVal"
         >{{content.value}}</div>
         <div
           v-else
@@ -33,7 +30,6 @@
           :id="content.id"
           :content="content"
           :class="[content.class, content.contentWidth, content.contentAlign]"
-          v-model="inputVal"
         ></div>
       </slot>
     </div>
@@ -43,7 +39,6 @@
       :is="component.contentType"
       :id="component.id"
       :content="component"
-      v-model="inputVal"
       :class="[component.class, component.contentWidth, component.contentAlign]"
     ></div>
   </div>
@@ -66,7 +61,6 @@ export default {
     return {
       contentType: 'TypeEvaluator',
       lightTheme: true,
-      inputVal: this.value,
       isHtml:
         this.component.contentType === 'span' ||
         this.component.contentType === 'p' ||
@@ -103,18 +97,14 @@ export default {
         obj.contentType === 'h1' ||
         obj.contentType === 'h3' ||
         obj.contentType === 'label' ||
-        obj.contentType === 'div';
+        obj.contentType === 'div' ||
+        obj.contentType === 'textarea';
 
       return ret;
     }
   },
   created() {
     this.lightTheme = this.parentColorTheme;
-  },
-  watch: {
-    inputVal(val) {
-      this.$emit('input', val);
-    }
   }
 };
 </script>

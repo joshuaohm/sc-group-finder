@@ -24,9 +24,10 @@ const state = {
     }
   },
   allShips: null,
+  allManus: null,
   filteredShips: null,
   currentShip: null,
-  allManus: null,
+
   selectedManu: null,
   currentPosts: null,
   filteredPosts: null,
@@ -76,6 +77,10 @@ const mutations = {
   },
   SHIPSELECTED(state, data) {
     state.currentShip = data;
+  },
+  UPDATESHIPMEMBERS(state, data) {
+    if (state.currentShip)
+      state.currentShip.members = data;
   }
 }
 

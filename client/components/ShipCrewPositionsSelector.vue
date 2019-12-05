@@ -4,7 +4,12 @@
     :class="['shipCrewPositionsDisplayer-wrapper', 'container', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)} ]"
   >
     <label class="align-center">Description:</label>
-    <TypeEvaluator :component="textArea"></TypeEvaluator>
+    <textarea
+      name="description"
+      id="description"
+      class="align-center three-quarter-width"
+      v-model="inputVal"
+    ></textarea>
     <label class="align-center">Crew Positions:</label>
     <div :class="['members-wrapper']">
       <slot v-for="(position, index) in content.members">
@@ -40,7 +45,9 @@ export default {
   },
   data() {
     return {
-      inputVal: '',
+      inputVal: this.value,
+      textAreaName: 'description',
+      textAreaValue: this.value,
       show: false,
       userPosition: null,
       textArea: {
@@ -100,6 +107,7 @@ export default {
         position.enabled = true;
       }
 
+      this.$store.commit('UPDATESHIPMEMBERS', this.content.members);
       this.$forceUpdate();
     }
   },

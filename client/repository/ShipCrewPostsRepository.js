@@ -35,8 +35,8 @@ export default {
   },
 
 
-  createPost(payload, successCallBack = null, errorCallBack = null) {
-    return Repository.$http.post(`${resource}`, payload)
+  createPost(userToken, payload, successCallBack = null, errorCallBack = null) {
+    return Repository.swapToken(userToken).post(`${resource}`, payload)
       .catch((error) => {
         if (errorCallBack) {
           successCallBack = null;

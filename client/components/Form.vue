@@ -68,6 +68,8 @@ export default {
           data[child.name] = child.inputVal;
         } else if (child.selected && child.name) {
           data[child.name] = child.selected;
+        } else if (child.textAreaName && child.inputVal) {
+          data[child.textAreaName] = child.inputVal;
         }
         if (child.$children.length > 0) data = this.parseChildren(data, child.$children);
       }
