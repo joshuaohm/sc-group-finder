@@ -16,9 +16,9 @@
         <div
           @click="positionClicked(position)"
           :key="'position-'+index"
-          :class="['crewPosition', position.type, , {'filled' : (position.member > 0 || position.member === 'this')}, {'disabled' : (position.enabled === false)}]"
+          :class="['crewPosition', position.type, , {'filled' : (position.member.id > 0 || position.member.id === 'this')}, {'disabled' : (position.enabled === false)}]"
         >
-          <div class>{{position.member ? "&nbsp;": "&nbsp;"}}</div>
+          <div class>{{position.member && position.member.name ? position.member.name : "&nbsp;"}}</div>
           <div>{{position.type}}</div>
           <div>{{position.position ? position.position : "&nbsp;"}}</div>
         </div>
@@ -93,13 +93,13 @@ export default {
     positionClicked(position) {
       if (this.userPosition === null && position.enabled) {
         this.userPosition = position;
-        position.member = 'this';
+        position.member.id = 'this';
       } else if (this.userPosition === null && !position.enabled) {
         position.enabled = true;
         this.userPosition = position;
-        position.member = 'this';
+        position.member.id = 'this';
       } else if (this.userPosition === position) {
-        position.member = 0;
+        position.member.id = 0;
         this.userPosition = null;
       } else if (position.enabled) {
         position.enabled = false;
@@ -118,7 +118,8 @@ export default {
 
         for (var position of this.content.members) {
           position.enabled = true;
-          position.member = 0;
+          position.member = new Object();
+          position.member.id = 0;
         }
         this.$forceUpdate();
       }

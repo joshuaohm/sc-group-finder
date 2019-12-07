@@ -59,6 +59,7 @@ export default {
     },
     subPanelLoaded() {
       this.$store.commit('SUBPANELEXPANDED');
+      this.$store.commit('SHOWTABS');
     },
     subPanelCollapsed() {
       this.$store.commit('SUBPANELCOLLAPSED');
@@ -136,7 +137,7 @@ export default {
 @media screen and (max-width: 780px) {
   .sub-panel {
     font-size: 1rem;
-    margin-right: 32px;
+    margin-right: 0px;
   }
 }
 @media screen and (max-width: 480px) {

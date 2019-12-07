@@ -11,7 +11,7 @@ const state = {
   currentUser: {
     token: "",
     id: 0,
-    name: null,
+    name: "",
   },
   currentPage: {
     name: "",
@@ -44,6 +44,9 @@ const mutations = {
   PAGELOADED(state) {
     state.currentPage.isLoaded = true;
   },
+  SHOWTABS(state) {
+
+  },
   TABLOADED(state) {
     state.currentPage.currentTab.isLoaded = true;
   },
@@ -53,13 +56,17 @@ const mutations = {
   SUBPANELCOLLAPSED(state) {
     state.currentPage.currentTab.currentSubPanel.isExpanded = false;
   },
-  LOGGEDIN(state, token) {
-    state.currentUser.token = token;
+  LOGGEDIN(state, data) {
+    state.currentUser.token = data.token;
+    state.currentUser.id = data.id;
+    state.currentUser.name = data.name;
     state.isLoggedIn = true;
-    window.localStorage.setItem('scgf-token', token);
+    window.localStorage.setItem('scgf-token', data.token);
   },
   LOGGEDOUT(state) {
     state.currentUser.token = "";
+    state.currentUser.id = 0;
+    state.currentUser.name = "";
     state.isLoggedIn = false;
     window.localStorage.setItem('scgf-token', "");
   },

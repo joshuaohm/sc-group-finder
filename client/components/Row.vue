@@ -1,7 +1,10 @@
 <template>
-  <div @click="rowClicked" :class="['row', {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]">
-    <div  v-for="(component, index) in content.content" :key="index">
-      <TypeEvaluator  :component="component" :name="'Row-TypeEvaluator-'+index"></TypeEvaluator>
+  <div
+    @click="rowClicked"
+    :class="['row', {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
+  >
+    <div v-for="(component, index) in content.content" :key="index">
+      <TypeEvaluator :component="component" :name="'Row-TypeEvaluator-'+index"></TypeEvaluator>
     </div>
   </div>
 </template>
@@ -17,33 +20,34 @@ export default {
     name: String,
     content: Object
   },
-  data () {
+  data() {
     return {
-      contentType: "Row",
-    }
+      contentType: 'Row'
+    };
   },
   computed: {
-    parentColorTheme () {
-      if(this.$parent.content)
-        return this.$parent.content.lightTheme;
-      else if(this.$parent.lightTheme)
-        return this.$parent.lightTheme;
-    },
+    parentColorTheme() {
+      if (this.$parent.content) return this.$parent.content.lightTheme;
+      else if (this.$parent.lightTheme) return this.$parent.lightTheme;
+    }
   },
-  created () {
+  created() {
     this.content.lightTheme = this.parentColorTheme;
   },
-  methods : {
-    rowClicked (e){
+  updated() {
+    this.$store.commit('SHOWTABS');
+  },
+  methods: {
+    rowClicked(e) {
       e.stopPropagation();
     }
   }
-}
+};
 </script>
 <style lang="scss">
-@import "../assets/scss/_variables.scss";
+@import '../assets/scss/_variables.scss';
 
-.row{
+.row {
   display: flex;
   position: relative;
   flex-flow: row nowrap;
@@ -56,14 +60,13 @@ export default {
   flex: 1 1 100%;
 }
 
-@media screen and (max-width: 480px){
-  .row{
+@media screen and (max-width: 480px) {
+  .row {
     flex-flow: row wrap;
   }
-  .row > div{
+  .row > div {
     flex: 1 0 100%;
     width: 100%;
   }
 }
-
 </style>

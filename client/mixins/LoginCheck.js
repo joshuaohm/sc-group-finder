@@ -5,7 +5,7 @@ var loginCheck = function (store, router) {
   if (store.state.isLoggedIn) {
 
     var onSuccess = (retData) => {
-      store.commit("LOGGEDIN", retData.data.data.token);
+      store.commit("LOGGEDIN", retData.data.data);
     };
 
     var onError = () => {
@@ -35,7 +35,7 @@ var beforeMount = function () {
 
     if (token != null && token != "") {
 
-      this.$store.commit("LOGGEDIN", token);
+      this.$store.commit("LOGGEDIN", { token: token, id: 0, name: "" });
       var self = this;
 
       setTimeout(function () {

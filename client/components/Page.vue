@@ -44,6 +44,7 @@ export default {
     },
     pageLoaded() {
       this.$store.commit('PAGELOADED');
+      this.$store.commit('SHOWTABS');
     }
   }
 };

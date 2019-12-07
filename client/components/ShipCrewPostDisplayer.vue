@@ -33,8 +33,11 @@ export default {
         lightTheme: true,
         text: [
           { value: 'post.slotsAvailable', class: 'post-slotsAvailable' },
-          { value: 'post.ship.manufacturer post.ship.name', class: 'post-shipName' },
-          { value: 'post.description', class: 'post-description' }
+          { value: 'post.ship.name', class: 'post-item' },
+          { value: 'post.creator', class: 'post-item' },
+          { value: 'post.startLocation', class: 'post-item' },
+          { value: 'post.targetLocation', class: 'post-item' },
+          { value: 'post.description', class: 'post-item' }
         ],
         subPanel: {
           contentType: 'SubPanel',
@@ -43,7 +46,7 @@ export default {
             {
               name: 'SCPsD-1',
               contentType: 'ShipCrewPositionsDisplayer',
-              content: { members: 'post.members', miscCrew: 'post.miscCrew' }
+              content: []
             }
           ]
         }
@@ -67,6 +70,8 @@ export default {
     },
     createContent(template, post) {
       for (var val of template.text) {
+        if (val.value === 'post') val.value = post;
+
         if (val.value.includes('post.ship.name')) val.value = val.value.replace(/post.ship.name/gi, post.ship.name);
         if (val.value.includes('post.ship.manufacturer'))
           val.value = val.value.replace(/post.ship.manufacturer/gi, post.ship.manufacturer);
@@ -77,10 +82,18 @@ export default {
             /post.description/gi,
             post.description.length > 20 ? post.description.substring(0, 20) + '...' : post.description
           );
+        if (val.value.includes('post.creator')) {
+          val.value = val.value.replace(/post.creator/gi, post.creator);
+        }
+        if (val.value.includes('post.startLocation')) {
+          val.value = val.value.replace(/post.startLocation/gi, post.startLocation);
+        }
+        if (val.value.includes('post.targetLocation')) {
+          val.value = val.value.replace(/post.targetLocation/gi, post.targetLocation);
+        }
       }
 
-      template.subPanel.content[0].content.members = post.members;
-      template.subPanel.content[0].content.miscCrew = post.miscCrew;
+      template.subPanel.content[0].content = post;
 
       this.computedTabs.push(template);
     },
@@ -110,9 +123,11 @@ export default {
   width: 100px;
 }
 
-/deep/ .post-shipName,
-/deep/ .post-description {
+/deep/ .post-item {
   width: 200px;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

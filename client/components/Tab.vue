@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-wrapper" :class="[mobileAlignOverride()]">
+  <div class="tab-wrapper" :class="[mobileAlignOverride(), content.contentWidth]">
     <transition name="tab-transition" v-on:after-enter="tabLoaded()">
       <div
         v-if="showTab"
@@ -56,7 +56,7 @@ export default {
   },
   created() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'PAGELOADED') {
+      if (mutation.type === 'SHOWTABS') {
         this.showTab = true;
         this.addedHeight = false;
       } else if (mutation.type === 'TABLOADED' && this.showTab) {

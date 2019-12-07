@@ -47,7 +47,7 @@ export default {
             class: 'container',
             onSubmit(data, self) {
               var successCallBack = retData => {
-                self.$store.commit('LOGGEDIN', retData.data.data.token);
+                self.$store.commit('LOGGEDIN', retData.data.data);
                 self.$router.push({ name: 'home' });
               };
 

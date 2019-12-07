@@ -41,7 +41,7 @@ export default {
           alignType: 'center',
           lightTheme: false,
           subPanel: false,
-          text: [{ value: 'Select an Option' }]
+          text: [{ value: 'Look For Groups in the PU' }]
         },
         {
           contentType: 'Panel',
