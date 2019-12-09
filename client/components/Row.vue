@@ -1,3 +1,8 @@
+<!--
+- Row
+- Used to contain html elements and components somewhat like bootstrap's row class, uses flex, so can display as row or columns.
+-
+-->
 <template>
   <div
     @click="rowClicked"

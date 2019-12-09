@@ -1,3 +1,8 @@
+<!--
+- Panel
+- Used to contain rendered objects in a Page within a bordered square.
+-
+-->
 <template>
   <div class="panel-wrapper">
     <div

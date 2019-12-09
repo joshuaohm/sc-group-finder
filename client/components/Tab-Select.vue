@@ -1,3 +1,8 @@
+<!--
+- Tab Select
+- Variation on Tab used as a select dropdown.
+-
+-->
 <template>
   <div class="tab-input-wrapper" :class="[alignment]">
     <transition name="tab-transition" v-on:after-enter="tabLoaded()">

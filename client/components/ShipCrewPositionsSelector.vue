@@ -1,3 +1,8 @@
+<!--
+- Ship Crew Positions Selector
+- Used to enable/disable crew positions, or assign yourself to a position, when creating a new SCPost.
+-
+--->
 <template>
   <div
     v-if="show"

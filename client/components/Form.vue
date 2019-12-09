@@ -1,3 +1,9 @@
+<!--
+- Form
+- Pretty much just a form object that can be used with TypeEvaluator to make sure components/nested objects still submit
+- Iterates through supplied content and checks children for input values, see methods' parseChildren()
+-
+--->
 <template>
   <form
     :action="content.action"

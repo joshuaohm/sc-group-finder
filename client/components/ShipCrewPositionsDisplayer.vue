@@ -1,3 +1,10 @@
+<!--  
+- Ship Crew Positions Displayer
+- Used to show filled/unfilled available positions in an SCPost
+- Users should be able to click positions and request to join the party in that position.
+-
+--->
+
 <template>
   <div class="shipCrewPositionsDisplayer-wrapper">
     <div class="row three-quarter-width align-center">

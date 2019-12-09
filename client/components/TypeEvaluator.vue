@@ -1,3 +1,8 @@
+<!--
+- TypeEvalaluator
+- Used to determine HTML elements from components in JSON prop data and render them correctly
+-
+--->
 <template>
   <div :class="['full-width']">
     <div

@@ -1,3 +1,11 @@
+<!--
+- Sub Panel
+- Regular tabs can be clicked to open Sub Panels beneath them.<template>
+- Primary use: crew posts have summary data printed on the tab, the sub panel contains full information.
+-
+</template>
+-->
+
 <template>
   <div class="panel-wrapper">
     <transition

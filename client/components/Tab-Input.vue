@@ -1,3 +1,8 @@
+<!--
+- Tab Input
+- Variation on Tab used as a text input field or a form submit button.
+-
+-->
 <template>
   <div class="tab-input-wrapper" :class="[alignment]">
     <transition name="tab-transition">

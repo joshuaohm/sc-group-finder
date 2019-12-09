@@ -1,3 +1,8 @@
+<!--
+- Page
+- Used to contain all view content, basically a window that open below the nav in the app.
+-
+-->
 <template>
   <div class="page-wrapper">
     <transition appear appear-active-class="page-appear-active" v-on:after-appear="pageLoaded()">

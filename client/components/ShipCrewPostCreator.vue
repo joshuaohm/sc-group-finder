@@ -1,3 +1,8 @@
+<!--
+- Ship Crew Post Creator
+- Used to create new SCPosts.
+-
+-->
 <template>
   <div
     :class="['shipCrewPostCreator-wrapper', {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"

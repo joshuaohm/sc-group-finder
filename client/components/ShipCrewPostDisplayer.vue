@@ -1,3 +1,9 @@
+<!--
+- Ship Crew Post Displayer
+- Used to load SCPost info and display tabs/subpanels with their contents
+- Iterates through data object and replaces 'post.' references with post data, like filling a template.
+-
+--->
 <template>
   <div class="SCPostDisplayer-wrapper">
     <slot>

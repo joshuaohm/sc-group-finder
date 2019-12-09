@@ -1,3 +1,8 @@
+<!--
+- Tab
+- Heavily stylized visual component used to display text or act as a button.
+-
+-->
 <template>
   <div class="tab-wrapper" :class="[mobileAlignOverride(), content.contentWidth]">
     <transition name="tab-transition" v-on:after-enter="tabLoaded()">
