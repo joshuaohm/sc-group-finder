@@ -87,6 +87,11 @@ export default {
                 contentWidth: 'three-quarter-width',
                 contentAlign: 'align-left',
                 formStep: 0,
+                formStepCallBack: e => {
+                  this.shipOptions = this.$store.state.allShips.filter(x => x.manufacturer === e.target.value);
+                  this.$store.commit('SHIPOPTIONSFILTERED', this.shipOptions);
+                  this.$store.commit('SHOWTABS', { id: 'ship-selector' });
+                },
                 formId: 'newShipCrewForm',
                 name: 'manufacturer',
                 id: 'manufacturer-selector',
@@ -119,7 +124,7 @@ export default {
                 formStep: 1,
                 formStepCallBack: e => {
                   this.$store.commit('SHIPSELECTED', this.$store.state.filteredShips.find(x => x.id == e.target.value));
-                  this.$root.$emit('reveal-positions-selector', { id: 'shipCrewSelector' });
+                  this.$store.commit('SHOWTABS', { id: 'startBody' });
                 },
                 name: 'ship_id',
                 id: 'ship-selector',
@@ -134,6 +139,106 @@ export default {
             contentAlign: 'align-center',
             contentWidth: 'three-quarter-width',
             content: [
+              {
+                contentType: 'label',
+                value: 'Meetup Parent:',
+                contentWidth: 'half-width',
+                contentAlign: 'align-left'
+              },
+              {
+                contentType: 'Tab-Select',
+                delayedReveal: true,
+                alignType: 'left',
+                lightTheme: false,
+                contentWidth: 'three-quarter-width',
+                contentAlign: 'align-left',
+                formStepCallBack: e => {
+                  this.$store.commit('LOCATIONBODYSELECTED', e.target.value);
+                  this.getChildrenLandingZones(e.target.value, 'startZone');
+                  this.$store.commit('SHOWTABS', { id: 'startZone' });
+                },
+                formId: 'newShipCrewForm',
+                name: 'startBody',
+                id: 'startBody',
+                optionType: 'allLocationBodies'
+              },
+              {
+                contentType: 'label',
+                value: 'Meetup Landing Zone:',
+                contentWidth: 'half-width',
+                contentAlign: 'align-left'
+              },
+              {
+                contentType: 'Tab-Select',
+                delayedReveal: true,
+                alignType: 'left',
+                lightTheme: false,
+                placeholder: 'Ship',
+                contentWidth: 'three-quarter-width',
+                contentAlign: 'align-left',
+                formStep: 2,
+                formStepCallBack: e => {
+                  this.$store.commit('SHOWTABS', { id: 'targetBody' });
+                  this.$root.$emit('reveal-positions-selector', { id: 'shipCrewSelector' });
+                },
+                formId: 'newShipCrewForm',
+                name: 'startZone',
+                id: 'startZone',
+                optionType: 'filteredLandingZones'
+              }
+            ]
+          },
+          {
+            contentType: 'div',
+            class: 'container',
+            id: 'newShipCrewFormStep3',
+            contentAlign: 'align-center',
+            contentWidth: 'three-quarter-width',
+            content: [
+              {
+                contentType: 'label',
+                value: '(Optional)Target Location Parent:',
+                contentWidth: 'half-width',
+                contentAlign: 'align-left'
+              },
+              {
+                contentType: 'Tab-Select',
+                delayedReveal: true,
+                alignType: 'left',
+                lightTheme: false,
+                contentWidth: 'three-quarter-width',
+                contentAlign: 'align-left',
+                formStepCallBack: e => {
+                  this.$store.commit('LOCATIONBODYSELECTED', e.target.value);
+                  this.getChildrenLandingZones(e.target.value, 'targetZone');
+                  this.$store.commit('SHOWTABS', { id: 'targetZone' });
+                },
+                formId: 'newShipCrewForm',
+                name: 'targetBody',
+                id: 'targetBody',
+                optionType: 'allLocationBodies'
+              },
+              {
+                contentType: 'label',
+                value: '(Optional)Target Location Landing Zone:',
+                contentWidth: 'half-width',
+                contentAlign: 'align-left'
+              },
+              {
+                contentType: 'Tab-Select',
+                delayedReveal: true,
+                alignType: 'left',
+                lightTheme: false,
+                placeholder: 'Ship',
+                contentWidth: 'three-quarter-width',
+                contentAlign: 'align-left',
+                formStep: 2,
+                formStepCallBack: e => {},
+                formId: 'newShipCrewForm',
+                name: 'targetZone',
+                id: 'targetZone',
+                optionType: 'filteredLandingZones'
+              },
               {
                 contentType: 'label',
                 value: 'Select Crew:',
@@ -153,6 +258,14 @@ export default {
                 id: 'ship-crew-selector'
               }
             ]
+          },
+          {
+            contentType: 'div',
+            class: 'container',
+            id: 'newShipCrewFormStep4',
+            contentAlign: 'align-center',
+            contentWidth: 'three-quarter-width',
+            content: []
           }
         ]
       }
@@ -183,19 +296,81 @@ export default {
       const repo = RepositoryFactory.get('ships');
       repo.getAllManus(this.$store.state.currentUser.token, successCallBack, errorCallBack);
     },
+    getAllLocationBodies() {
+      var successCallBack = locationData => {
+        this.$store.commit('LOCATIONBODIESLOADED', locationData.data.data);
+      };
+
+      var errorCallBack = error => {
+        console.log(error);
+      };
+
+      const repo = RepositoryFactory.get('locations');
+      repo.getType(this.$store.state.currentUser.token, 3, successCallBack, errorCallBack);
+    },
+    getAllLandingZones() {
+      var successCallBack = locationData => {
+        this.$store.commit('LOCATIONLANDINGZONESLOADED', locationData.data.data);
+      };
+
+      var errorCallBack = error => {
+        console.log(error);
+      };
+
+      const repo = RepositoryFactory.get('locations');
+      repo.getType(this.$store.state.currentUser.token, 4, successCallBack, errorCallBack);
+    },
+    getChildrenLandingZones(parentId, tabSelectId) {
+      var successCallBack = locationData => {
+        this.$store.commit('LOCATIONLANDINGZONESFILTERED', { data: locationData.data.data, id: tabSelectId });
+      };
+
+      var errorCallBack = error => {
+        console.log(error);
+      };
+
+      const repo = RepositoryFactory.get('locations');
+      repo.getChildrenOfType(this.$store.state.currentUser.token, parentId, 4, successCallBack, errorCallBack);
+    },
     createOptions(type) {
       if (type === 'ships' && !this.$store.state.allShips) return false;
       else if (type === 'manus' && !this.$store.state.allManus) return false;
 
-      if (type === 'ships') {
-        for (var option of this.$store.state.allShips) {
-          option.displayValue = option.name;
-          option.value = option.id;
+      switch (type) {
+        case 'ships': {
+          for (var option of this.$store.state.allShips) {
+            option.displayValue = option.name;
+            option.value = option.id;
+          }
+          break;
         }
-      } else if (type === 'manus') {
-        for (var option of this.$store.state.allManus) {
-          option.displayValue = option.manufacturer;
-          option.value = option.manufacturer;
+        case 'manus': {
+          for (var option of this.$store.state.allManus) {
+            option.displayValue = option.manufacturer;
+            option.value = option.manufacturer;
+          }
+          break;
+        }
+        case 'allLandingZones': {
+          for (var option of this.$store.state.locationLandingZones) {
+            option.displayValue = option.name;
+            option.value = option.id;
+          }
+          break;
+        }
+        case 'filteredLandingZones': {
+          for (var option of this.$store.state.filteredLandingZones) {
+            option.displayValue = option.name;
+            option.value = option.id;
+          }
+          break;
+        }
+        case 'allLocationBodies': {
+          for (var option of this.$store.state.locationBodies) {
+            option.displayValue = option.name;
+            option.value = option.id;
+          }
+          break;
         }
       }
     }
@@ -203,21 +378,33 @@ export default {
   mounted() {
     this.getAllManus();
     this.getAllShips();
+    this.getAllLocationBodies();
 
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'SHIPSLOADED') {
         this.createOptions('ships');
       } else if (mutation.type === 'MANUSLOADED') {
         this.createOptions('manus');
-      }
-    });
-    this.$root.$on('option-selected', el => {
-      if (el.id === 'manufacturer-selector' && el.value !== '') {
-        this.shipOptions = this.$store.state.allShips.filter(x => x.manufacturer === el.value);
-        this.$store.commit('SHIPOPTIONSFILTERED', this.shipOptions);
-        this.$root.$emit('reveal-next-tab', { id: 'ship-selector' });
+      } else if (mutation.type === 'LOCATIONLANDINGZONESLOADED') {
+        this.createOptions('allLandingZones');
+      } else if (mutation.type === 'LOCATIONBODIESLOADED') {
+        this.createOptions('allLocationBodies');
+      } else if (mutation.type === 'LOCATIONLANDINGZONESFILTERED') {
+        this.createOptions('filteredLandingZones');
       }
     });
   }
 };
 </script>
+
+<style lang="scss">
+@import '../assets/scss/_variables.scss';
+
+label {
+  font-size: 1.2rem;
+}
+
+.shipCrewPostCreator-wrapper .tab-input-wrapper {
+  margin-bottom: 1rem;
+}
+</style>

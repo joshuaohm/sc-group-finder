@@ -24,9 +24,16 @@ const state = {
     }
   },
   allShips: null,
-  allManus: null,
   filteredShips: null,
+
   currentShip: null,
+  allManus: null,
+
+  locationBodies: null,
+  locationLandingZones: null,
+
+  selectedLocationBody: null,
+  filteredLandingZones: null,
 
   selectedManu: null,
   currentPosts: null,
@@ -41,20 +48,17 @@ const mutations = {
   DECREMENT(state) {
     state.count--
   },
-  PAGELOADED(state) {
-    state.currentPage.isLoaded = true;
+  LOCATIONBODIESLOADED(state, data) {
+    state.locationBodies = data;
   },
-  SHOWTABS(state) {
-
+  LOCATIONBODYSELECTED(state, data) {
+    state.selectedLocationBody = data;
   },
-  TABLOADED(state) {
-    state.currentPage.currentTab.isLoaded = true;
+  LOCATIONLANDINGZONESLOADED(state, data) {
+    state.locationLandingZones = data;
   },
-  SUBPANELEXPANDED(state) {
-    state.currentPage.currentTab.currentSubPanel.isExpanded = true;
-  },
-  SUBPANELCOLLAPSED(state) {
-    state.currentPage.currentTab.currentSubPanel.isExpanded = false;
+  LOCATIONLANDINGZONESFILTERED(state, data) {
+    state.filteredLandingZones = data.data;
   },
   LOGGEDIN(state, data) {
     state.currentUser.token = data.token;
@@ -70,14 +74,17 @@ const mutations = {
     state.isLoggedIn = false;
     window.localStorage.setItem('scgf-token', "");
   },
+  MANUSLOADED(state, data) {
+    state.allManus = data;
+  },
+  PAGELOADED(state) {
+    state.currentPage.isLoaded = true;
+  },
   POSTSLOADED(state, data) {
     state.currentPosts = data;
   },
   SHIPSLOADED(state, data) {
     state.allShips = data;
-  },
-  MANUSLOADED(state, data) {
-    state.allManus = data;
   },
   SHIPOPTIONSFILTERED(state, data) {
     state.filteredShips = data;
@@ -85,10 +92,22 @@ const mutations = {
   SHIPSELECTED(state, data) {
     state.currentShip = data;
   },
+  SHOWTABS(state, data) {
+
+  },
+  SUBPANELEXPANDED(state) {
+    state.currentPage.currentTab.currentSubPanel.isExpanded = true;
+  },
+  SUBPANELCOLLAPSED(state) {
+    state.currentPage.currentTab.currentSubPanel.isExpanded = false;
+  },
+  TABLOADED(state) {
+    state.currentPage.currentTab.isLoaded = true;
+  },
   UPDATESHIPMEMBERS(state, data) {
     if (state.currentShip)
       state.currentShip.members = data;
-  }
+  },
 }
 
 const actions = {

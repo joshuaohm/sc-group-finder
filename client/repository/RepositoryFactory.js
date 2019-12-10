@@ -1,11 +1,13 @@
 import ShipCrewPostsRepository from "./ShipCrewPostsRepository";
 import LoginRepository from "./LoginRepository";
 import ShipsRepository from "./ShipsRepository";
+import LocationsRepository from "./LocationsRepository";
 
 const repositories = {
   scPosts: ShipCrewPostsRepository,
   login: LoginRepository,
-  ships: ShipsRepository
+  ships: ShipsRepository,
+  locations: LocationsRepository,
 
 };
 

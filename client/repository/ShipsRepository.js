@@ -6,7 +6,7 @@ var resource = "";
 export default {
   get(userToken, successCallBack = null, errorCallBack = null) {
     resource = "/ships";
-    return Repository.$http.get(`${resource}`, { headers: { 'Authorization': 'Bearer ' + userToken } })
+    return Repository.swapToken(userToken).get(`${resource}`)
       .catch((error) => {
         if (errorCallBack) {
           successCallBack = null;
@@ -22,7 +22,7 @@ export default {
 
   getAllManus(userToken, successCallBack = null, errorCallBack = null) {
     resource = '/manufacturers';
-    return Repository.$http.get(`${resource}`, { headers: { 'Authorization': 'Bearer ' + userToken } })
+    return Repository.swapToken(userToken).get(`${resource}`)
       .catch((error) => {
         if (errorCallBack) {
           successCallBack = null;
@@ -36,9 +36,9 @@ export default {
       });
   },
 
-  getShip(postId, successCallBack = null, errorCallBack = null) {
+  getShip(userToken, postId, successCallBack = null, errorCallBack = null) {
     resource = "/ships";
-    return Repository.$http.get(`${resource}/${postId}`)
+    return Repository.swapToken(userToken).get(`${resource}/${postId}`)
       .catch((error) => {
         if (errorCallBack) {
           successCallBack = null;

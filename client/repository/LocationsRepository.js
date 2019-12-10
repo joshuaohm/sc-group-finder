@@ -1,10 +1,11 @@
 import Repository from "./Repository";
 import store from '../store'
 
-const resource = "/posts/shipcrews";
+var resource = "";
 
 export default {
   get(userToken, successCallBack = null, errorCallBack = null) {
+    resource = "/locations";
     return Repository.swapToken(userToken).get(`${resource}`)
       .catch((error) => {
         if (errorCallBack) {
@@ -19,8 +20,9 @@ export default {
       });
   },
 
-  getPost(userToken, postId, successCallBack = null, errorCallBack = null) {
-    return Repository.swapToken(userToken).get(`${resource}/${postId}`)
+  getChildren(userToken, parentId, successCallBack = null, errorCallBack = null) {
+    resource = '/locations/children/' + parentId;
+    return Repository.swapToken(userToken).get(`${resource}`)
       .catch((error) => {
         if (errorCallBack) {
           successCallBack = null;
@@ -34,9 +36,9 @@ export default {
       });
   },
 
-
-  createPost(userToken, payload, successCallBack = null, errorCallBack = null) {
-    return Repository.swapToken(userToken).post(`${resource}`, payload)
+  getType(userToken, type, successCallBack = null, errorCallBack = null) {
+    resource = '/locations/type/' + type;
+    return Repository.swapToken(userToken).get(`${resource}`)
       .catch((error) => {
         if (errorCallBack) {
           successCallBack = null;
@@ -48,6 +50,22 @@ export default {
           successCallBack(data);
         }
       });
-  }
+  },
+
+  getChildrenOfType(userToken, parentId, type, successCallBack = null, errorCallBack = null) {
+    resource = '/locations/children/' + parentId + "/" + type;
+    return Repository.swapToken(userToken).get(`${resource}`)
+      .catch((error) => {
+        if (errorCallBack) {
+          successCallBack = null;
+          errorCallBack(error);
+        }
+      })
+      .then((data) => {
+        if (successCallBack) {
+          successCallBack(data);
+        }
+      });
+  },
 
 }

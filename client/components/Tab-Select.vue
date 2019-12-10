@@ -52,7 +52,6 @@ export default {
   },
   data() {
     return {
-      show: false,
       showTab: false,
       showBlue: true,
       showSubPanel: false,
@@ -62,7 +61,12 @@ export default {
   },
   created() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'PAGELOADED' && !this.content.delayedReveal) {
+      if (
+        mutation.type === 'SHOWTABS' &&
+        (!this.content.delayedReveal || (mutation.payload && mutation.payload.id === this.content.id))
+      ) {
+        console.log('showtabs');
+
         this.showTab = true;
         this.addedHeight = false;
 
@@ -72,20 +76,8 @@ export default {
               this.content.options = this.$store.state.allManus;
               break;
             }
-            case 'allShips': {
-              this.content.options = this.$store.state.allShips;
-              break;
-            }
           }
         }
-      } else if (
-        mutation.type === 'TABLOADED' &&
-        this.showTab &&
-        mutation.payload === this.content.id &&
-        !this.content.delayedReveal
-      ) {
-        this.showBlue = true;
-        this.addedHeight = false;
       }
       //Watch for state lists that Tab Selects use to be updated and push the changes to the select's options
       //forceUpdate() seems to be necessary, this.$set on all values did not work.
@@ -103,17 +95,35 @@ export default {
           }
         }
       }
-    });
-  },
-  mounted() {
-    this.$root.$on('reveal-next-tab', tab => {
-      if (tab.id === this.content.id) {
-        this.showTab = true;
-        this.showBlue = true;
-        this.addedHeight = false;
+      if (
+        mutation.type === 'LOCATIONLANDINGZONESLOADED' ||
+        (mutation.type === 'LOCATIONLANDINGZONESFILTERED' && mutation.payload.id === this.content.id)
+      ) {
+        switch (this.content.optionType) {
+          case 'allLandingZones': {
+            this.content.options = this.$store.state.locationLandingZones;
+            this.$forceUpdate();
+            break;
+          }
+          case 'filteredLandingZones': {
+            this.content.options = mutation.payload.data;
+            this.$forceUpdate();
+            break;
+          }
+        }
+      }
+      if (mutation.type === 'LOCATIONBODIESLOADED') {
+        switch (this.content.optionType) {
+          case 'allLocationBodies': {
+            this.content.options = this.$store.state.locationBodies;
+            this.$forceUpdate();
+            break;
+          }
+        }
       }
     });
   },
+  mounted() {},
   methods: {
     onChange(e) {
       this.$root.$emit('option-selected', { id: e.target.id, value: e.target.value });
