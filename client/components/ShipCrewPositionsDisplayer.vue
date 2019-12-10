@@ -1,4 +1,4 @@
-<!--  
+<!--
 - Ship Crew Positions Displayer
 - Used to show filled/unfilled available positions in an SCPost
 - Users should be able to click positions and request to join the party in that position.
@@ -9,71 +9,73 @@
   <div class="shipCrewPositionsDisplayer-wrapper">
     <div class="row three-quarter-width align-center">
       <div class="row-item">
-        <label class="post-text">Creator:</label>
-        <div class="post-text">{{content.content.creator}}</div>
+        <label class="post-text align-left">Creator:</label>
+        <div class="post-text align-left">{{content.content.creator}}</div>
       </div>
       <div class="row-item">
-        <label class="post-text">Ship:</label>
+        <label class="post-text align-right">Ship:</label>
         <div
-          class="post-text"
+          class="post-text align-right"
         >{{content.content.ship.manufacturer + " " + content.content.ship.name}}</div>
       </div>
     </div>
     <slot v-if="content.content.startLocation && content.content.targetLocation">
       <div class="row three-quarter-width align-center">
         <div class="row-item">
-          <label class="post-text">Start Location:</label>
-          <div class="post-text">{{content.content.startLocation}}</div>
+          <label class="post-text align-left">Start Location:</label>
+          <div class="post-text align-left">{{content.content.startLocation.name}}</div>
         </div>
-
         <div class="row-item">
-          <label class="post-text">Target Location:</label>
-          <div class="post-text">{{content.content.targetLocation}}</div>
+          <label class="post-text align-right">Target Location:</label>
+          <div class="post-text align-right">{{content.content.targetLocation.name}}</div>
         </div>
       </div>
     </slot>
     <slot v-else-if="content.content.startLocation && !content.content.targetLocation">
       <div class="row row-center full-width align-center">
         <div class="row-item">
-          <label class="post-text">Start Location:</label>
-          <div class="post-text">{{content.content.startLocation}}</div>
+          <label class="post-text align-center">Start Location:</label>
+          <div class="post-text align-center">{{content.content.startLocation.name}}</div>
         </div>
       </div>
     </slot>
     <slot v-else-if="!content.content.startLocation && content.content.targetLocation">
       <div class="row row-center full-width align-center">
         <div class="row-item">
-          <label class="post-text">Target Location:</label>
-          <div class="post-text">{{content.content.targetLocation}}</div>
+          <label class="post-text align-center">Target Location:</label>
+          <div class="post-text align-center">{{content.content.targetLocation.name}}</div>
         </div>
       </div>
     </slot>
 
-    <label>Description:</label>
-    <textarea :class="['three-quarter-width', 'align-center']">{{content.content.description}}</textarea>
-    <label>Crew Positions:</label>
+    <label class="post-text">Description:</label>
+    <textarea disabled :class="['three-quarter-width', 'align-center']">{{content.content.description}}</textarea>
+
+    <label class="post-text">Crew Positions:</label>
     <div :class="['members-wrapper']">
       <slot v-for="(position, index) in content.content.members">
         <div
           v-if="position.enabled"
           :class="['crewPosition', position.type, , {'filled' : (position.member.id > 0)}, {'disabled' : (position.enabled === false)}]"
         >
-          <div class>{{position.member && position.member.name ? position.member.name : "&nbsp;"}}</div>
+          <div>{{position.member && position.member.name ? position.member.name : "&nbsp;"}}</div>
           <div>{{position.type}}</div>
           <div>{{position.position ? position.position : "&nbsp;"}}</div>
         </div>
       </slot>
     </div>
-    <label>Misc Positions:</label>
-    <div :class="['miscCrew-wrapper']">
-      <slot v-for="(position, index) in content.content.miscCrew">
-        <div
-          :class="['crewPosition', position.type, {'filled' : (position.member.id > 0)}, {'disabled' : (position.enabled === false)}]"
-        >
-          <div class>{{position.member && position.member.name ? position.member.name : "&nbsp;"}}</div>
-        </div>
-      </slot>
-    </div>
+    <slot v-if="content.content.miscCrew">
+      <label class="post-text">Misc Positions:</label>
+      <div :class="['miscCrew-wrapper']">
+        <slot v-for="(position, index) in content.content.miscCrew">
+          <div
+            :class="['crewPosition', position.type, {'filled' : (position.member.id > 0)}, {'disabled' : (position.enabled === false)}]"
+          >
+            <div>{{position.member && position.member.name ? position.member.name : "&nbsp;"}}</div>
+          </div>
+        </slot>
+      </div>
+    </slot>
   </div>
 </template>
 
@@ -97,7 +99,13 @@ export default {
           {
             subPanel: false,
             lightTheme: true,
-            text: [{ value: 'Start Location: ' + this.content.content.startLocation }],
+            text: [
+              {
+                value:
+                  'Start Location: ' +
+                  (this.content.content.targetLocation ? this.content.content.startLocation.name : null)
+              }
+            ],
             contentType: 'Tab',
             alignType: 'left',
             contentAlign: 'align-center',
@@ -106,7 +114,13 @@ export default {
           {
             subPanel: false,
             lightTheme: true,
-            text: [{ value: 'Target Location: ' + this.content.content.targetLocation }],
+            text: [
+              {
+                value:
+                  'Target Location: ' +
+                  (this.content.content.targetLocation ? this.content.content.targetLocation.name : null)
+              }
+            ],
             contentType: 'Tab',
             alignType: 'row-right',
             contentAlign: 'align-center',
@@ -133,6 +147,7 @@ export default {
   justify-content: center;
   align-items: center;
   margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .row {
@@ -152,11 +167,18 @@ export default {
 
 .post-text {
   font-size: 1.4rem;
-  text-align: left;
+  text-align: center;
+
+  &.align-left {
+    text-align: left;
+  }
+
+  &.align-right {
+    text-align: right;
+  }
 }
 
 div.post-text {
-  text-decoration: underline;
   white-space: pre-line;
 }
 
@@ -173,10 +195,12 @@ label {
 
   &.disabled {
     background-color: red;
+    opacity: 0.8;
   }
 
   &.filled {
     background-color: green;
+    opacity: 0.8;
   }
 }
 

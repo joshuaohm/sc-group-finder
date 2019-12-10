@@ -9,11 +9,19 @@
       <div
         v-if="showTab"
         @click="tabClicked"
-        :class="['tab', alignment, {'btn':(content.onClick)}, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
+        :class="['tab', alignment, {'active' : content.active }, {'btn':(content.onClick)}, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
       >
-        <slot v-for="(item, index) in content.text">
-          <span v-if="item.value && item.value.length > 0" :class="item.class">{{item.value}}</span>
-        </slot>
+        <div class="text-row">
+          <slot v-for="(item, index) in content.text">
+            <fieldset v-if="item.legend">
+              <legend>{{item.legend}}</legend>
+              <span v-if="item.value && item.value.length > 0" :class="item.class">{{item.value}}</span>
+            </fieldset>
+            <slot v-else>
+              <span v-if="item.value && item.value.length > 0" :class="item.class">{{item.value}}</span>
+            </slot>
+          </slot>
+        </div>
       </div>
     </transition>
     <slot @v-show="showSubPanel">
@@ -88,6 +96,8 @@ export default {
   },
   methods: {
     tabClicked() {
+      this.content.active = !this.content.active;
+
       if (this.content.subPanel) {
         this.showSubPanel = !this.showSubPanel;
 

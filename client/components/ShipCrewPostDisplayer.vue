@@ -39,11 +39,11 @@ export default {
         lightTheme: true,
         text: [
           { value: 'post.slotsAvailable', class: 'post-slotsAvailable' },
-          { value: 'post.ship.name', class: 'post-item' },
-          { value: 'post.creator', class: 'post-item' },
-          { value: 'post.startLocation', class: 'post-item' },
-          { value: 'post.targetLocation', class: 'post-item' },
-          { value: 'post.description', class: 'post-item' }
+          { value: 'post.ship.name', class: 'post-item ship-name', legend: 'Ship' },
+          { value: 'post.creator', class: 'post-item creator', legend: 'Creator' },
+          { value: 'post.startLocation.name', class: 'post-item startLocation', legend: 'Start Location' },
+          { value: 'post.targetLocation.name', class: 'post-item targetLocation', legend: 'Target Location' },
+          { value: 'post.description', class: 'post-item description', legend: 'Description' }
         ],
         subPanel: {
           contentType: 'SubPanel',
@@ -91,11 +91,13 @@ export default {
         if (val.value.includes('post.creator')) {
           val.value = val.value.replace(/post.creator/gi, post.creator);
         }
-        if (val.value.includes('post.startLocation')) {
-          val.value = val.value.replace(/post.startLocation/gi, post.startLocation);
+        if (val.value.includes('post.startLocation.name')) {
+          if (post.startLocation === null) val.value = '';
+          else val.value = val.value.replace(/post.startLocation.name/gi, post.startLocation.name);
         }
-        if (val.value.includes('post.targetLocation')) {
-          val.value = val.value.replace(/post.targetLocation/gi, post.targetLocation);
+        if (val.value.includes('post.targetLocation.name')) {
+          if (post.targetLocation === null) val.value = '';
+          else val.value = val.value.replace(/post.targetLocation.name/gi, post.targetLocation.name);
         }
       }
 
@@ -122,18 +124,55 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/scss/_variables.scss';
+
+/deep/ .tab {
+  overflow-x: hidden;
+}
 /deep/ .left {
   justify-content: flex-start;
 }
+
+/deep/ .text-row {
+  display: flex;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  padding-left: 74px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 /deep/ .post-slotsAvailable {
-  width: 100px;
+  top: 2px;
+  left: 2px;
+  width: 70px;
+  text-align: left;
+  position: absolute;
+  border: 1px solid $ice-blue;
+  background-color: $page-border;
+  box-sizing: border-box;
+  height: calc(100% - 4px);
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/deep/ .active .post-slotsAvailable {
+  border-color: $orange;
 }
 
 /deep/ .post-item {
-  width: 200px;
+  display: inline-block;
+  width: 160px;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 0.8rem;
+  padding-right: 8px;
+  flex-shrink: 0;
 }
 </style>

@@ -29,7 +29,12 @@ body {
   background-color: #000;
   margin: 0;
   font-size: 2rem;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Roboto Mono', monospace;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 h1,

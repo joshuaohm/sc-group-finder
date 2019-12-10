@@ -258,14 +258,6 @@ export default {
                 id: 'ship-crew-selector'
               }
             ]
-          },
-          {
-            contentType: 'div',
-            class: 'container',
-            id: 'newShipCrewFormStep4',
-            contentAlign: 'align-center',
-            contentWidth: 'three-quarter-width',
-            content: []
           }
         ]
       }

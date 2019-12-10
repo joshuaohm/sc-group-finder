@@ -103,6 +103,7 @@ $page-color: #012e23;
   background-color: $page-color;
   border: 2px solid $page-border;
   color: $ice-blue;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .nav-item,
