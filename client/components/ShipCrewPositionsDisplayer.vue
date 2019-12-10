@@ -205,8 +205,20 @@ label {
 }
 
 @media screen and (max-width: 768px) {
+  .row-item {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
   .post-text {
     font-size: 1rem;
+    text-align: center;
+
+    &.align-left {
+      text-align: center;
+    }
+    &.align-right {
+      text-align: center;
+    }
   }
 }
 </style>

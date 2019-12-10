@@ -128,6 +128,33 @@ export default {
 
 /deep/ .tab {
   overflow-x: hidden;
+  cursor: pointer;
+  user-select: none;
+
+  & legend {
+    font-size: 0.5rem;
+    color: $orange;
+    pointer-events: none;
+  }
+
+  & fieldset {
+    position: relative;
+    margin-bottom: 4px;
+    padding: 1px 4px;
+    border-color: $ice-blue;
+    width: 160px;
+    box-sizing: border-box;
+  }
+
+  &.active {
+    fieldset {
+      border-color: $orange;
+    }
+
+    legend {
+      color: white;
+    }
+  }
 }
 /deep/ .left {
   justify-content: flex-start;
@@ -138,7 +165,9 @@ export default {
   overflow-x: scroll;
   -ms-overflow-style: none;
   padding-left: 74px;
-
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  width: 100%;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -166,13 +195,11 @@ export default {
 
 /deep/ .post-item {
   display: inline-block;
-  width: 160px;
   text-align: left;
   white-space: nowrap;
+  font-size: 0.8rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.8rem;
-  padding-right: 8px;
-  flex-shrink: 0;
+  width: 160px;
 }
 </style>

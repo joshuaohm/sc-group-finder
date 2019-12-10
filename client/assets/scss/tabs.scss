@@ -80,35 +80,6 @@
   justify-content: center;
   align-items: center;
 
-  & .text-row {
-    color: white;
-  }
-
-  & legend {
-    font-size: .5rem;
-    color: $orange;
-  }
-
-  & fieldset {
-    position: relative;
-    margin-bottom: 4px;
-    padding: 1px 4px;
-    border-color: $ice-blue;
-    white-space: nowrap;
-  }
-
-  &.active {
-
-    fieldset {
-      border-color: $orange;
-    }
-
-    legend {
-      color: white;
-    }
-  }
-
-
   &.submit {
     cursor: pointer;
 

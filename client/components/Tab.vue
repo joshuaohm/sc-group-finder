@@ -16,9 +16,11 @@
             <fieldset v-if="item.legend">
               <legend>{{item.legend}}</legend>
               <span v-if="item.value && item.value.length > 0" :class="item.class">{{item.value}}</span>
+              <span v-else :class="item.class"></span>
             </fieldset>
             <slot v-else>
               <span v-if="item.value && item.value.length > 0" :class="item.class">{{item.value}}</span>
+              <span v-else :class="item.class"></span>
             </slot>
           </slot>
         </div>
