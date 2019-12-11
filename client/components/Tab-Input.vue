@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="tab-input-wrapper" :class="[alignment]">
-    <transition name="tab-transition">
+    <transition :transitionType="'transition'" name="tab-transition">
       <slot v-if="showTab">
         <div
           v-bind:class="['tab', content.inputType, alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
@@ -17,8 +17,6 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :placeholder="content.placeholder"
-              :name="content.id"
-              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -29,8 +27,6 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :placeholder="content.placeholder"
-              :name="content.id"
-              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -41,8 +37,6 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :placeholder="content.placeholder"
-              :name="content.id"
-              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -52,8 +46,6 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :value="content.placeholder"
-              :name="content.id"
-              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -66,8 +58,6 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :placeholder="content.placeholder"
-              :name="content.id"
-              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -86,7 +76,6 @@
 <script>
 export default {
   props: {
-    name: String,
     content: Object
   },
   computed: {

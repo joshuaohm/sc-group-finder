@@ -102,8 +102,7 @@ export default {
         contentWidth: 'quarter-width',
         placeholder: 'Submit',
         inputType: 'submit',
-        name: this.$attrs.name + '-submitBtn',
-        id: this.$attrs.name + '-submitBtn'
+        id: this.content.parentId + '-' + this.$uuid + '-submit'
       },
       row: {
         lightTheme: true,
@@ -146,6 +145,16 @@ export default {
     };
   },
   methods: {
+    clearRequestedPositions(positions) {
+      if (!positions || positions.length === 0) return false;
+
+      for (var i = 0; i < positions.length; i++) {
+        if (positions[i].requested === true) {
+          positions[i].requested = false;
+          this.$set(positions, positions[i].requested, false);
+        }
+      }
+    },
     positionClicked(position, index, isCrew) {
       var positions = null;
       if (isCrew) {
@@ -159,23 +168,16 @@ export default {
       )
         this.requestedPosition = null;
       else {
-        for (var i = 0; i < positions.length; i++) {
-          if (positions[i].requested === true) {
-            positions[i].requested = false;
-            this.$set(positions, positions[i].requested, false);
-          }
-        }
-
+        this.clearRequestedPositions(positions);
         this.requestedPosition = position;
         this.$set(this.requestedPosition, 0, position);
       }
 
-      if (this.requestedPosition !== null) this.$store.commit('SHOWTABS', { id: this.$attrs.id + '-submitBtn' });
-      else this.$store.commit('HIDETABS', { id: this.$attrs.id + '-submitBtn' });
+      if (this.requestedPosition !== null)
+        this.$store.commit('SHOWTABS', { id: this.content.parentId + '-' + this.$uuid + '-submit' });
+      else this.$store.commit('HIDETABS', { id: this.content.parentId + '-' + this.$uuid + '-submit' });
 
       position.requested = !position.requested;
-
-      // this.$store.commit('UPDATESHIPMEMBERS', this.content.members);
       this.$forceUpdate();
     }
   },
@@ -197,19 +199,23 @@ export default {
       } else if (
         mutation.type === 'SUBPANELEXPANDED' &&
         mutation.payload &&
-        mutation.payload.id.includes(this.content.id.replace('-ShipCrewPostionsDisplayer', ''))
+        (mutation.payload.id === this.$attrs.parentId ||
+          (mutation.payload.parentId && this.content && mutation.payload.parentId === this.content.parentId))
       ) {
       } else if (
         mutation.type === 'SUBPANELCOLLAPSED' &&
         mutation.payload &&
-        mutation.payload.id.includes(this.content.id.replace('-ShipCrewPostionsDisplayer', ''))
+        (mutation.payload.id === this.$attrs.parentId ||
+          (this.content && mutation.payload.id === this.content.parentId))
       ) {
+        this.requestedPosition = null;
+        this.clearRequestedPositions(this.content.content.members);
+        this.clearRequestedPositions(this.content.content.miscCrew);
+        this.$forceUpdate();
       }
     });
   },
-  updated() {
-    this.$store.commit('SHOWTABS', { id: this.$attrs.id + '-submitBtn' });
-  }
+  updated() {}
 };
 </script>
 
@@ -270,6 +276,7 @@ label {
   margin: 1px;
   min-width: 60px;
   min-height: 60px;
+  cursor: pointer;
 
   &.requested {
     border-color: $orange;

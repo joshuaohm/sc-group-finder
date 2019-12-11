@@ -48,9 +48,6 @@ export default {
         contentType: 'Form',
         lightTheme: true,
         onSubmit(data, self) {
-          console.log(data);
-          console.log(self.$store.state.currentShip.members);
-
           data.members = JSON.stringify(self.$store.state.currentShip.members);
 
           var successCallBack = postData => {

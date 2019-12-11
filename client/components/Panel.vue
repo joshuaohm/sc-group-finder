@@ -9,7 +9,7 @@
       v-bind:class="{'panel':true, 'light':(content.lightTheme), 'onLight':(parentColorTheme), 'onDark':(!parentColorTheme)}"
     >
       <slot v-for="(component, index) in content.content">
-        <TypeEvaluator :component="component" :name="'Panel-TypeEvaluator-'+index"></TypeEvaluator>
+        <TypeEvaluator :component="component"></TypeEvaluator>
       </slot>
     </div>
   </div>
@@ -26,7 +26,6 @@ export default {
     ShipCrewPostDisplayer: () => import('components/ShipCrewPostDisplayer')
   },
   props: {
-    name: String,
     content: Object
   },
   computed: {

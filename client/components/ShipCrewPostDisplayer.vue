@@ -37,8 +37,7 @@ export default {
         contentType: 'Tab',
         alignType: 'left',
         lightTheme: true,
-        name: this.$attrs.id + '-Tab',
-        id: this.$attrs.id + '-Tab',
+
         text: [
           { value: 'post.slotsAvailable', class: 'post-slotsAvailable' },
           { value: 'post.ship.name', class: 'post-item ship-name', legend: 'Ship' },
@@ -49,13 +48,9 @@ export default {
         ],
         subPanel: {
           contentType: 'SubPanel',
-          name: this.$attrs.id + '-SubPanel',
-          id: this.$attrs.id + '-SubPanel',
           lightTheme: false,
           content: [
             {
-              name: this.$attrs.id + '-ShipCrewPositionsDisplayer',
-              id: this.$attrs.id + '-ShipCrewPositionsDisplayer',
               contentType: 'ShipCrewPositionsDisplayer',
               content: []
             }
@@ -107,6 +102,8 @@ export default {
       }
 
       template.subPanel.content[0].content = post;
+      template.subPanel.parentId = this.$attrs.id;
+      template.parentId = this.$attrs.id;
 
       this.computedTabs.push(template);
     },

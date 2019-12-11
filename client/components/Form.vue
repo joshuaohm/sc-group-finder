@@ -18,9 +18,7 @@
         <TypeEvaluator
           v-show="stepIds[index]"
           :component="component"
-          :name="component.name"
           :class="[content.formId+'-formStep'+index, 'container']"
-          :id="content.formId+'-TypeEvaluator-'+index"
           :key="content.formId+'-formStep'+index"
           v-model="component.inputVal"
         ></TypeEvaluator>
@@ -30,9 +28,7 @@
       <slot v-for="(component, index) in content.content">
         <TypeEvaluator
           :component="component"
-          :name="component.name"
           :class="[content.formId+'-formStep'+index, 'container']"
-          :id="content.formId+'-TypeEvaluator-'+index"
           :key="content.formId+'-formStep'+index"
           v-model="component.inputVal"
         ></TypeEvaluator>

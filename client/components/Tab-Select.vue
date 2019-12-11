@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="tab-input-wrapper" :class="[alignment]">
-    <transition name="tab-transition" v-on:after-enter="tabLoaded()">
+    <transition :transitionType="'transition'" name="tab-transition" v-on:after-enter="tabLoaded()">
       <slot v-if="showTab">
         <div
           :class="['tab', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
@@ -13,8 +13,6 @@
           <select
             v-model="selected"
             @change="onChange($event)"
-            :id="content.id"
-            :name="content.name"
             :class="['tab-input', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}]"
           >
             <option
@@ -38,7 +36,6 @@
 <script>
 export default {
   props: {
-    name: String,
     content: Object
   },
   computed: {

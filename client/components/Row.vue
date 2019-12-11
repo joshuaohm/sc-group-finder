@@ -9,7 +9,7 @@
     :class="['row', {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
   >
     <div v-for="(component, index) in content.content" :key="index">
-      <TypeEvaluator :component="component" :name="'Row-TypeEvaluator-'+index"></TypeEvaluator>
+      <TypeEvaluator :component="component"></TypeEvaluator>
     </div>
   </div>
 </template>
@@ -22,7 +22,6 @@ export default {
     TypeEvaluator: () => import('components/TypeEvaluator')
   },
   props: {
-    name: String,
     content: Object
   },
   data() {

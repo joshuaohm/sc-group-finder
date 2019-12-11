@@ -5,7 +5,11 @@
 -->
 <template>
   <div class="navigation">
-    <transition-group appear appear-active-class="nav-animation-active">
+    <transition-group
+      :transitionType="'transition'"
+      appear
+      appear-active-class="nav-animation-active"
+    >
       <div class="mobile-nav-wrapper" :key="0" @click="toggleMobileNav()">
         <div class="logo-wrapper"></div>
         <ul class="nav-list">
@@ -32,7 +36,7 @@
       </div>
     </transition-group>
 
-    <transition name="mobile-nav-transition">
+    <transition :transitionType="'transition'" name="mobile-nav-transition">
       <div v-if="mobileShow" class="mobile-nav-menu">
         <ul class="nav-list">
           <li class="nav-item" id="nav-item-1">
@@ -67,9 +71,6 @@ export default {
     }
   },
   methods: {
-    hello() {
-      console.log(this.msg);
-    },
     toggleMobileNav() {
       this.mobileShow = !this.mobileShow;
     },

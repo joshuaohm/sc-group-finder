@@ -9,13 +9,14 @@
 <template>
   <div class="panel-wrapper">
     <transition
+      :transitionType="'transition'"
       name="subpanel-transition"
       v-on:after-enter="subPanelLoaded()"
       v-on:after-leave="subPanelCollapsed()"
     >
       <div
         v-if="expanded"
-        v-bind:class="['sub-panel', parentAlignment, {'light':(content.lightTheme)}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
+        :class="['sub-panel', parentAlignment, {'light':(content.lightTheme)}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
       >
         <slot v-for="(component, index) in content.content">
           <slot v-if="component.contentType.toLowerCase() === 'p'">
@@ -25,7 +26,7 @@
             <h3>{{component.value}}</h3>
           </slot>
           <slot v-else-if="component.contentType">
-            <TypeEvaluator :component="component" :name="'SubPanel-TypeEvaluator-'+index"></TypeEvaluator>
+            <TypeEvaluator :parentId="content.id" :component="component"></TypeEvaluator>
           </slot>
         </slot>
       </div>
@@ -42,7 +43,6 @@ export default {
     TypeEvaluator: () => import('components/TypeEvaluator')
   },
   props: {
-    name: String,
     content: Object
   },
   computed: {
@@ -66,11 +66,17 @@ export default {
       this.expanded = !this.expanded;
     },
     subPanelLoaded() {
-      this.$store.commit('SUBPANELEXPANDED', { id: this.content.id });
+      this.$store.commit('SUBPANELEXPANDED', {
+        id: this.content.id,
+        parentId: this.content && this.content.parentId ? this.content.parentId : null
+      });
       this.$store.commit('SHOWTABS');
     },
     subPanelCollapsed() {
-      this.$store.commit('SUBPANELCOLLAPSED', { id: this.content.id });
+      this.$store.commit('SUBPANELCOLLAPSED', {
+        id: this.content.id,
+        parentId: this.content && this.content.parentId ? this.content.parentId : null
+      });
     }
   }
 };

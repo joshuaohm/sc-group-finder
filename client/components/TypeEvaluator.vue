@@ -8,23 +8,17 @@
     <div
       v-if="isElementHTML(component) && component.value && component.value.length > 0"
       :is="component.contentType"
-      :name="elementName(component)"
-      :id="elementId(component)"
       :class="[component.class, component.contentWidth, component.contentAlign]"
     >{{component.value}}</div>
     <div
       v-else-if="isElementHTML(component) && component.content && component.content.length > 0"
       :is="component.contentType"
-      :name="elementName(component)"
-      :id="elementId(component)"
       :class="[component.class, component.contentWidth, component.contentAlign]"
     >
       <slot v-for="content in component.content">
         <div
           v-if="isElementHTML(content) && content.value && content.value.length > 0"
           :is="content.contentType"
-          :name="elementName(content)"
-          :id="elementId(content)"
           content
           :align="content.contentAlign"
           :class="[content.class, content.contentWidth, content.contentAlign]"
@@ -32,8 +26,6 @@
         <div
           v-else
           :is="content.contentType"
-          :name="elementName(content)"
-          :id="elementId(content)"
           :content="content"
           :class="[content.class, content.contentWidth, content.contentAlign]"
         ></div>
@@ -41,9 +33,8 @@
     </div>
     <div
       v-else
-      :name="elementName(component)"
-      :id="elementId(component)"
       :is="component.contentType"
+      :parentId="this.$attrs.parentId"
       :content="component"
       :class="[component.class, component.contentWidth, component.contentAlign]"
     ></div>
@@ -66,7 +57,7 @@ export default {
   data() {
     return {
       contentType: 'TypeEvaluator',
-      id: 'TypeEvaluator-' + this._uid,
+      id: this.$uuid,
       lightTheme: true,
       isHtml:
         this.component.contentType === 'span' ||
@@ -79,7 +70,6 @@ export default {
     };
   },
   props: {
-    name: String,
     component: Object,
     test: String
   },
@@ -108,12 +98,6 @@ export default {
         obj.contentType === 'textarea';
 
       return ret;
-    },
-    elementName(component) {
-      return this.id + '-' + this.component.contentType;
-    },
-    elementId(component) {
-      return this.id + '-' + this.component.contentType;
     }
   },
   created() {

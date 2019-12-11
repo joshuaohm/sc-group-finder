@@ -22,7 +22,6 @@ export default {
     return {
       loggedOut: [
         {
-          name: 'tabProp',
           contentType: 'Tab',
           alignType: 'center',
           lightTheme: false,
@@ -36,7 +35,6 @@ export default {
       ],
       loggedIn: [
         {
-          name: 'tabProp',
           contentType: 'Tab',
           alignType: 'center',
           lightTheme: false,
@@ -52,7 +50,6 @@ export default {
               lightTheme: true,
               content: [
                 {
-                  name: 'tabProp',
                   contentType: 'Tab',
                   alignType: 'left',
                   lightTheme: true,
@@ -63,7 +60,6 @@ export default {
                   text: [{ value: 'View Ship Crews' }]
                 },
                 {
-                  name: 'tabProp',
                   contentType: 'Tab',
                   alignType: 'mid',
                   lightTheme: true,
@@ -72,7 +68,6 @@ export default {
                   text: [{ value: 'View Ship Fleets' }]
                 },
                 {
-                  name: 'tabProp',
                   contentType: 'Tab',
                   alignType: 'row-right',
                   lightTheme: true,

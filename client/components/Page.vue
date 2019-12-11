@@ -5,7 +5,12 @@
 -->
 <template>
   <div class="page-wrapper">
-    <transition appear appear-active-class="page-appear-active" v-on:after-appear="pageLoaded()">
+    <transition
+      :transitionType="'transition'"
+      appear
+      appear-active-class="page-appear-active"
+      v-on:after-appear="pageLoaded()"
+    >
       <div v-bind:class="{'page':true, 'light':(content.lightTheme)}">
         <slot v-for="(component, index) in content.content">
           <slot v-if="Array.isArray(component)">
@@ -33,7 +38,6 @@ export default {
     TypeEvaluator
   },
   props: {
-    name: String,
     content: Object,
     lightTheme: Boolean
   },

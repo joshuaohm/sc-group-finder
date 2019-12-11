@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="tab-wrapper" :class="[mobileAlignOverride(), content.contentWidth]">
-    <transition name="tab-transition" v-on:after-enter="tabLoaded()">
+    <transition :transitionType="'transition'" name="tab-transition" v-on:after-enter="tabLoaded()">
       <div
         v-if="showTab"
         @click="tabClicked"
@@ -30,7 +30,6 @@
       <component
         :is="content.subPanel.contentType"
         ref="subPanel"
-        :name="content.subPanel.name"
         :content="content.subPanel"
         :class="[alignment]"
       ></component>
@@ -49,7 +48,6 @@ export default {
     SubPanel: () => import('components/Sub-Panel')
   },
   props: {
-    name: String,
     content: Object
   },
   computed: {

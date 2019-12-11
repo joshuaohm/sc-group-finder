@@ -14,7 +14,6 @@ export default {
     Page
   },
   props: {
-    name: String,
     content: Object
   },
   created() {
