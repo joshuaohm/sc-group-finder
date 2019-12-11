@@ -6,7 +6,7 @@
 <template>
   <div class="tab-input-wrapper" :class="[alignment]">
     <transition name="tab-transition">
-      <slot v-if="show">
+      <slot v-if="showTab">
         <div
           v-bind:class="['tab', content.inputType, alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)}]"
         >
@@ -69,10 +69,10 @@
         </div>
       </slot>
     </transition>
-    <slot v-if="show">
+    <slot v-if="showBlue && !addedHeight">
       <div :class="['blue-line', alignment, {'active':focused}]"></div>
     </slot>
-    <slot v-else>
+    <slot v-else-if="showBlue && addedHeight">
       <div :class="['blue-line', 'added-height', alignment]"></div>
     </slot>
   </div>
@@ -95,15 +95,24 @@ export default {
   },
   data() {
     return {
-      show: false,
+      showTab: false,
+      showBlue: true,
+      addedHeight: true,
       focused: false,
       inputVal: this.value
     };
   },
   created() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'PAGELOADED') {
-        this.show = true;
+      if (mutation.type === 'SHOWTABS' && (mutation.payload && mutation.payload.id === this.content.id)) {
+        this.showTab = true;
+        this.addedHeight = false;
+      }
+
+      if (mutation.type === 'HIDETABS' && (mutation.payload && mutation.payload.id === this.content.id)) {
+        this.showTab = false;
+        this.addedHeight = true;
+        this.showBlue = true;
       }
     });
   },

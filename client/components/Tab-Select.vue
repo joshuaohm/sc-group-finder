@@ -65,8 +65,6 @@ export default {
         mutation.type === 'SHOWTABS' &&
         (!this.content.delayedReveal || (mutation.payload && mutation.payload.id === this.content.id))
       ) {
-        console.log('showtabs');
-
         this.showTab = true;
         this.addedHeight = false;
 
@@ -78,10 +76,14 @@ export default {
             }
           }
         }
+      } else if (mutation.type === 'HIDETABS' && (mutation.payload && mutation.payload.id === this.content.id)) {
+        this.showTab = false;
+        this.addedHeight = true;
+        this.showBlue = true;
       }
       //Watch for state lists that Tab Selects use to be updated and push the changes to the select's options
       //forceUpdate() seems to be necessary, this.$set on all values did not work.
-      if (mutation.type === 'SHIPOPTIONSFILTERED') {
+      else if (mutation.type === 'SHIPOPTIONSFILTERED') {
         switch (this.content.optionType) {
           case 'allShips': {
             this.content.options = this.$store.state.filteredShips;
@@ -94,8 +96,7 @@ export default {
             break;
           }
         }
-      }
-      if (
+      } else if (
         mutation.type === 'LOCATIONLANDINGZONESLOADED' ||
         (mutation.type === 'LOCATIONLANDINGZONESFILTERED' && mutation.payload.id === this.content.id)
       ) {
@@ -111,8 +112,7 @@ export default {
             break;
           }
         }
-      }
-      if (mutation.type === 'LOCATIONBODIESLOADED') {
+      } else if (mutation.type === 'LOCATIONBODIESLOADED') {
         switch (this.content.optionType) {
           case 'allLocationBodies': {
             this.content.options = this.$store.state.locationBodies;

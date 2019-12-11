@@ -182,6 +182,7 @@ export default {
   padding: 4px;
   min-width: 60px;
   min-height: 60px;
+  margin: 1px;
 
   &.disabled {
     background-color: red;

@@ -95,6 +95,9 @@ const mutations = {
   SHOWTABS(state, data) {
 
   },
+  HIDETABS(state, data) {
+
+  },
   SUBPANELEXPANDED(state) {
     state.currentPage.currentTab.currentSubPanel.isExpanded = true;
   },

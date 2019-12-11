@@ -55,8 +55,9 @@
     <div :class="['members-wrapper']">
       <slot v-for="(position, index) in content.content.members">
         <div
+          @click="positionClicked(position, index, true)"
           v-if="position.enabled"
-          :class="['crewPosition', position.type, , {'filled' : (position.member.id > 0)}, {'disabled' : (position.enabled === false)}]"
+          :class="['crewPosition', position.type, , {'filled' : (position.member.id > 0)}, {'requested' : (position.requested === true)}]"
         >
           <div>{{position.member && position.member.name ? position.member.name : "&nbsp;"}}</div>
           <div>{{position.type}}</div>
@@ -76,6 +77,7 @@
         </slot>
       </div>
     </slot>
+    <TypeEvaluator v-show="this.requestedPosition !== null" :component="submitBtn"></TypeEvaluator>
   </div>
 </template>
 
@@ -83,13 +85,26 @@
 export default {
   components: {
     Tab: () => import('components/Tab'),
-    Row: () => import('components/Row')
+    Row: () => import('components/Row'),
+    TypeEvaluator: () => import('components/TypeEvaluator')
   },
   props: {
     content: Object
   },
   data() {
     return {
+      requestedPosition: null,
+      submitBtn: {
+        contentType: 'Tab-Input',
+        alignType: 'center',
+        lightTheme: true,
+        contentAlign: 'align-center',
+        contentWidth: 'quarter-width',
+        placeholder: 'Submit',
+        inputType: 'submit',
+        name: 'submit',
+        id: this.content.name + '-submitBtn'
+      },
       row: {
         lightTheme: true,
         contentType: 'Row',
@@ -129,6 +144,40 @@ export default {
         ]
       }
     };
+  },
+  methods: {
+    positionClicked(position, index, isCrew) {
+      var positions = null;
+      if (isCrew) {
+        positions = this.content.content.members;
+      } else positions = this.content.content.miscCrew;
+
+      if (
+        this.requestedPosition !== null &&
+        this.requestedPosition.type === position.type &&
+        this.requestedPosition.position === position.position
+      )
+        this.requestedPosition = null;
+      else {
+        for (var i = 0; i < positions.length; i++) {
+          if (positions[i].requested === true) {
+            positions[i].requested = false;
+            this.$set(positions, positions[i].requested, false);
+          }
+        }
+
+        this.requestedPosition = position;
+        this.$set(this.requestedPosition, 0, position);
+      }
+
+      if (this.requestedPosition !== null) this.$store.commit('SHOWTABS', { id: this.content.name + '-submitBtn' });
+      else this.$store.commit('HIDETABS', { id: this.content.name + '-submitBtn' });
+
+      position.requested = !position.requested;
+
+      // this.$store.commit('UPDATESHIPMEMBERS', this.content.members);
+      this.$forceUpdate();
+    }
   },
   updated() {
     this.$store.commit('SHOWTABS');
@@ -190,11 +239,12 @@ label {
   border: 1px solid $ice-blue;
   font-size: 1rem;
   padding: 4px;
+  margin: 1px;
   min-width: 60px;
   min-height: 60px;
 
-  &.disabled {
-    background-color: red;
+  &.requested {
+    border-color: $orange;
     opacity: 0.8;
   }
 

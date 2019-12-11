@@ -92,6 +92,14 @@ export default {
       } else {
         return null;
       }
+    },
+    elementName() {
+      if (this.content.name) return this.content.name;
+      else return 'TE-' + this._uid + '-Child';
+    },
+    elementId() {
+      if (this.content.name) return this.content.id;
+      else return 'TE-' + this._uid + '-Child';
     }
   },
   methods: {

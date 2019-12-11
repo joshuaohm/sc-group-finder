@@ -77,6 +77,10 @@ export default {
       ) {
         this.showTab = true;
         this.addedHeight = false;
+      } else if (mutation.type === 'HIDETABS' && (mutation.payload && mutation.payload.id === this.content.id)) {
+        this.showTab = false;
+        this.addedHeight = true;
+        this.showBlue = true;
       } else if (mutation.type === 'TABLOADED' && this.showTab) {
         this.showBlue = true;
         this.addedHeight = false;

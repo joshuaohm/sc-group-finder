@@ -50,7 +50,7 @@ export default {
           lightTheme: false,
           content: [
             {
-              name: 'SCPsD-1',
+              name: 'SCPsD-',
               contentType: 'ShipCrewPositionsDisplayer',
               content: []
             }
