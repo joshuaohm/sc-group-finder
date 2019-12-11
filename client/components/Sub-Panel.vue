@@ -66,11 +66,11 @@ export default {
       this.expanded = !this.expanded;
     },
     subPanelLoaded() {
-      this.$store.commit('SUBPANELEXPANDED');
+      this.$store.commit('SUBPANELEXPANDED', { id: this.content.id });
       this.$store.commit('SHOWTABS');
     },
     subPanelCollapsed() {
-      this.$store.commit('SUBPANELCOLLAPSED');
+      this.$store.commit('SUBPANELCOLLAPSED', { id: this.content.id });
     }
   }
 };

@@ -17,7 +17,8 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :placeholder="content.placeholder"
-              :name="content.name"
+              :name="content.id"
+              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -28,7 +29,8 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :placeholder="content.placeholder"
-              :name="content.name"
+              :name="content.id"
+              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -39,7 +41,8 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :placeholder="content.placeholder"
-              :name="content.name"
+              :name="content.id"
+              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -49,7 +52,8 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :value="content.placeholder"
-              :name="content.name"
+              :name="content.id"
+              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -62,7 +66,8 @@
               @focus="tabFocused()"
               @blur="tabBlurred()"
               :placeholder="content.placeholder"
-              :name="content.name"
+              :name="content.id"
+              :id="content.id"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
           </slot>
@@ -104,12 +109,19 @@ export default {
   },
   created() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'SHOWTABS' && (mutation.payload && mutation.payload.id === this.content.id)) {
+      if (
+        mutation.type === 'SHOWTABS' &&
+        (mutation.payload && this.content.id && mutation.payload.id === this.content.id)
+      ) {
         this.showTab = true;
+        this.showBlue = true;
         this.addedHeight = false;
       }
 
-      if (mutation.type === 'HIDETABS' && (mutation.payload && mutation.payload.id === this.content.id)) {
+      if (
+        mutation.type === 'HIDETABS' &&
+        (mutation.payload && this.content.id && mutation.payload.id === this.content.id)
+      ) {
         this.showTab = false;
         this.addedHeight = true;
         this.showBlue = true;

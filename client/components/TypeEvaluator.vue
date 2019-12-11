@@ -8,31 +8,32 @@
     <div
       v-if="isElementHTML(component) && component.value && component.value.length > 0"
       :is="component.contentType"
-      :id="component.id"
-      :name="component.name"
+      :name="elementName(component)"
+      :id="elementId(component)"
       :class="[component.class, component.contentWidth, component.contentAlign]"
     >{{component.value}}</div>
     <div
       v-else-if="isElementHTML(component) && component.content && component.content.length > 0"
       :is="component.contentType"
-      :id="component.id"
-      :name="component.name"
+      :name="elementName(component)"
+      :id="elementId(component)"
       :class="[component.class, component.contentWidth, component.contentAlign]"
     >
       <slot v-for="content in component.content">
         <div
           v-if="isElementHTML(content) && content.value && content.value.length > 0"
           :is="content.contentType"
-          :id="content.id"
-          :name="content.name"
+          :name="elementName(content)"
+          :id="elementId(content)"
+          content
           :align="content.contentAlign"
           :class="[content.class, content.contentWidth, content.contentAlign]"
         >{{content.value}}</div>
         <div
           v-else
-          :name="content.name"
           :is="content.contentType"
-          :id="content.id"
+          :name="elementName(content)"
+          :id="elementId(content)"
           :content="content"
           :class="[content.class, content.contentWidth, content.contentAlign]"
         ></div>
@@ -40,9 +41,9 @@
     </div>
     <div
       v-else
-      :name="component.name"
+      :name="elementName(component)"
+      :id="elementId(component)"
       :is="component.contentType"
-      :id="component.id"
       :content="component"
       :class="[component.class, component.contentWidth, component.contentAlign]"
     ></div>
@@ -65,6 +66,7 @@ export default {
   data() {
     return {
       contentType: 'TypeEvaluator',
+      id: 'TypeEvaluator-' + this._uid,
       lightTheme: true,
       isHtml:
         this.component.contentType === 'span' ||
@@ -92,14 +94,6 @@ export default {
       } else {
         return null;
       }
-    },
-    elementName() {
-      if (this.content.name) return this.content.name;
-      else return 'TE-' + this._uid + '-Child';
-    },
-    elementId() {
-      if (this.content.name) return this.content.id;
-      else return 'TE-' + this._uid + '-Child';
     }
   },
   methods: {
@@ -114,6 +108,12 @@ export default {
         obj.contentType === 'textarea';
 
       return ret;
+    },
+    elementName(component) {
+      return this.id + '-' + this.component.contentType;
+    },
+    elementId(component) {
+      return this.id + '-' + this.component.contentType;
     }
   },
   created() {

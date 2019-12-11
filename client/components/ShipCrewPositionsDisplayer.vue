@@ -102,8 +102,8 @@ export default {
         contentWidth: 'quarter-width',
         placeholder: 'Submit',
         inputType: 'submit',
-        name: 'submit',
-        id: this.content.name + '-submitBtn'
+        name: this.$attrs.name + '-submitBtn',
+        id: this.$attrs.name + '-submitBtn'
       },
       row: {
         lightTheme: true,
@@ -170,8 +170,8 @@ export default {
         this.$set(this.requestedPosition, 0, position);
       }
 
-      if (this.requestedPosition !== null) this.$store.commit('SHOWTABS', { id: this.content.name + '-submitBtn' });
-      else this.$store.commit('HIDETABS', { id: this.content.name + '-submitBtn' });
+      if (this.requestedPosition !== null) this.$store.commit('SHOWTABS', { id: this.$attrs.id + '-submitBtn' });
+      else this.$store.commit('HIDETABS', { id: this.$attrs.id + '-submitBtn' });
 
       position.requested = !position.requested;
 
@@ -179,8 +179,36 @@ export default {
       this.$forceUpdate();
     }
   },
+  created() {
+    this.$store.subscribe((mutation, state) => {
+      if (
+        mutation.type === 'SHOWTABS' &&
+        (!this.content.delayedReveal || (mutation.payload.id && mutation.payload.id === this.content.id))
+      ) {
+        this.showTab = true;
+        this.addedHeight = false;
+      } else if (mutation.type === 'HIDETABS' && (mutation.payload && mutation.payload.id === this.content.id)) {
+        this.showTab = false;
+        this.addedHeight = true;
+        this.showBlue = true;
+      } else if (mutation.type === 'TABLOADED' && this.showTab) {
+        this.showBlue = true;
+        this.addedHeight = false;
+      } else if (
+        mutation.type === 'SUBPANELEXPANDED' &&
+        mutation.payload &&
+        mutation.payload.id.includes(this.content.id.replace('-ShipCrewPostionsDisplayer', ''))
+      ) {
+      } else if (
+        mutation.type === 'SUBPANELCOLLAPSED' &&
+        mutation.payload &&
+        mutation.payload.id.includes(this.content.id.replace('-ShipCrewPostionsDisplayer', ''))
+      ) {
+      }
+    });
+  },
   updated() {
-    this.$store.commit('SHOWTABS');
+    this.$store.commit('SHOWTABS', { id: this.$attrs.id + '-submitBtn' });
   }
 };
 </script>
