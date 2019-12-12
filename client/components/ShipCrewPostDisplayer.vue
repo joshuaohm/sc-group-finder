@@ -37,6 +37,7 @@ export default {
         contentType: 'Tab',
         alignType: 'left',
         lightTheme: true,
+        delayedReveal: true,
 
         text: [
           { value: 'post.slotsAvailable', class: 'post-slotsAvailable' },

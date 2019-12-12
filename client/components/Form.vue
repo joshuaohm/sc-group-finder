@@ -66,10 +66,10 @@ export default {
   methods: {
     parseChildren(data, tree) {
       for (var child of tree) {
-        if (child.inputVal && child.name) {
-          data[child.name] = child.inputVal;
-        } else if (child.selected && child.name) {
-          data[child.name] = child.selected;
+        if (child.inputVal && child.$attrs.name) {
+          data[child.$attrs.name] = child.inputVal;
+        } else if (child.selected && child.$attrs.name) {
+          data[child.$attrs.name] = child.selected;
         } else if (child.textAreaName && child.inputVal) {
           data[child.textAreaName] = child.inputVal;
         }

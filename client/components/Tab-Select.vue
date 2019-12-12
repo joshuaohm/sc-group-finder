@@ -12,6 +12,8 @@
         >
           <select
             v-model="selected"
+            :name="this.$attrs.name"
+            :id="this.$attrs.id"
             @change="onChange($event)"
             :class="['tab-input', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}]"
           >
@@ -60,7 +62,8 @@ export default {
     this.$store.subscribe((mutation, state) => {
       if (
         mutation.type === 'SHOWTABS' &&
-        (!this.content.delayedReveal || (mutation.payload && mutation.payload.id === this.content.id))
+        ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
+          (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
       ) {
         this.showTab = true;
         this.addedHeight = false;
@@ -73,7 +76,11 @@ export default {
             }
           }
         }
-      } else if (mutation.type === 'HIDETABS' && (mutation.payload && mutation.payload.id === this.content.id)) {
+      } else if (
+        mutation.type === 'HIDETABS' &&
+        ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
+          (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
+      ) {
         this.showTab = false;
         this.addedHeight = true;
         this.showBlue = true;

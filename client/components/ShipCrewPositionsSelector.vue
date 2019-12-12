@@ -71,7 +71,8 @@ export default {
         contentWidth: 'half-width',
         placeholder: 'Enter Quantity',
         inputType: 'number',
-        name: 'miscCrew'
+        name: 'miscCrew',
+        delayedReveal: true
       },
       submitBtn: {
         contentType: 'Tab-Input',
@@ -81,7 +82,8 @@ export default {
         contentWidth: 'quarter-width',
         placeholder: 'Submit',
         inputType: 'submit',
-        name: 'submit'
+        name: 'submit',
+        delayedReveal: true
       }
     };
   },

@@ -26,6 +26,7 @@ export default {
           contentType: 'Tab',
           alignType: 'center',
           lightTheme: false,
+          delayedReveal: true,
           text: [{ value: 'New Ship Crew Post:' }],
           subPanel: false
         },

@@ -32,6 +32,7 @@ export default {
               lightTheme: true,
               text: [{ value: 'List Your Ship' }],
               contentWidth: 'quarter-width grow',
+              delayedReveal: true,
               subPanel: false,
               onClick(self) {
                 self.$router.push({ name: 'New Ship Crew Post' });
@@ -43,6 +44,7 @@ export default {
           contentType: 'Tab',
           alignType: 'center',
           lightTheme: false,
+          delayedReveal: true,
           text: [{ value: 'View Ship Crews:' }],
           subPanel: false
         },

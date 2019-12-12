@@ -1,3 +1,7 @@
+/*
+ *  Used as a mixin globally to create a unique id for every component, and assign its html element a name/id if not given one already.
+ *
+ */
 var hex = [];
 
 for (var i = 0; i < 256; i++) {

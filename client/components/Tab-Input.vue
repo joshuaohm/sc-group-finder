@@ -100,16 +100,17 @@ export default {
     this.$store.subscribe((mutation, state) => {
       if (
         mutation.type === 'SHOWTABS' &&
-        (mutation.payload && this.content.id && mutation.payload.id === this.content.id)
+        ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
+          (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
       ) {
         this.showTab = true;
         this.showBlue = true;
         this.addedHeight = false;
       }
-
       if (
         mutation.type === 'HIDETABS' &&
-        (mutation.payload && this.content.id && mutation.payload.id === this.content.id)
+        ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
+          (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
       ) {
         this.showTab = false;
         this.addedHeight = true;

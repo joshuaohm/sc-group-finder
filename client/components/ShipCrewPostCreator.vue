@@ -83,6 +83,7 @@ export default {
                 placeholder: 'Ship',
                 contentWidth: 'three-quarter-width',
                 contentAlign: 'align-left',
+                delayedReveal: true,
                 formStep: 0,
                 formStepCallBack: e => {
                   this.shipOptions = this.$store.state.allShips.filter(x => x.manufacturer === e.target.value);
@@ -111,7 +112,6 @@ export default {
               },
               {
                 contentType: 'Tab-Select',
-                delayedReveal: true,
                 alignType: 'left',
                 lightTheme: false,
                 placeholder: 'Ship',
@@ -144,7 +144,6 @@ export default {
               },
               {
                 contentType: 'Tab-Select',
-                delayedReveal: true,
                 alignType: 'left',
                 lightTheme: false,
                 contentWidth: 'three-quarter-width',
@@ -167,7 +166,6 @@ export default {
               },
               {
                 contentType: 'Tab-Select',
-                delayedReveal: true,
                 alignType: 'left',
                 lightTheme: false,
                 placeholder: 'Ship',
@@ -177,6 +175,7 @@ export default {
                 formStepCallBack: e => {
                   this.$store.commit('SHOWTABS', { id: 'targetBody' });
                   this.$root.$emit('reveal-positions-selector', { id: 'shipCrewSelector' });
+                  this.$store.commit('SHOWTABS');
                 },
                 formId: 'newShipCrewForm',
                 name: 'startZone',
@@ -200,7 +199,6 @@ export default {
               },
               {
                 contentType: 'Tab-Select',
-                delayedReveal: true,
                 alignType: 'left',
                 lightTheme: false,
                 contentWidth: 'three-quarter-width',
@@ -223,7 +221,6 @@ export default {
               },
               {
                 contentType: 'Tab-Select',
-                delayedReveal: true,
                 alignType: 'left',
                 lightTheme: false,
                 placeholder: 'Ship',

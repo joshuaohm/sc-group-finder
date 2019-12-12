@@ -1,3 +1,7 @@
+/*
+ *  Used as a mixin to properly handle authentication within the app.
+ *
+ */
 import { RepositoryFactory } from './../repository/RepositoryFactory';
 
 var loginCheck = function (store, router) {
