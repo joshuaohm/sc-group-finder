@@ -101,7 +101,9 @@ export default {
       if (
         mutation.type === 'SHOWTABS' &&
         ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
-          (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
+          (mutation.payload &&
+            this.content.id &&
+            (mutation.payload.id === this.$attrs.id || mutation.payload.id === this.content.id)))
       ) {
         this.showTab = true;
         this.showBlue = true;
@@ -110,7 +112,9 @@ export default {
       if (
         mutation.type === 'HIDETABS' &&
         ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
-          (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
+          (mutation.payload &&
+            this.content.id &&
+            (mutation.payload.id === this.$attrs.id || mutation.payload.id === this.content.id)))
       ) {
         this.showTab = false;
         this.addedHeight = true;

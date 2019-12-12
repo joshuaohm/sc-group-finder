@@ -25,6 +25,7 @@ export default {
           contentType: 'Tab',
           alignType: 'center',
           lightTheme: false,
+          delayedReveal: true,
           subPanel: false,
           text: [{ value: 'Home' }]
         },
@@ -38,6 +39,7 @@ export default {
           contentType: 'Tab',
           alignType: 'center',
           lightTheme: false,
+          delayedReveal: true,
           subPanel: false,
           text: [{ value: 'Look For Groups in the PU' }]
         },
@@ -54,6 +56,7 @@ export default {
                   alignType: 'left',
                   lightTheme: true,
                   subPanel: false,
+                  delayedReveal: true,
                   onClick(self) {
                     self.$router.push({ name: 'Ship Crew Posts' });
                   },
@@ -63,6 +66,7 @@ export default {
                   contentType: 'Tab',
                   alignType: 'mid',
                   lightTheme: true,
+                  delayedReveal: true,
                   subPanel: false,
                   onClick() {},
                   text: [{ value: 'View Ship Fleets' }]
@@ -71,6 +75,7 @@ export default {
                   contentType: 'Tab',
                   alignType: 'row-right',
                   lightTheme: true,
+                  delayedReveal: true,
                   subPanel: false,
                   onClick() {},
                   text: [{ value: 'View Misc./On Foot Groups' }]
