@@ -128,7 +128,7 @@ export default {
   created() {
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'SHIPSELECTED') {
-        this.content.members = JSON.parse(mutation.payload.crewPositions);
+        this.content.members = mutation.payload.crewPositions;
 
         for (var position of this.content.members) {
           position.enabled = true;
