@@ -377,7 +377,6 @@ span {
 
 @media screen and (max-width: 780px) {
   .tab {
-    font-size: 1rem;
 
     &:before {
       width: 20px;
@@ -386,11 +385,6 @@ span {
 }
 
 @media screen and (max-width: 480px) {
-  .tab {
-    font-size: .8rem;
-  }
+  .tab {}
 
-  .tab.submit {
-    font-size: 1rem;
-  }
 }

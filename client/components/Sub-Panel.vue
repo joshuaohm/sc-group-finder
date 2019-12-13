@@ -159,4 +159,12 @@ export default {
     font-size: 0.8rem;
   }
 }
+@media screen and (max-width: 400px) {
+  .panel-wrapper {
+    margin: 0 !important;
+  }
+  .sub-panel {
+    margin: 0;
+  }
+}
 </style>

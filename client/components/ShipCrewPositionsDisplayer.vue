@@ -100,7 +100,7 @@ export default {
         lightTheme: true,
         contentAlign: 'align-center',
         contentWidth: 'btn-width',
-        placeholder: 'Submit',
+        placeholder: 'Request Position',
         inputType: 'submit',
         id: this.content.parentId + '-' + this.$uuid + '-submit'
       },
