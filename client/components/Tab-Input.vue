@@ -14,8 +14,8 @@
             <input
               type="text"
               v-model="inputVal"
-              @focus="tabFocused()"
-              @blur="tabBlurred()"
+              @focus="tabFocused($event)"
+              @blur="tabBlurred($event)"
               :placeholder="content.placeholder"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
@@ -24,8 +24,8 @@
             <input
               type="email"
               v-model="inputVal"
-              @focus="tabFocused()"
-              @blur="tabBlurred()"
+              @focus="tabFocused($event)"
+              @blur="tabBlurred($event)"
               :placeholder="content.placeholder"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
@@ -34,8 +34,8 @@
             <input
               type="password"
               v-model="inputVal"
-              @focus="tabFocused()"
-              @blur="tabBlurred()"
+              @focus="tabFocused($event)"
+              @blur="tabBlurred($event)"
               :placeholder="content.placeholder"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
@@ -43,8 +43,8 @@
           <slot v-else-if="content.inputType.toLowerCase() === 'submit'">
             <input
               type="submit"
-              @focus="tabFocused()"
-              @blur="tabBlurred()"
+              @focus="tabFocused($event)"
+              @blur="tabBlurred($event)"
               :value="content.placeholder"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
@@ -55,8 +55,8 @@
               v-model="inputVal"
               min="0"
               max="50"
-              @focus="tabFocused()"
-              @blur="tabBlurred()"
+              @focus="tabFocused($event)"
+              @blur="tabBlurred($event)"
               :placeholder="content.placeholder"
               :class="{'tab-input':true, 'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}"
             />
@@ -123,10 +123,11 @@ export default {
     });
   },
   methods: {
-    tabBlurred() {
+    tabBlurred(e) {
       this.focused = false;
+      this.inputVal = e.target.value;
     },
-    tabFocused() {
+    tabFocused(e) {
       this.focused = true;
     }
   },

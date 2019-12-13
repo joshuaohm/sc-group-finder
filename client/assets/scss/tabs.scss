@@ -22,11 +22,16 @@
   cursor: pointer;
 }
 
+input[type="submit"].tab-input {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 .tab-input {
   position: relative;
   display: block;
   width: calc(100% - 8px);
-
   margin: 0;
   margin-left: 4px;
   margin-right: 4px;
@@ -74,7 +79,7 @@
   height: 40px;
   z-index: 10;
   color: $ice-blue;
-  font-size: 1rem;
+  font-size: .8rem;
   vertical-align: middle;
   display: flex;
   justify-content: center;

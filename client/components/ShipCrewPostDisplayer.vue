@@ -200,7 +200,8 @@ export default {
   display: inline-block;
   text-align: left;
   white-space: nowrap;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
+  font-family: 'Roboto Mono', monospace;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 160px;

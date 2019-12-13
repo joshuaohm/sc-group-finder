@@ -57,7 +57,7 @@
         <div
           @click="positionClicked(position, index, true)"
           v-if="position.enabled"
-          :class="['crewPosition', position.type, , {'filled' : (position.member.id > 0)}, {'requested' : (position.requested === true)}]"
+          :class="['crewPosition', position.type, , {'filled' : (!position.requested && position.member && position.member.id > 0)}, {'requested' : (position.requested === true)}]"
         >
           <div>{{position.member && position.member.name ? position.member.name : "&nbsp;"}}</div>
           <div>{{position.type}}</div>
@@ -99,7 +99,7 @@ export default {
         alignType: 'center',
         lightTheme: true,
         contentAlign: 'align-center',
-        contentWidth: 'quarter-width',
+        contentWidth: 'btn-width',
         placeholder: 'Submit',
         inputType: 'submit',
         id: this.content.parentId + '-' + this.$uuid + '-submit'
@@ -150,34 +150,49 @@ export default {
 
       for (var i = 0; i < positions.length; i++) {
         if (positions[i].requested === true) {
+          positions[i].member = null;
           positions[i].requested = false;
           this.$set(positions, positions[i].requested, false);
+          this.$set(positions, positions[i].member, null);
         }
       }
     },
     positionClicked(position, index, isCrew) {
+      if (!position.requested && position.member && position.member.id > 0) return;
+
       var positions = null;
       if (isCrew) {
         positions = this.content.content.members;
       } else positions = this.content.content.miscCrew;
 
+      //Position clicked has already been requested by current user
       if (
+        position.requested &&
+        position.member &&
         this.requestedPosition !== null &&
         this.requestedPosition.type === position.type &&
-        this.requestedPosition.position === position.position
-      )
+        this.requestedPosition.position === position.position &&
+        position.member.id === this.$store.state.currentUser.id
+      ) {
         this.requestedPosition = null;
-      else {
+        positions[index].requested = false;
+        positions[index].member = null;
+      }
+      //Position clicked has been requested by someone else
+      else if (position.requested && position.member && position.member.id === this.$store.state.currentUser.id) {
+        return;
+      } else {
         this.clearRequestedPositions(positions);
         this.requestedPosition = position;
-        this.$set(this.requestedPosition, 0, position);
+
+        position.member = { id: this.$store.state.currentUser.id, name: this.$store.state.currentUser.name };
+        position.requested = !position.requested;
       }
 
       if (this.requestedPosition !== null)
         this.$store.commit('SHOWTABS', { id: this.content.parentId + '-' + this.$uuid + '-submit' });
       else this.$store.commit('HIDETABS', { id: this.content.parentId + '-' + this.$uuid + '-submit' });
 
-      position.requested = !position.requested;
       this.$forceUpdate();
     }
   },
@@ -249,7 +264,7 @@ export default {
 }
 
 .post-text {
-  font-size: 1.4rem;
+  font-size: 1rem;
   text-align: center;
 
   &.align-left {
@@ -267,12 +282,15 @@ div.post-text {
 
 label {
   color: $teal;
+  font-size: 1.4rem !important;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .crewPosition {
   border: 1px solid $ice-blue;
-  font-size: 1rem;
-  padding: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px;
   margin: 1px;
   min-width: 60px;
   min-height: 60px;
@@ -280,11 +298,15 @@ label {
 
   &.requested {
     border-color: $orange;
+    background-color: $page-border;
+    color: $orange;
     opacity: 0.8;
   }
 
   &.filled {
-    background-color: green;
+    border-color: $page-border;
+    background-color: $page-color;
+    color: green;
     opacity: 0.8;
   }
 }

@@ -50,13 +50,25 @@ export default {
         onSubmit(data, self) {
           data.members = JSON.stringify(self.$store.state.currentShip.members);
 
+          if (!data.miscCrew) data.miscCrew = 0;
+
           var successCallBack = postData => {
             //this.$store.commit('SCPOSTSUCCESS', shipData.data.data);
             self.$router.push({ name: 'Ship Crew Posts' });
           };
 
           var errorCallBack = error => {
-            console.log(error);
+            console.log(error.response);
+
+            var msg = '';
+            for (var err in error.response.data.data) {
+              if (err === 'description') msg += error.response.data.data[err] + '<br/>';
+              else if (err === 'members') msg += 'You must select / disable a Crew Position. <br />';
+              else if (err === 'ship_id') msg += 'You must select a Ship. <br />';
+              else if (err === 'startBody') msg += 'You must select a landing zone to meetup at. <br />';
+              else msg += error.response.data.data[err] + '<br/>';
+            }
+            document.getElementById('errorContainer').innerHTML = msg;
           };
 
           const repo = RepositoryFactory.get('scPosts');
@@ -193,7 +205,7 @@ export default {
             content: [
               {
                 contentType: 'label',
-                value: '(Optional)Target Location Parent:',
+                value: '(Optional) Target Location Parent:',
                 contentWidth: 'half-width',
                 contentAlign: 'align-left'
               },
@@ -215,7 +227,7 @@ export default {
               },
               {
                 contentType: 'label',
-                value: '(Optional)Target Location Landing Zone:',
+                value: '(Optional) Target Location Landing Zone:',
                 contentWidth: 'half-width',
                 contentAlign: 'align-left'
               },
@@ -387,7 +399,10 @@ export default {
 @import '../assets/scss/_variables.scss';
 
 label {
-  font-size: 1.2rem;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .shipCrewPostCreator-wrapper .tab-input-wrapper {

@@ -31,7 +31,7 @@ export default {
               alignType: 'center',
               lightTheme: true,
               text: [{ value: 'List Your Ship' }],
-              contentWidth: 'quarter-width grow',
+              contentWidth: 'btn-width grow',
               delayedReveal: true,
               subPanel: false,
               onClick(self) {

@@ -11,74 +11,66 @@ export default {
   components: {
     Page
   },
-  props: {
+  props: {},
+  created() {
+    document.title = 'About';
   },
-  created () {
-    document.title = "About"
-  },
-  data () {
+  data() {
     return {
-
-      tab1 : {
-        contentType: "Tab",
-        alignType: "center",
+      tab1: {
+        contentType: 'Tab',
+        alignType: 'center',
         lightTheme: false,
+        delayedReveal: true,
         subPanel: false,
-        text: [
-          { value : "About This Site" }
-        ],
+        text: [{ value: 'About This Site' }]
       },
 
-      panel1 : {
-        contentType: "Panel",
+      panel1: {
+        contentType: 'Panel',
         lightTheme: false,
-        content : [
+        content: [
           {
-            contentType : "h4",
-            value : "Find Groups In The Verse"
+            contentType: 'h4',
+            value: 'Find Groups In The Verse'
           },
           {
-            contentType : "p",
-            value : "You can search through listings and make postings for:"
+            contentType: 'p',
+            value: 'You can search through listings and make postings for:'
           },
           {
-            contentType: "Row",
+            contentType: 'Row',
             lightTheme: false,
             content: [
               {
-                contentType: "Tab",
-                alignType: "left",
+                contentType: 'Tab',
+                alignType: 'left',
                 subPanel: false,
+                delayedReveal: true,
                 lightTheme: true,
-                text: [
-                  { value : "Ship Crews" }
-                ],
+                text: [{ value: 'Ship Crews' }]
               },
               {
-                contentType: "Tab",
-                alignType: "center",
+                contentType: 'Tab',
+                alignType: 'center',
                 subPanel: false,
+                delayedReveal: true,
                 lightTheme: true,
-                text: [
-                  { value : "Ship Fleets" }
-                ],
+                text: [{ value: 'Ship Fleets' }]
               },
               {
-                contentType: "Tab",
-                alignType: "right",
+                contentType: 'Tab',
+                alignType: 'right',
                 lightTheme: true,
+                delayedReveal: true,
                 subPanel: false,
-                text: [
-                  { value : "People On Foot" }
-                ],
-              },
+                text: [{ value: 'People On Foot' }]
+              }
             ]
           }
         ]
       }
-
-
-    }
+    };
   }
-}
+};
 </script>

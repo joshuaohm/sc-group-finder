@@ -14,6 +14,7 @@
       id="description"
       class="align-center three-quarter-width"
       v-model="inputVal"
+      @blur="textAreaBlurred()"
     ></textarea>
     <label class="align-center">Crew Positions:</label>
     <div :class="['members-wrapper']">
@@ -34,6 +35,7 @@
       <TypeEvaluator :component="miscCrewTab"></TypeEvaluator>
     </div>
     <TypeEvaluator :component="submitBtn"></TypeEvaluator>
+    <span id="errorContainer"></span>
   </div>
 </template>
 
@@ -116,6 +118,11 @@ export default {
 
       this.$store.commit('UPDATESHIPMEMBERS', this.content.members);
       this.$forceUpdate();
+    },
+    //Mobile devices weren't updating correctly when input was entered, this somewhat forces it.
+    textAreaBlurred() {
+      var test = document.getElementById('description').value;
+      this.inputVal = test;
     }
   },
   created() {
@@ -153,6 +160,13 @@ export default {
 <style lang="scss">
 @import '../assets/scss/_variables.scss';
 
+#errorContainer {
+  font-size: 0.8rem;
+  color: red;
+  text-transform: uppercase;
+  font-family: 'Roboto Mono', monospace;
+}
+
 .shipCrewPositionsDisplayer-wrapper {
   position: relative;
   display: block;
@@ -167,8 +181,7 @@ export default {
   }
 }
 
-.members-wrapper,
-.miscCrew-wrapper {
+.members-wrapper {
   position: relative;
   display: flex;
   flex-flow: row wrap;
@@ -180,20 +193,26 @@ export default {
 
 .crewPosition {
   border: 1px solid $ice-blue;
-  font-size: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
   padding: 4px;
   min-width: 60px;
   min-height: 60px;
   margin: 1px;
+  background-color: black;
 
   &.disabled {
-    background-color: red;
-    color: white;
+    border-color: red;
+    background-color: black;
+    color: red;
+    opacity: 0.8;
   }
 
   &.filled {
-    background-color: green;
-    color: white;
+    border-color: $page-border;
+    background-color: black;
+    color: green;
+    opacity: 0.8;
   }
 }
 </style>

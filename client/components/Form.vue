@@ -65,14 +65,15 @@ export default {
   },
   methods: {
     parseChildren(data, tree) {
+      var name = '';
       for (var child of tree) {
-        if (child.inputVal && child.$attrs.name) {
-          data[child.$attrs.name] = child.inputVal;
-        } else if (child.selected && child.$attrs.name) {
-          data[child.$attrs.name] = child.selected;
-        } else if (child.textAreaName && child.inputVal) {
-          data[child.textAreaName] = child.inputVal;
-        }
+        if (child.textAreaName) name = child.textAreaName;
+        else if (child.$props && child.$props.content && child.$props.content.name) name = child.$props.content.name;
+        else if (child.$attrs.name) name = child.$attrs.name;
+
+        if (child.inputVal) data[name] = child.inputVal;
+        else if (child.selected) data[name] = child.selected;
+
         if (child.$children.length > 0) data = this.parseChildren(data, child.$children);
       }
 
