@@ -61,13 +61,17 @@ export default {
             console.log(error.response);
 
             var msg = '';
-            for (var err in error.response.data.data) {
-              if (err === 'description') msg += error.response.data.data[err] + '<br/>';
-              else if (err === 'members') msg += 'You must select / disable a Crew Position. <br />';
-              else if (err === 'ship_id') msg += 'You must select a Ship. <br />';
-              else if (err === 'startBody') msg += 'You must select a landing zone to meetup at. <br />';
-              else msg += error.response.data.data[err] + '<br/>';
-            }
+
+            if (typeof error.response.data.data === 'string') msg += error.response.data.data + '<br/>';
+            else
+              for (var err in error.response.data.data) {
+                if (err === 'description') msg += error.response.data.data[err] + '<br/>';
+                else if (err === 'members') msg += 'You must select / disable a Crew Position. <br />';
+                else if (err === 'ship_id') msg += 'You must select a Ship. <br />';
+                else if (err === 'startBody') msg += 'You must select a landing zone to meetup at. <br />';
+                else msg += error.response.data.data[err] + '<br/>';
+              }
+
             document.getElementById('errorContainer').innerHTML = msg;
           };
 
