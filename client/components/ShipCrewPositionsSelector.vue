@@ -102,11 +102,11 @@ export default {
     positionClicked(position) {
       if (this.userPosition === null && position.enabled) {
         this.userPosition = position;
-        position.user.id = 'this';
+        position.user.id = this.$store.state.currentUser.id;
       } else if (this.userPosition === null && !position.enabled) {
         position.enabled = true;
         this.userPosition = position;
-        position.user.id = 'this';
+        position.user.id = this.$store.state.currentUser.id;
       } else if (this.userPosition === position) {
         position.user.id = 0;
         this.userPosition = null;
