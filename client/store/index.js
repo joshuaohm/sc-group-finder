@@ -93,7 +93,7 @@ const mutations = {
     state.currentShip = data;
   },
   SHOWTABS(state, data) {
-
+    console.log(data);
   },
   HIDETABS(state, data) {
 

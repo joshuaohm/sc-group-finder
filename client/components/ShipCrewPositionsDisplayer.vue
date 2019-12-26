@@ -10,7 +10,7 @@
     <div class="row three-quarter-width align-center">
       <div class="row-item">
         <label class="post-text align-left">Creator:</label>
-        <div class="post-text align-left">{{content.content.creator}}</div>
+        <div class="post-text align-left">{{content.content.creator.name}}</div>
       </div>
       <div class="row-item">
         <label class="post-text align-right">Ship:</label>
@@ -56,12 +56,11 @@
       <slot v-for="(position, index) in content.content.members">
         <div
           @click="positionClicked(position, index, true)"
-          v-if="position.enabled"
-          :class="['crewPosition', position.type, , {'filled' : (!position.requested && position.member && position.member.id > 0)}, {'requested' : (position.requested === true)}]"
+          :class="['crewPosition', position.position.type, , {'filled' : (!position.requested && position.user && position.user.id > 0)}, {'requested' : (position.requested === true)}]"
         >
-          <div>{{position.member && position.member.name ? position.member.name : "&nbsp;"}}</div>
-          <div>{{position.type}}</div>
-          <div>{{position.position ? position.position : "&nbsp;"}}</div>
+          <div>{{position.user && position.user.name ? position.user.name : "&nbsp;"}}</div>
+          <div>{{position.position.type}}</div>
+          <div>{{position.position.location ? position.position.location: "&nbsp;"}}</div>
         </div>
       </slot>
     </div>
@@ -70,9 +69,9 @@
       <div :class="['miscCrew-wrapper']">
         <slot v-for="(position, index) in content.content.miscCrew">
           <div
-            :class="['crewPosition', position.type, {'filled' : (position.member.id > 0)}, {'disabled' : (position.enabled === false)}]"
+            :class="['crewPosition', position.position.type, {'filled' : (position.user && position.user.id > 0)}, {'disabled' : (position.enabled === false)}]"
           >
-            <div>{{position.member && position.member.name ? position.member.name : "&nbsp;"}}</div>
+            <div>{{position.user && position.user.name ? position.user.name : "&nbsp;"}}</div>
           </div>
         </slot>
       </div>
@@ -150,15 +149,15 @@ export default {
 
       for (var i = 0; i < positions.length; i++) {
         if (positions[i].requested === true) {
-          positions[i].member = null;
+          positions[i].user = null;
           positions[i].requested = false;
           this.$set(positions, positions[i].requested, false);
-          this.$set(positions, positions[i].member, null);
+          this.$set(positions, positions[i].user, null);
         }
       }
     },
     positionClicked(position, index, isCrew) {
-      if (!position.requested && position.member && position.member.id > 0) return;
+      if (!position.requested && position.user && position.user.id > 0) return;
 
       var positions = null;
       if (isCrew) {
@@ -168,24 +167,24 @@ export default {
       //Position clicked has already been requested by current user
       if (
         position.requested &&
-        position.member &&
+        position.user &&
         this.requestedPosition !== null &&
         this.requestedPosition.type === position.type &&
-        this.requestedPosition.position === position.position &&
-        position.member.id === this.$store.state.currentUser.id
+        this.requestedPosition.location === position.location &&
+        position.user.id === this.$store.state.currentUser.id
       ) {
         this.requestedPosition = null;
         positions[index].requested = false;
-        positions[index].member = null;
+        positions[index].user = null;
       }
       //Position clicked has been requested by someone else
-      else if (position.requested && position.member && position.member.id === this.$store.state.currentUser.id) {
+      else if (position.requested && position.user && position.user.id === this.$store.state.currentUser.id) {
         return;
       } else {
         this.clearRequestedPositions(positions);
         this.requestedPosition = position;
 
-        position.member = { id: this.$store.state.currentUser.id, name: this.$store.state.currentUser.name };
+        position.user = { id: this.$store.state.currentUser.id, name: this.$store.state.currentUser.name };
         position.requested = !position.requested;
       }
 

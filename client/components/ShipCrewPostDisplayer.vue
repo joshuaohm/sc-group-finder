@@ -42,7 +42,7 @@ export default {
         text: [
           { value: 'post.slotsAvailable', class: 'post-slotsAvailable' },
           { value: 'post.ship.name', class: 'post-item ship-name', legend: 'Ship' },
-          { value: 'post.creator', class: 'post-item creator', legend: 'Creator' },
+          { value: 'post.creator.name', class: 'post-item creator', legend: 'Creator' },
           { value: 'post.startLocation.name', class: 'post-item startLocation', legend: 'Start Location' },
           { value: 'post.targetLocation.name', class: 'post-item targetLocation', legend: 'Target Location' },
           { value: 'post.description', class: 'post-item description', legend: 'Description' }
@@ -90,7 +90,7 @@ export default {
             post.description.length > 20 ? post.description.substring(0, 20) + '...' : post.description
           );
         if (val.value.includes('post.creator')) {
-          val.value = val.value.replace(/post.creator/gi, post.creator);
+          val.value = val.value.replace(/post.creator.name/gi, post.creator.name);
         }
         if (val.value.includes('post.startLocation.name')) {
           if (post.startLocation === null) val.value = '';

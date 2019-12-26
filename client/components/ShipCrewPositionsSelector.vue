@@ -8,7 +8,7 @@
     v-if="show"
     :class="['shipCrewPositionsDisplayer-wrapper', 'container', alignment, {'light':( ( (!content.lightTheme && !parentColorTheme ) || content.lightTheme ) ? true : false  )}, {'onLight':(parentColorTheme)}, {'onDark':(!parentColorTheme)} ]"
   >
-    <label class="align-center">Description:</label>
+    <label class="align-center">Description :</label>
     <textarea
       name="description"
       id="description"
@@ -16,21 +16,21 @@
       v-model="inputVal"
       @blur="textAreaBlurred()"
     ></textarea>
-    <label class="align-center">Crew Positions:</label>
+    <label class="align-center">Crew Positions :</label>
     <div :class="['members-wrapper']">
       <slot v-for="(position, index) in content.members">
         <div
           @click="positionClicked(position)"
           :key="'position-'+index"
-          :class="['crewPosition', position.type, , {'filled' : (position.user.id > 0 || position.user.id === 'this')}, {'disabled' : (position.enabled === false)}]"
+          :class="['crewPosition', position.type, , {'filled' : (position.user && position.user.id > 0 || position.user.id === 'this')}, {'disabled' : (position.enabled === false)}]"
         >
           <div class>{{position.user && position.user.name ? position.user.name : "&nbsp;"}}</div>
           <div>{{position.type}}</div>
-          <div>{{position.position ? position.position : "&nbsp;"}}</div>
+          <div>{{position.location ? position.location : "&nbsp;"}}</div>
         </div>
       </slot>
     </div>
-    <label class="align-center">Misc Positions:</label>
+    <label class="align-center">Misc Positions :</label>
     <div :class="['miscCrew-wrapper']">
       <TypeEvaluator :component="miscCrewTab"></TypeEvaluator>
     </div>

@@ -80,6 +80,7 @@ export default {
                 contentType: 'Tab-Input',
                 inputType: 'email',
                 alignType: 'right',
+                delayedReveal: true,
                 lightTheme: false,
                 placeholder: 'Email',
                 contentWidth: 'three-quarter-width',
@@ -96,6 +97,7 @@ export default {
                 contentType: 'Tab-Input',
                 inputType: 'password',
                 alignType: 'right',
+                delayedReveal: true,
                 lightTheme: false,
                 placeholder: 'Password',
                 contentWidth: 'three-quarter-width',
@@ -106,6 +108,7 @@ export default {
                 contentType: 'Tab-Input',
                 inputType: 'submit',
                 alignType: 'right',
+                delayedReveal: true,
                 lightTheme: true,
                 placeholder: 'Log in',
                 contentAlign: 'align-right',
@@ -123,6 +126,14 @@ export default {
 <style lang="scss">
 .login-page {
   margin: auto;
+
+  & label {
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  & .tab-input-wrapper {
+    margin-bottom: 1rem;
+  }
 }
 
 #loginError {

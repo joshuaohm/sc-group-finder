@@ -37,8 +37,9 @@ export default {
   data() {
     return {
       selectedShip: 0,
-      manuOptions: null,
-      shipOptions: null,
+      shipsLoaded: false,
+      manusLoaded: false,
+      bodiesLoaded: false,
       manufacturerOptions: null,
       shipCrew: {
         action: '',
@@ -88,7 +89,7 @@ export default {
             content: [
               {
                 contentType: 'label',
-                value: 'Select Manufacturer:',
+                value: 'Select Manufacturer :',
                 contentWidth: 'half-width',
                 contentAlign: 'align-left'
               },
@@ -96,7 +97,7 @@ export default {
                 contentType: 'Tab-Select',
                 alignType: 'left',
                 lightTheme: false,
-                placeholder: 'Ship',
+                placeholder: 'Manufacturer',
                 contentWidth: 'three-quarter-width',
                 contentAlign: 'align-left',
                 delayedReveal: true,
@@ -122,7 +123,7 @@ export default {
             content: [
               {
                 contentType: 'label',
-                value: 'Select Ship:',
+                value: 'Select Ship :',
                 contentWidth: 'half-width',
                 contentAlign: 'align-left'
               },
@@ -154,7 +155,7 @@ export default {
             content: [
               {
                 contentType: 'label',
-                value: 'Meetup Parent:',
+                value: 'Meetup Parent :',
                 contentWidth: 'half-width',
                 contentAlign: 'align-left'
               },
@@ -164,6 +165,7 @@ export default {
                 lightTheme: false,
                 contentWidth: 'three-quarter-width',
                 contentAlign: 'align-left',
+                formStep: 2,
                 formStepCallBack: e => {
                   this.$store.commit('LOCATIONBODYSELECTED', e.target.value);
                   this.getChildrenLandingZones(e.target.value, 'startZone');
@@ -176,7 +178,7 @@ export default {
               },
               {
                 contentType: 'label',
-                value: 'Meetup Landing Zone:',
+                value: 'Meetup Landing Zone :',
                 contentWidth: 'half-width',
                 contentAlign: 'align-left'
               },
@@ -191,7 +193,6 @@ export default {
                 formStepCallBack: e => {
                   this.$store.commit('SHOWTABS', { id: 'targetBody' });
                   this.$root.$emit('reveal-positions-selector', { id: 'shipCrewSelector' });
-                  this.$store.commit('SHOWTABS');
                 },
                 formId: 'newShipCrewForm',
                 name: 'startZone',
@@ -203,13 +204,13 @@ export default {
           {
             contentType: 'div',
             class: 'container',
-            id: 'newShipCrewFormStep3',
+            id: 'newShipCrewFormStep4',
             contentAlign: 'align-center',
             contentWidth: 'three-quarter-width',
             content: [
               {
                 contentType: 'label',
-                value: '(Optional) Target Location Parent:',
+                value: '(Optional) Target Location Parent :',
                 contentWidth: 'half-width',
                 contentAlign: 'align-left'
               },
@@ -219,6 +220,7 @@ export default {
                 lightTheme: false,
                 contentWidth: 'three-quarter-width',
                 contentAlign: 'align-left',
+                formStep: 3,
                 formStepCallBack: e => {
                   this.$store.commit('LOCATIONBODYSELECTED', e.target.value);
                   this.getChildrenLandingZones(e.target.value, 'targetZone');
@@ -231,7 +233,7 @@ export default {
               },
               {
                 contentType: 'label',
-                value: '(Optional) Target Location Landing Zone:',
+                value: '(Optional) Target Location Landing Zone :',
                 contentWidth: 'half-width',
                 contentAlign: 'align-left'
               },
@@ -242,7 +244,7 @@ export default {
                 placeholder: 'Ship',
                 contentWidth: 'three-quarter-width',
                 contentAlign: 'align-left',
-                formStep: 2,
+                formStep: 3,
                 formStepCallBack: e => {},
                 formId: 'newShipCrewForm',
                 name: 'targetZone',
@@ -251,7 +253,7 @@ export default {
               },
               {
                 contentType: 'label',
-                value: 'Select Crew:',
+                value: 'Select Crew :',
                 contentWidth: 'half-width',
                 contentAlign: 'align-left'
               },
@@ -274,7 +276,7 @@ export default {
     };
   },
   methods: {
-    getAllShips() {
+    async getAllShips() {
       var successCallBack = shipData => {
         this.$store.commit('SHIPSLOADED', shipData.data.data);
       };
@@ -284,9 +286,9 @@ export default {
       };
 
       const repo = RepositoryFactory.get('ships');
-      repo.get(this.$store.state.currentUser.token, successCallBack, errorCallBack);
+      await repo.get(this.$store.state.currentUser.token, successCallBack, errorCallBack);
     },
-    getAllManus() {
+    async getAllManus() {
       var successCallBack = manuData => {
         this.$store.commit('MANUSLOADED', manuData.data.data);
       };
@@ -296,11 +298,12 @@ export default {
       };
 
       const repo = RepositoryFactory.get('ships');
-      repo.getAllManus(this.$store.state.currentUser.token, successCallBack, errorCallBack);
+      await repo.getAllManus(this.$store.state.currentUser.token, successCallBack, errorCallBack);
     },
-    getAllLocationBodies() {
+    async getAllLocationBodies() {
       var successCallBack = locationData => {
         this.$store.commit('LOCATIONBODIESLOADED', locationData.data.data);
+        this.$store.commit('SHOWTABS');
       };
 
       var errorCallBack = error => {
@@ -308,9 +311,9 @@ export default {
       };
 
       const repo = RepositoryFactory.get('locations');
-      repo.getType(this.$store.state.currentUser.token, 3, successCallBack, errorCallBack);
+      await repo.getType(this.$store.state.currentUser.token, 3, successCallBack, errorCallBack);
     },
-    getAllLandingZones() {
+    async getAllLandingZones() {
       var successCallBack = locationData => {
         this.$store.commit('LOCATIONLANDINGZONESLOADED', locationData.data.data);
       };
@@ -320,9 +323,9 @@ export default {
       };
 
       const repo = RepositoryFactory.get('locations');
-      repo.getType(this.$store.state.currentUser.token, 4, successCallBack, errorCallBack);
+      await repo.getType(this.$store.state.currentUser.token, 4, successCallBack, errorCallBack);
     },
-    getChildrenLandingZones(parentId, tabSelectId) {
+    async getChildrenLandingZones(parentId, tabSelectId) {
       var successCallBack = locationData => {
         this.$store.commit('LOCATIONLANDINGZONESFILTERED', { data: locationData.data.data, id: tabSelectId });
       };
@@ -332,7 +335,7 @@ export default {
       };
 
       const repo = RepositoryFactory.get('locations');
-      repo.getChildrenOfType(this.$store.state.currentUser.token, parentId, 4, successCallBack, errorCallBack);
+      await repo.getChildrenOfType(this.$store.state.currentUser.token, parentId, 4, successCallBack, errorCallBack);
     },
     createOptions(type) {
       if (type === 'ships' && !this.$store.state.allShips) return false;
@@ -378,9 +381,10 @@ export default {
     }
   },
   mounted() {
-    this.getAllManus();
-    this.getAllShips();
-    this.getAllLocationBodies();
+    this.getAllManus().then(() => {
+      this.getAllShips();
+      this.getAllLocationBodies();
+    });
 
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'SHIPSLOADED') {

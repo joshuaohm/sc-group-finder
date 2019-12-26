@@ -58,36 +58,11 @@ export default {
       selected: ''
     };
   },
-  created() {
+  beforeCreate() {
     this.$store.subscribe((mutation, state) => {
-      if (
-        mutation.type === 'SHOWTABS' &&
-        ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
-          (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
-      ) {
-        this.showTab = true;
-        this.addedHeight = false;
-
-        if (!this.options) {
-          switch (this.content.optionType) {
-            case 'allManus': {
-              this.content.options = this.$store.state.allManus;
-              break;
-            }
-          }
-        }
-      } else if (
-        mutation.type === 'HIDETABS' &&
-        ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
-          (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
-      ) {
-        this.showTab = false;
-        this.addedHeight = true;
-        this.showBlue = true;
-      }
       //Watch for state lists that Tab Selects use to be updated and push the changes to the select's options
       //forceUpdate() seems to be necessary, this.$set on all values did not work.
-      else if (mutation.type === 'SHIPOPTIONSFILTERED') {
+      if (mutation.type === 'SHIPOPTIONSFILTERED') {
         switch (this.content.optionType) {
           case 'allShips': {
             this.content.options = this.$store.state.filteredShips;
@@ -124,12 +99,45 @@ export default {
             break;
           }
         }
+      } else if (
+        mutation.type === 'SHOWTABS' &&
+        ((!mutation.payload && this.content.delayedReveal) ||
+          (mutation.payload && this.$attrs.id && mutation.payload.id === this.$attrs.id))
+      ) {
+        if (!this.options) {
+          switch (this.content.optionType) {
+            case 'allManus': {
+              this.content.options = this.$store.state.allManus;
+              this.$forceUpdate();
+              break;
+            }
+          }
+        }
+        this.showTab = true;
+        this.showBlue = true;
+        this.addedHeight = false;
+        this.$forceUpdate();
+      } else if (
+        mutation.type === 'HIDETABS' &&
+        ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
+          (mutation.payload && this.$attrs.id && mutation.payload.id === this.$attrs.id))
+      ) {
+        this.showTab = false;
+        this.addedHeight = true;
+        this.showBlue = true;
       }
     });
   },
-  mounted() {},
   methods: {
     onChange(e) {
+      if (e.target.id === 'startZone') {
+        //hack because for some reason on mobile things aren't triggering in the correct order.
+        var self = this;
+        setTimeout(function() {
+          console.log('test');
+          self.$store.commit('SHOWTABS', { id: 'targetBody' });
+        }, 50);
+      }
       this.$root.$emit('option-selected', { id: e.target.id, value: e.target.value });
       this.$root.$emit('form-step-completed', {
         formStep: this.content.formStep,
