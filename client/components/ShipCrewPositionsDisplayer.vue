@@ -69,7 +69,8 @@
       <div :class="['miscCrew-wrapper']">
         <slot v-for="(position, index) in content.content.miscCrew">
           <div
-            :class="['crewPosition', position.position.type, {'filled' : (position.user && position.user.id > 0)}, {'disabled' : (position.enabled === false)}]"
+            @click="positionClicked(position, index, false)"
+            :class="['crewPosition', position.position.type, {'filled' : (!position.requested && position.user && position.user.id > 0)}, {'requested' : (position.requested === true)}]"
           >
             <div>{{position.user && position.user.name ? position.user.name : "&nbsp;"}}</div>
           </div>
@@ -81,6 +82,8 @@
 </template>
 
 <script>
+import { RepositoryFactory } from './../repository/RepositoryFactory';
+
 export default {
   components: {
     Tab: () => import('components/Tab'),
@@ -101,6 +104,25 @@ export default {
         contentWidth: 'btn-width',
         placeholder: 'Request Position',
         inputType: 'submit',
+        onSubmit: () => {
+          console.log(this.requestedPosition);
+
+          var successCallBack = retData => {
+            console.log('success');
+          };
+
+          var errorCallBack = error => {
+            console.log(error);
+          };
+
+          const ShipCrewPostsRepository = RepositoryFactory.get('scPosts');
+          ShipCrewPostsRepository.requestPosition(
+            this.$store.state.currentUser.token,
+            this.requestedPosition,
+            successCallBack,
+            errorCallBack
+          );
+        },
         id: this.content.parentId + '-' + this.$uuid + '-submit'
       },
       row: {
@@ -156,7 +178,7 @@ export default {
         }
       }
     },
-    positionClicked(position, index, isCrew) {
+    currentModePositionClick(position, index, isCrew) {
       if (!position.requested && position.user && position.user.id > 0) return;
 
       var positions = null;
@@ -181,7 +203,8 @@ export default {
       else if (position.requested && position.user && position.user.id === this.$store.state.currentUser.id) {
         return;
       } else {
-        this.clearRequestedPositions(positions);
+        this.clearRequestedPositions(this.content.content.members);
+        this.clearRequestedPositions(this.content.content.miscCrew);
         this.requestedPosition = position;
 
         position.user = { id: this.$store.state.currentUser.id, name: this.$store.state.currentUser.name };
@@ -193,6 +216,14 @@ export default {
       else this.$store.commit('HIDETABS', { id: this.content.parentId + '-' + this.$uuid + '-submit' });
 
       this.$forceUpdate();
+    },
+    userModePositionClick(position, index, isCrew) {},
+    positionClicked(position, index, isCrew) {
+      if (this.content && this.content.contentMode === 'current') {
+        this.currentModePositionClick(position, index, isCrew);
+      } else if (this.content && this.content.contentMode === 'user') {
+        this.userModePositionClick(position, index, isCrew);
+      }
     }
   },
   created() {

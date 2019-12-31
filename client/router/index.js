@@ -5,6 +5,7 @@ import About from '../views/About'
 import Login from '../views/Login'
 import ShipCrews from '../views/ShipCrews'
 import NewShipCrew from '../views/NewShipCrew'
+import PostsDashboard from '../views/Posts-Dashboard'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/scPosts/new',
       name: 'New Ship Crew Post',
       component: NewShipCrew
+    },
+    {
+      path: '/posts/dashboard',
+      name: 'dashboard',
+      component: PostsDashboard
     }
   ]
 })

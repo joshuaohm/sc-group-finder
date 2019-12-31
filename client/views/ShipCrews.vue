@@ -55,6 +55,7 @@ export default {
             {
               contentType: 'ShipCrewPostDisplayer',
               content: this.$store.state.currentPosts,
+              postsType: 'current',
               lightTheme: true
             }
           ]

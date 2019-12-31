@@ -55,7 +55,7 @@ export default {
 
           var successCallBack = postData => {
             //this.$store.commit('SCPOSTSUCCESS', shipData.data.data);
-            self.$router.push({ name: 'Ship Crew Posts' });
+            self.$router.push({ name: 'dashboard' });
           };
 
           var errorCallBack = error => {

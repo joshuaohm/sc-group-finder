@@ -28,8 +28,11 @@
           <li class="nav-item" id="nav-item-2">
             <router-link :to="{ name: links[1] }">{{links[1]}}</router-link>
           </li>
-          <li v-if="!this.$store.state.isLoggedIn" class="nav-item" id="nav-item-3">
+          <li class="nav-item" id="nav-item-3">
             <router-link :to="{ name: links[2] }">{{links[2]}}</router-link>
+          </li>
+          <li v-if="!this.$store.state.isLoggedIn" class="nav-item" id="nav-item-4">
+            <router-link :to="{ name: links[3] }">{{links[4]}}</router-link>
           </li>
           <li v-else @click="logOut()" class="nav-item" id="nav-item-3">Log Out</li>
         </ul>
@@ -45,10 +48,13 @@
           <li class="nav-item" id="nav-item-2">
             <router-link :to="{ name: links[1] }">{{links[1]}}</router-link>
           </li>
-          <li v-if="!this.$store.state.isLoggedIn" class="nav-item" id="nav-item-3">
+          <li class="nav-item" id="nav-item-3">
             <router-link :to="{ name: links[2] }">{{links[2]}}</router-link>
           </li>
-          <li v-else @click="logOut()" class="nav-item" id="nav-item-3">Log Out</li>
+          <li v-if="!this.$store.state.isLoggedIn" class="nav-item" id="nav-item-4">
+            <router-link :to="{ name: links[3] }">{{links[3]}}</router-link>
+          </li>
+          <li v-else @click="logOut()" class="nav-item" id="nav-item-4">Log Out</li>
         </ul>
       </div>
     </transition>
@@ -61,7 +67,7 @@ import { RepositoryFactory } from './../repository/RepositoryFactory';
 export default {
   data() {
     return {
-      links: ['home', 'about', 'log in'],
+      links: ['home', 'dashboard', 'about', 'log in'],
       mobileShow: false
     };
   },
@@ -130,6 +136,7 @@ $page-color: #012e23;
   height: 100%;
   list-style: none;
   margin: 0;
+  font-size: 1.6rem;
 }
 
 .nav-wrapper,

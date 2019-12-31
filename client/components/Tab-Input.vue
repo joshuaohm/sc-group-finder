@@ -43,6 +43,7 @@
           <slot v-else-if="content.inputType.toLowerCase() === 'submit'">
             <input
               type="submit"
+              @click="tabSubmitted($event)"
               @focus="tabFocused($event)"
               @blur="tabBlurred($event)"
               :value="content.placeholder"
@@ -129,6 +130,12 @@ export default {
     },
     tabFocused(e) {
       this.focused = true;
+    },
+    tabSubmitted(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (this.content && this.content.onSubmit) this.content.onSubmit();
     }
   },
   watch: {

@@ -4,7 +4,7 @@
 -
 -->
 <template>
-  <div class="tab-wrapper" :class="[mobileAlignOverride(), content.contentWidth]">
+  <div class="tab-wrapper" :class="[mobileAlignOverride(), this.contentWidth]">
     <transition :transitionType="'transition'" name="tab-transition" v-on:after-enter="tabLoaded()">
       <div
         v-if="showTab"
@@ -26,11 +26,11 @@
         </div>
       </div>
     </transition>
-    <slot @v-show="showSubPanel">
+    <slot @v-show="this.content && this.content.subPanel && showSubPanel">
       <component
-        :is="content.subPanel.contentType"
+        :is="this.content ? this.content.subPanel.contentType : ''"
         ref="subPanel"
-        :content="content.subPanel"
+        :content="this.content ? this.content.subPanel : ''"
         :class="[alignment]"
       ></component>
     </slot>
@@ -56,7 +56,19 @@ export default {
       else if (this.$parent.lightTheme) return this.$parent.lightTheme;
     },
     alignment() {
-      return this.content.alignType;
+      if (this.content) return this.content.alignType;
+    },
+    contentType() {
+      if (this.content && this.content.contentType) return this.content.contentType;
+      else return '';
+    },
+    contentWidth() {
+      if (this.content && this.content.contentWidth) return this.content.contentWidth;
+      else return '';
+    },
+    subPanel() {
+      if (this.content && this.content.subPanel) return this.content.subPanel;
+      else return null;
     }
   },
   data() {
@@ -71,14 +83,14 @@ export default {
     this.$store.subscribe((mutation, state) => {
       if (
         mutation.type === 'SHOWTABS' &&
-        ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
+        ((!mutation.payload && !this.showTab && this.content && this.content.delayedReveal) ||
           (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
       ) {
         this.showTab = true;
         this.addedHeight = false;
       } else if (
         mutation.type === 'HIDETABS' &&
-        ((!mutation.payload && !this.showTab && this.content.delayedReveal) ||
+        ((!mutation.payload && !this.showTab && this.content && this.content.delayedReveal) ||
           (mutation.payload && this.content.id && mutation.payload.id === this.$attrs.id))
       ) {
         this.showTab = false;

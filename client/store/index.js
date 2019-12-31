@@ -66,6 +66,8 @@ const mutations = {
     state.currentUser.name = data.name;
     state.isLoggedIn = true;
     window.localStorage.setItem('scgf-token', data.token);
+    window.localStorage.setItem('scgf-id', data.id);
+    window.localStorage.setItem('scgf-name', data.name);
   },
   LOGGEDOUT(state) {
     state.currentUser.token = "";
@@ -93,10 +95,8 @@ const mutations = {
     state.currentShip = data;
   },
   SHOWTABS(state, data) {
-    console.log(data);
   },
   HIDETABS(state, data) {
-
   },
   SUBPANELEXPANDED(state) {
     state.currentPage.currentTab.currentSubPanel.isExpanded = true;

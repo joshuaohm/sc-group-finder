@@ -38,6 +38,7 @@ export default {
         alignType: 'left',
         lightTheme: true,
         delayedReveal: true,
+        name: 'SCPostTab',
 
         text: [
           { value: 'post.slotsAvailable', class: 'post-slotsAvailable' },
@@ -52,18 +53,19 @@ export default {
           lightTheme: false,
           content: [
             {
-              contentType: 'ShipCrewPositionsDisplayer',
-              content: []
+              contentType: 'ShipCrewPositionsDisplayer'
             }
           ]
         }
       }
     };
   },
-  beforeMount() {
-    if (!this.$store.state.currentPosts) {
+  mounted() {
+    if (!this.content.postsType || this.content.postsType === 'current') {
       this.getCurrentPosts();
-    } else {
+    } else if (this.content.postsType === 'user') {
+      this.getUsersPosts();
+    } else if (this.$store.state.currentPosts) {
       this.parsePosts();
     }
   },
@@ -102,10 +104,10 @@ export default {
         }
       }
 
+      template.subPanel.content[0].contentMode = this.content.postsType;
       template.subPanel.content[0].content = post;
       template.subPanel.parentId = this.$attrs.id;
       template.parentId = this.$attrs.id;
-
       this.computedTabs.push(template);
     },
 
@@ -113,6 +115,7 @@ export default {
       var successCallBack = retData => {
         this.$store.commit('POSTSLOADED', retData.data.data);
         this.parsePosts();
+        this.$forceUpdate();
       };
 
       var errorCallBack = error => {
@@ -121,6 +124,26 @@ export default {
 
       const ShipCrewPostsRepository = RepositoryFactory.get('scPosts');
       ShipCrewPostsRepository.get(this.$store.state.currentUser.token, successCallBack, errorCallBack);
+    },
+
+    getUsersPosts() {
+      var successCallBack = retData => {
+        this.$store.commit('POSTSLOADED', retData.data.data);
+        this.parsePosts();
+        this.$forceUpdate();
+      };
+
+      var errorCallBack = error => {
+        console.log(error);
+      };
+
+      const ShipCrewPostsRepository = RepositoryFactory.get('scPosts');
+      ShipCrewPostsRepository.getUsersPosts(
+        this.$store.state.currentUser.token,
+        this.$store.state.currentUser.id,
+        successCallBack,
+        errorCallBack
+      );
     }
   }
 };

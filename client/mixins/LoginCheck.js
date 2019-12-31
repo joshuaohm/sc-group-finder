@@ -4,6 +4,24 @@
  */
 import { RepositoryFactory } from './../repository/RepositoryFactory';
 
+
+function checkSavedInformation(self) {
+
+  if (!self.$store.state.currentUser.token)
+    self.$store.state.currentUser.token = window.localStorage.getItem('scgf-token');
+
+  if (!self.$store.state.currentUser.id)
+    self.$store.state.currentUser.id = window.localStorage.getItem('scgf-id');
+
+  if (!self.$store.state.currentUser.name)
+    self.$store.state.currentUser.name = window.localStorage.getItem('scgf-name');
+
+  if (!self.$store.state.currentUser.token)
+    return false;
+  else
+    return true;
+}
+
 var loginCheck = function (store, router) {
 
   if (store.state.isLoggedIn) {
@@ -30,16 +48,9 @@ var beforeMount = function () {
 
   if (!this.$store.state.IsLoggedIn) {
 
-    var token = "";
+    if (checkSavedInformation(this)) {
 
-    if (this.$store.state.currentUser.token)
-      token = this.$store.state.currentUser.token;
-    else
-      token = window.localStorage.getItem('scgf-token');
-
-    if (token != null && token != "") {
-
-      this.$store.commit("LOGGEDIN", { token: token, id: 0, name: "" });
+      this.$store.commit("LOGGEDIN", { token: this.$store.state.currentUser.token, id: this.$store.state.currentUser.id, name: this.$store.state.currentUser.name });
       var self = this;
 
       setTimeout(function () {
